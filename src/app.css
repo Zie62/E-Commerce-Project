@@ -1,0 +1,134 @@
+#title{
+    color:rgb(87, 87, 224);
+    padding-bottom: 8vh;
+    position: relative;
+    left: 24vw;
+}
+#header{
+    width: 100vw;
+    height: 20vh;
+    z-index: 20;
+}
+h1{
+    font-size: 40px;
+}
+h2{
+    font-size: 30px;
+}
+#root{
+    width: 100vw;
+    overflow-x:hidden;
+}
+.hotbar{
+    text-align: center;
+    color:rgb(20, 163, 127)
+}
+#intro{
+    color: red;
+    text-align: center;
+}
+
+.drop-down{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+}
+.dd-content{
+    display: none;
+    position: relative;
+    width:inherit;
+    overflow:auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-decoration: none;
+    text-align: center;
+    font-size: 25px;
+    margin: 0 auto;
+    background-color: white;
+    z-index: 5;
+}
+.drop-down:hover .dd-content{
+    display:block;
+}
+.dd-content a:hover{
+    z-index: 5;
+    color: red;
+    background-color: green;
+    text-decoration: none;
+}
+#dd1{
+    border:inherit;
+    font-size: 30px;
+    width: inherit;
+}
+.dd-links{
+    width:inherit;
+    text-decoration: none;
+    z-index: 5;
+}
+.dd-links:hover{
+    text-decoration:none;
+}
+#logo{
+    width: 10vw;
+    height: 10vh;
+}
+.co-link{
+    width:10vw;
+    height:10vh;
+}
+#primary{
+    height: 80vh;
+    z-index: 1;
+}
+#primary h1{
+    text-align: center;
+    color: orange
+}
+#mainBody{
+    background-image: url("https://bit.ly/3lpJj1Y");
+    height: 80vh;
+    background-repeat: repeat;
+}
+#featured{
+    height: 80%;
+    position: relative;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0px 0px 50% 50%;
+}
+.feat-box{
+    position: relative;
+    height: 35vh;
+    width: 25vw;
+    margin-top: 3vh;
+    margin-left: 3vh;
+    box-shadow: 8px 4px 4px rgb(49, 48, 48);
+    background-color:rgb(72, 72, 167);
+    float: left;
+    text-align:center
+}
+.feat-package{
+    height: 45vh;
+    border: 2px solid blue;
+    position:relative;
+    margin: 0 auto;
+    padding: 20px;
+}
+.feat-name{
+    color: orange;
+}
+.feat-link{
+    text-decoration: none;
+}
+.feat-link:hover{
+    text-decoration: none;
+}
+.feat-img{
+    margin-top: 1vh;
+    margin-left: 1vh;
+    width:80%;
+    height:65%;
+}
+.feat-price{
+    text-align: center;
+}
