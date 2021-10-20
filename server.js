@@ -55,10 +55,10 @@ app.get("/full-db", (req, res) =>{
     giveAllListings(res)
 })
 app.get("/"), (req, res) =>{
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'build', 'index.bundle.html'))
 }
 app.get("/alternative", (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'notindex.html'))
+    res.sendFile(path.join(__dirname, 'build', 'notindex.bundle.html'))
 })
 
 app.listen(port)
