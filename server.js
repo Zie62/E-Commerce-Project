@@ -57,5 +57,8 @@ app.get("/full-db", (req, res) =>{
 app.get("/"), (req, res) =>{
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 }
+app.get("/alternative", (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'notindex.html'))
+})
 
 app.listen(port)

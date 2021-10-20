@@ -3,10 +3,10 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const { Server } = require("http");
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {index: './src/index.js', notindex: './src/notindex.js'},
     output: {
         path: path.join(__dirname, '/build'),
-        filename: 'index_bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [{
@@ -26,7 +26,17 @@ module.exports = {
     plugins: [
         new htmlWebpackPlugin({
             title: 'react template',
-            template: './src/index.html'
+            template: './src/index.html',
+            inject: true,
+            chunks:['index'],
+            filename: 'index.html'
+        }),
+        new htmlWebpackPlugin({
+            title: 'alternative template',
+            template: './src/notindex.html',
+            inject: true,
+            chunks: ['notindex'],
+            filename: 'notindex.html'
         })
     ]
 }
