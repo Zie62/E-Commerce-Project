@@ -4,12 +4,15 @@
   "description": "React and webpack from scratch",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "node server.js",
     "build": "webpack --mode production"
   },
   "author": "August Guenther",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
