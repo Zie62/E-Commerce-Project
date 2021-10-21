@@ -12,6 +12,7 @@ class FullList extends Component {
             disPrices: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.conTarget = this.conTarget.bind(this)
     }
     componentDidMount() {
         Axios.get("/full-db").then((response) => {
@@ -51,7 +52,7 @@ class FullList extends Component {
         <div id="primary" className="container-fluid">
             <div id="mainBody" className="row">
                 <div id="stock" className="col-10">
-                    {conTarget()}
+                    {this.conTarget()}
                 </div>
             </div>
         </div>
