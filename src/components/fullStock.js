@@ -12,7 +12,7 @@ class FullList extends Component {
             disPrices: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
-        this.conTarget = this.conTarget.bind(this)
+        this.imgMap = this.imgMap.bind(this)
     }
     componentDidMount() {
         Axios.get("/full-db").then((response) => {
@@ -35,15 +35,11 @@ class FullList extends Component {
             })
         });
     }
-    conTarget() {
+    imgMap() {
         <div>
-            {this.state.map((state, i) => (
+            {this.state.pics.map((state, i) => (
                 <div>
-                    <a href="#" className="feat-link">
-                        <img src={state.pics[i]} alt="oopsies" className="feat-img" />
-                        <h4 className="feat-name">{state.names[i]}</h4>
-                    </a>
-                    <h5 className="feat-price">${state.ogPrices[i]}</h5>
+                    <img src={state.pics[i]} alt="oopsies" className="feat-img" />
                 </div>
             ))}
         </div>
@@ -52,7 +48,7 @@ class FullList extends Component {
         <div id="primary" className="container-fluid">
             <div id="mainBody" className="row">
                 <div id="stock" className="col-10">
-                    {this.conTarget()}
+                    {this.imgMap()}
                 </div>
             </div>
         </div>
