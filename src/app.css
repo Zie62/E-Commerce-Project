@@ -109,7 +109,6 @@ h2{
     box-shadow: 8px 4px 4px rgb(49, 48, 48);
     background-color:rgb(72, 72, 167);
     float: left;
-    display:flex;
     align-content: center;
     text-align:center;
 }
