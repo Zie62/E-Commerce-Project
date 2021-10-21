@@ -2,7 +2,6 @@ import "./app.css";
 import "./bootstrap.min.css"
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Axios from 'axios';
 import NavBar from './components/navBar';
 import Body from './components/homeBody';
 
