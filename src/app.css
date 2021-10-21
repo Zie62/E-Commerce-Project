@@ -132,3 +132,7 @@ h2{
 .feat-price{
     text-align: center;
 }
+#stock{
+    background-color: white;
+    height: 100%
+}
