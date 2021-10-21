@@ -37,15 +37,20 @@ class FullList extends Component {
     }
     imgMap() {
         console.log(this.state.pics)
-        return(
-        <div>
-            {this.state.pics.map((pics, i) => (
+        if (this.state.pics.length === 0) {
+            return (<h1>oopsies</h1>)
+        }
+        else {
+            return (
                 <div>
-                    <img src={pics[i]} alt="oopsies" className="feat-img" />
+                    {this.state.pics.map((pic, i) => (
+                        <div>
+                            <img src={pic} alt="oopsies" className="feat-img" key={i}/>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
-        )
+            )
+        }
     }
     render() {
         return (
