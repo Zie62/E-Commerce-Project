@@ -86,9 +86,7 @@ h2{
 }
 #mainBody{
     background-image: url("https://bit.ly/3lpJj1Y");
-    height: 80vh;
     background-repeat: repeat;
-    position: fixed;
 }
 #featured{
     height: 80%;
