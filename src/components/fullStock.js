@@ -45,13 +45,16 @@ class FullList extends Component {
         </div>
     }
     render() {
-        <div id="primary" className="container-fluid">
-            <div id="mainBody" className="row">
-                <div id="stock" className="col-10">
-                    {this.imgMap()}
+        return (
+            <div id="primary" className="container-fluid">
+                <div id="mainBody" className="row">
+                    <div id="stock" className="col-10">
+                        {this.imgMap()}
+                    </div>
                 </div>
             </div>
-        </div>
+        )
     }
+
 }
 export default FullList;
