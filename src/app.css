@@ -87,6 +87,11 @@ h2{
 #mainBody{
     background-image: url("https://bit.ly/3lpJj1Y");
     background-repeat: repeat;
+    height: 80vh
+}
+#stockBody{
+    background-image: url("https://bit.ly/3lpJj1Y");
+    background-repeat: repeat;
 }
 #featured{
     height: 80%;
