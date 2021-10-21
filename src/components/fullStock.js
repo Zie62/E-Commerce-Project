@@ -36,6 +36,7 @@ class FullList extends Component {
         });
     }
     imgMap() {
+        return(
         <div>
             {this.state.pics.map((state, i) => (
                 <div>
@@ -43,6 +44,7 @@ class FullList extends Component {
                 </div>
             ))}
         </div>
+        )
     }
     render() {
         return (
