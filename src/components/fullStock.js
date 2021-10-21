@@ -36,6 +36,7 @@ class FullList extends Component {
         });
     }
     imgMap() {
+        console.log(this.state.pics)
         return(
         <div>
             {this.state.pics.map((pics, i) => (
