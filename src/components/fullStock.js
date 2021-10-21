@@ -36,11 +36,13 @@ class FullList extends Component {
         });
     }
     imgMap() {
+        let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i]]);
+        console.log(zipper)
         return (
             <div>
                 {this.state.pics.map((pic, i) => (
                     <div>
-                       <img src={pic} alt="oopsies" className="feat-img" key={i} />
+                        <img src={pic} alt="oopsies" className="feat-img" key={i} />
                     </div>
                 ))}
             </div>
