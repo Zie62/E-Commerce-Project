@@ -105,7 +105,10 @@ h2{
     box-shadow: 8px 4px 4px rgb(49, 48, 48);
     background-color:rgb(72, 72, 167);
     float: left;
-    text-align:center
+    display:flex;
+    align-content: center;
+    align-items: center;
+    text-align:center;
 }
 .feat-package{
     height: 45vh;
@@ -124,9 +127,7 @@ h2{
     text-decoration: none;
 }
 .feat-img{
-    margin-top: 1vh;
-    margin-left: 1vh;
-    width:80%;
+    width: 80%;
     height:65%;
 }
 .feat-price{

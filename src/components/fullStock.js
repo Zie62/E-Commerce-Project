@@ -36,6 +36,8 @@ class FullList extends Component {
         });
     }
     imgMap() {
+        //zipper turns the state into an array of arrays where each one represents
+        //a listing to be displayed on the webpage. 
         let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i]]);
         return (
             <div>
