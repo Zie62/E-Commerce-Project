@@ -40,7 +40,7 @@ class FullList extends Component {
         return (
             <div>
                 {zipper.map((pic, i) => (
-                    <div key={i}>
+                    <div className="feat-box col-2" key={i}>
                         <a href="#" className="feat-link">
                                     <img src={pic[1]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{pic[0]}</h4>
@@ -62,6 +62,5 @@ class FullList extends Component {
             </div>
         )
     }
-
 }
 export default FullList;
