@@ -60,5 +60,8 @@ app.get("/"), (req, res) =>{
 app.get("/alternative", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'notindex.html'))
 })
-
+app.post('/database-upload', (req, res)=>{
+    createAndSaveListing(req.body.picture, req.body.listname, req.body.oriPrice, req.body.discPrice)
+    res.json("Successfully Posted!")
+})
 app.listen(port)
