@@ -38,9 +38,9 @@ class FullList extends Component {
     imgMap() {
         return(
         <div>
-            {this.state.pics.map((state, i) => (
+            {this.state.pics.map((pics, i) => (
                 <div>
-                    <img src={state.pics[i]} alt="oopsies" className="feat-img" />
+                    <img src={pics[i]} alt="oopsies" className="feat-img" />
                 </div>
             ))}
         </div>
