@@ -8,7 +8,7 @@ class Testing extends React.Component {
     render() {
         return (
             <div>
-                <h1> extra little line for fuck sake</h1>
+                <h1> extra little line please</h1>
             </div>
         )
     }
