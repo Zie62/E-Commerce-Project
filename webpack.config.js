@@ -35,7 +35,7 @@ module.exports = {
             title: 'product page',
             template: './src/products.html',
             inject: true,
-            chunks: ['notindex'],
+            chunks: ['products'],
             filename: 'products.html'
         })
     ]
