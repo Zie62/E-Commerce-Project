@@ -51,7 +51,7 @@ h2{
 }
 #drop-button{
     font-size: 30px;
-    width: inherit;
+    width: 25vw;
     justify-content: left;
 }
 .dd-links{
