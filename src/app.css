@@ -27,7 +27,8 @@ h2{
 }
 .dd-content{
     display: none;
-    position: relative;
+    position: absolute;
+    bottom: 0;
     width:inherit;
     overflow:auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -39,7 +40,9 @@ h2{
     z-index: 5;
 }
 .drop-down:hover .dd-content{
-    display:absolute;
+    display:inline-block;
+    position: absolute;
+    bottom:0;
 }
 .dd-content a:hover{
     z-index: 5;
@@ -51,7 +54,7 @@ h2{
     font-size: 30px;
     width: 20vw;
     position:absolute;
-    bottom:0%
+    bottom:0;
 }
 .dd-links{
     width:inherit;
