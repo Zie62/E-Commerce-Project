@@ -1,5 +1,5 @@
 #title{
-    color:rgb(87, 87, 224);
+    color:rgb(72, 72, 167);
     padding-bottom: 8vh;
     position: relative;
     left: 24vw;
@@ -24,7 +24,7 @@ h2{
     color:rgb(20, 163, 127)
 }
 #intro{
-    color: red;
+    color: rgb(72, 72, 167);
     text-align: center;
 }
 
@@ -51,8 +51,8 @@ h2{
 }
 .dd-content a:hover{
     z-index: 5;
-    color: red;
-    background-color: green;
+    color: rgb(72, 72, 167);
+    background-color: none;
     text-decoration: none;
 }
 #dd1{
@@ -122,7 +122,7 @@ h2{
     padding: 20px;
 }
 .feat-name{
-    color: orange;
+    color: white;
 }
 .feat-link{
     text-decoration: none;
