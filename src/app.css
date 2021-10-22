@@ -49,10 +49,10 @@ h2{
     background-color: none;
     text-decoration: none;
 }
-#dd1{
-    border:inherit;
+#drop-button{
     font-size: 30px;
     width: inherit;
+    justify-content: left;
 }
 .dd-links{
     width:inherit;
@@ -95,7 +95,7 @@ h2{
     height: 80%;
     position: relative;
     margin: 0 auto;
-    background-color: rgb(189, 186, 147);
+    background-color: rgb(197, 195, 163);
     border-radius: 0px 0px 50% 50%;
 }
 .feat-box{
@@ -136,7 +136,7 @@ h2{
     text-align: center;
 }
 #stock{
-    background-color: rgb(189, 186, 147);
+    background-color: rgb(197, 195, 163);
     height: 100%;
     position: relative;
     margin: 0 auto;
