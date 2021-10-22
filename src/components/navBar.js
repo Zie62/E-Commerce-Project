@@ -5,7 +5,7 @@ class NavBar extends Component {
         return (
             <div id="header" className="container-fluid">
                 <div id="headRow" className="row">
-                    <a className="co-link col-12" href="#">
+                    <a className="co-link col-12" href="/">
                         <img id="logo" alt="company logo" src="https://bit.ly/3B6dgJ8" />
                     </a>
                     <div className="drop-down col-4" id="shop-drop">
