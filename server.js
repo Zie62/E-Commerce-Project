@@ -57,8 +57,8 @@ app.get("/full-db", (req, res) =>{
 app.get("/"), (req, res) =>{
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 }
-app.get("/alternative", (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'notindex.html'))
+app.get("/products-page", (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'products.html'))
 })
 app.post('/database-upload', (req, res)=>{
     createAndSaveListing(req.body.picture, req.body.listname, req.body.oriPrice, req.body.discPrice)
