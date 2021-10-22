@@ -82,7 +82,7 @@ h2{
 }
 #primary h1{
     text-align: center;
-    color: white
+    color: rgb(72, 72, 167)
 }
 #mainBody{
     background-image: url("https://bit.ly/3lpJj1Y");
@@ -121,7 +121,7 @@ h2{
     padding: 20px;
 }
 .feat-name{
-    color: white;
+    color: rgb(72, 72, 167);
 }
 .feat-link{
     text-decoration: none;
