@@ -82,7 +82,7 @@ h2{
 }
 #primary h1{
     text-align: center;
-    color: orange
+    color: white
 }
 #mainBody{
     background-image: url("https://bit.ly/3lpJj1Y");
@@ -99,7 +99,7 @@ h2{
     height: 80%;
     position: relative;
     margin: 0 auto;
-    background-color: rgb(72, 72, 167);
+    background-color: rgb(189, 186, 147);
     border-radius: 0px 0px 50% 50%;
 }
 .feat-box{
@@ -140,7 +140,7 @@ h2{
     text-align: center;
 }
 #stock{
-    background-color: white;
+    background-color: rgb(189, 186, 147);
     height: 100%;
     position: relative;
     margin: 0 auto;
