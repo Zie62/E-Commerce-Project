@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-const Logo = "https://ravenandmacaw.com/wp-content/uploads/2021/07/company-logo.png"
 class NavBar extends Component {
     render() {
         return (
             <div id="header" className="container-fluid">
                 <div id="headRow" className="row">
-                    <a className="co-link col-2" href="#">
-                        <img id="logo" alt="company logo" src={Logo} /></a>
-                    <h1 id="title" className="col-10">COMPANY</h1>
+                    <a className="co-link col-12" href="#">
+                        <img id="logo" alt="company logo" src="https://bit.ly/3B6dgJ8" />
+                    </a>
                     <div className="drop-down col-4" id="shop-drop">
                         <button id="dd1">Dropdown</button>
                         <div className="dd-content">
