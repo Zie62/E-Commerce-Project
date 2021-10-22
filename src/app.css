@@ -23,9 +23,7 @@ h2{
 }
 
 .drop-down{
-    display: inline-block;
     position: relative;
-    text-align: center;
 }
 .dd-content{
     display: none;
@@ -51,8 +49,9 @@ h2{
 }
 #drop-button{
     font-size: 30px;
-    width: 25vw;
-    justify-content: left;
+    width: 20vw;
+    position:absolute;
+    bottom:0%
 }
 .dd-links{
     width:inherit;
