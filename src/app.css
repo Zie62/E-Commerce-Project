@@ -145,3 +145,6 @@ h2{
     position: relative;
     margin: 0 auto;
 }
+.crossed{
+    text-decoration: line-through;
+}

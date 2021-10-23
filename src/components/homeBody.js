@@ -45,35 +45,40 @@ class Body extends Component {
                                     <img src={this.state.pics[0]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{this.state.names[0]}</h4>
                                 </a>
-                                <h5 className="feat-price">${this.state.ogPrices[0]}</h5>
+                                <h5 className="feat-price crossed">${this.state.ogPrices[0]}</h5>
+                                <h5 className="feat-price">${this.state.disPrices[0]}</h5>
                             </section>
                             <section className="feat-box col-2">
                                 <a href="#" className="feat-link">
                                     <img src={this.state.pics[1]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{this.state.names[1]}</h4>
                                 </a>
-                                <h5 className="feat-price">${this.state.ogPrices[1]}</h5>
+                                <h5 className="feat-price crossed">${this.state.ogPrices[1]}</h5>
+                                <h5 className="feat-price">${this.state.disPrices[1]}</h5>
                             </section>
                             <section className="feat-box col-2">
                                 <a href="#" className="feat-link">
                                     <img src={this.state.pics[2]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{this.state.names[2]}</h4>
                                 </a>
-                                <h5 className="feat-price">${this.state.ogPrices[2]}</h5>
+                                <h5 className="feat-price crossed">${this.state.ogPrices[2]}</h5>
+                                <h5 className="feat-price">${this.state.disPrices[2]}</h5>
                             </section>
                             <section className="feat-box col-2">
                                 <a href="#" className="feat-link">
                                     <img src={this.state.pics[3]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{this.state.names[3]}</h4>
                                 </a>
-                                <h5 className="feat-price">${this.state.ogPrices[3]}</h5>
+                                <h5 className="feat-price crossed">${this.state.ogPrices[3]}</h5>
+                                <h5 className="feat-price">${this.state.disPrices[3]}</h5>
                             </section>
                             <section className="feat-box col-2">
                                 <a href="#" className="feat-link">
                                     <img src={this.state.pics[4]} alt="oopsies" className="feat-img" />
                                     <h4 className="feat-name">{this.state.names[4]}</h4>
                                 </a>
-                                <h5 className="feat-price">${this.state.ogPrices[4]}</h5>
+                                <h5 className="feat-price crossed">${this.state.ogPrices[4]}</h5>
+                                <h5 className="feat-price">${this.state.disPrices[4]}</h5>
                             </section>
                         </div>
                     </div>
