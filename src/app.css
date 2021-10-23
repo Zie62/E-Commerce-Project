@@ -29,9 +29,7 @@ h2{
 }
 .dd-content{
     display: none;
-    position: absolute;
-    top: 19vh;
-    left: 0;
+    position: relative;
     width:inherit;
     overflow:auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
