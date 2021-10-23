@@ -24,13 +24,13 @@ h2{
 
 .drop-down{
     position: absolute;
-    bottom: 0;
+    top: 19vh;
     left: 0;
 }
 .dd-content{
     display: none;
     position: absolute;
-    bottom: 0;
+    top: 19vh;
     left: 0;
     width:inherit;
     overflow:auto;
