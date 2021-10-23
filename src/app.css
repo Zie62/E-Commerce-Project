@@ -23,7 +23,7 @@ h2{
 }
 
 .drop-down{
-    position: absolute;
+    position: relative;
     top: 19vh;
     left: 0;
 }
