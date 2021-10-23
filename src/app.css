@@ -45,7 +45,6 @@ h2{
 .drop-down:hover .dd-content{
     display:inline-block;
     position: absolute;
-    top: 19vh;
     left: 0;
 }
 .dd-content a:hover{
