@@ -33,6 +33,22 @@ class Body extends Component {
             })
         });
     }
+    featLoader() {
+        let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i]]);
+        return (
+            <div>
+                {zipper.map((pic, i) => (
+                    <div className="feat-box col-2" key={i}>
+                        <a href="#" className="feat-link">
+                            <img src={pic[1]} alt="oopsies" className="feat-img" />
+                            <h4 className="feat-name">{pic[0]}</h4>
+                        </a>
+                        <h5 className="feat-price">${pic[2]}</h5>
+                    </div>
+                ))}
+            </div>
+        )
+    }
     render() {
         return (
             <div id="primary" className="container-fluid">
