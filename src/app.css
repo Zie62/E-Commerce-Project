@@ -71,7 +71,7 @@ h2{
     height:10vh;
 }
 #primary{
-    height: 80vh;
+    height: 87vh;
     z-index: 1;
 }
 #primary h1{
@@ -81,13 +81,14 @@ h2{
 #mainBody{
     background-image: url("https://bit.ly/3lpJj1Y");
     background-repeat: repeat;
-    height: 80vh;
+    height: 87vh;
     background-attachment: fixed;
 }
 #stockBody{
     background-image: url("https://bit.ly/3lpJj1Y");
     background-repeat: repeat;
     background-attachment: fixed;
+    height: 100%;
 }
 #featured{
     height: 80%;
