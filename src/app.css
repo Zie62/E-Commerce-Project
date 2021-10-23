@@ -30,7 +30,7 @@ h2{
 .dd-content{
     display: none;
     position: relative;
-    width:inherit;
+    width:20;
     overflow:auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     text-decoration: none;
@@ -43,7 +43,6 @@ h2{
 .drop-down:hover .dd-content{
     display:inline-block;
     position: absolute;
-    left: 0;
 }
 .dd-content a:hover{
     z-index: 5;
