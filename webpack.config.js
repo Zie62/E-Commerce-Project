@@ -3,7 +3,7 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const { Server } = require("http");
 
 module.exports = {
-    entry: {index: './src/index.js', products: './src/products.js'},
+    entry: {index: './src/index.js', products: './src/products.js', listing: './src/singleListing.js'},
     output: {
         path: path.join(__dirname, '/build'),
         filename: '[name].bundle.js'
@@ -37,6 +37,13 @@ module.exports = {
             inject: true,
             chunks: ['products'],
             filename: 'products.html'
+        }),
+        new htmlWebpackPlugin({
+            title: 'listing page',
+            template: './src/singleListing.html',
+            inject: true,
+            chunks:['listing'],
+            filename: 'singleListing.html'
         })
     ]
 }
