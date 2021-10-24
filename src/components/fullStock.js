@@ -29,6 +29,7 @@ class FullList extends Component {
                 ogPrices.push(listing.ogPrice)
                 disPrices.push(listing.disPrice)
                 idList.push(listing._id)
+                console.log(listing._id)
             }
             this.setState({
                 names: nameList,
