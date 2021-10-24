@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { calculateObjectSize } from 'bson';
 
 const queryStr = window.location.search.substr(1)
-console.log(queryStr)
+console.log(queryStr.test)
 class FullList extends Component {
     constructor(props) {
         super(props)
