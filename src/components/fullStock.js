@@ -45,7 +45,6 @@ class FullList extends Component {
         //zipper turns the state into an array of arrays where each one represents
         //a listing to be displayed on the webpage. 
         let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
-        console.log(zipper[0][4])
         return (
             <div>
                 {zipper.map((listing, i) => (
