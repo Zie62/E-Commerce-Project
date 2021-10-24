@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { calculateObjectSize } from 'bson';
 
+const queryStr = windows.location.search.substr(1)
+console.log(queryStr)
 class FullList extends Component {
     constructor(props) {
         super(props)
@@ -28,9 +30,9 @@ class FullList extends Component {
                 picList.push(listing.picture)
                 ogPrices.push(listing.ogPrice)
                 disPrices.push(listing.disPrice)
-                idList.push(listing._id)
-                console.log(listing._id.toString())
+                idList.push(listing._id.toString())
             }
+            console.log(idList)
             this.setState({
                 names: nameList,
                 pics: picList,
