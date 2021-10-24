@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { calculateObjectSize } from 'bson';
 
-const queryStr = windows.location.search.substr(1)
+const queryStr = window.location.search.substr(1)
 console.log(queryStr)
 class FullList extends Component {
     constructor(props) {
