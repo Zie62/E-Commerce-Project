@@ -9,7 +9,8 @@ class FullList extends Component {
             names: [],
             pics: [],
             ogPrices: [],
-            disPrices: []
+            disPrices: [],
+            ids:[]
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.imgMap = this.imgMap.bind(this)
@@ -20,30 +21,33 @@ class FullList extends Component {
             var picList = []
             var ogPrices = []
             var disPrices = []
+            var idList = []
             for (let i = 0; i < response.data.length; i++) {
                 let listing = response.data[i]
                 nameList.push(listing.name)
                 picList.push(listing.picture)
                 ogPrices.push(listing.ogPrice)
                 disPrices.push(listing.disPrice)
+                idList.push(listing._id)
             }
             this.setState({
                 names: nameList,
                 pics: picList,
                 ogPrices: ogPrices,
-                disPrices: disPrices
+                disPrices: disPrices,
+                ids: idList
             })
         });
     }
     imgMap() {
         //zipper turns the state into an array of arrays where each one represents
         //a listing to be displayed on the webpage. 
-        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i]]);
+        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
         return (
             <div>
                 {zipper.map((listing, i) => (
                     <div className="feat-box col-2" key={i}>
-                        <a href="#" className="feat-link">
+                        <a href={["/listing?id=",listing[4]].join} className="feat-link">
                             <img src={listing[1]} alt="oopsies" className="feat-img" />
                             <h4 className="feat-name">{listing[0]}</h4>
                         </a>

@@ -22,6 +22,12 @@ const webviewSchema = new Schema({
 });
 const Webview = mongoose.model("Webview", webviewSchema);
 
+const listingByID = (id, res) =>{
+    Listing.find({_id: id}, function(err,data){
+        if (err) return console.error(err);
+        res.json(data)
+    })
+}
 const createAndSaveListing = (picture, listname, oriPrice, discPrice) => {
     var newListing = new Listing({picture: picture, name:listname, ogPrice: oriPrice, disPrice:discPrice})
     newListing.save(function(err,data){
@@ -66,5 +72,8 @@ app.post('/database-upload', (req, res)=>{
 })
 app.get("/dont-go-here-nothing-here", (req, res) =>{
     res.sendFile(path.join(__dirname,'build','dbentry.html'))
+})
+app.get("/listing", (req, res) =>{
+    listingByID(req.query.id, res)
 })
 app.listen(port)
