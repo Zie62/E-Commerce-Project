@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import { calculateObjectSize } from 'bson';
 
-const queryStr = window.location.search
-console.log(queryStr)
+const queryStr = window.location.search.substr(1);
+var queryParams = queryStr.split("&").reduce((current, param) =>{
+    const [key, value] = param.split('=');
+    current[key] = value;
+    return current
+}, {})
+console.log(queryParams)
+
+console.log(queryParams)
 class FullList extends Component {
     constructor(props) {
         super(props)
