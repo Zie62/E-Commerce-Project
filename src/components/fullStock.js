@@ -9,8 +9,6 @@ var queryParams = queryStr.split("&").reduce((current, param) =>{
     return current
 }, {})
 console.log(queryParams)
-
-console.log(queryParams)
 class FullList extends Component {
     constructor(props) {
         super(props)
