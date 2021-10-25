@@ -33,7 +33,9 @@ class ListBody extends Component{
         })
     }
     render(){
+        console.log(this.state)
         let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice]
+        console.log(listing)
         return(
             <div className="feat-box col-2">
                 <a href="#" className="feat-link">
