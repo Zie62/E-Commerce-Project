@@ -21,9 +21,7 @@ class ListBody extends Component{
     }
     componentDidMount(){
         let queryId = "/listing?id=".concat(queryParams.id)
-        console.log(queryId)
         Axios.get(queryId).then((response) =>{
-            console.log(response.data)
             this.setState({
                 name: response.data[0].name,
                 pic: response.data[0].picture,
@@ -33,9 +31,7 @@ class ListBody extends Component{
         })
     }
     render(){
-        console.log(this.state)
         let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice]
-        console.log(listing)
         return(
             <div className="feat-box col-2">
                 <a href="#" className="feat-link">
