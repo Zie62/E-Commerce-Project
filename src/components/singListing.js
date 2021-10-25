@@ -36,7 +36,7 @@ class ListBody extends Component{
     render(){
         let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice]
         return(
-            <div className="feat-box col-2" key={i}>
+            <div className="feat-box col-2">
                 <a href="#" className="feat-link">
                     <img src={listing[1]} alt="oopsies" className="feat-img" />
                     <h4 className="feat-name">{listing[0]}</h4>
