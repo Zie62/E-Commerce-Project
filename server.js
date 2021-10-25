@@ -75,6 +75,7 @@ app.get("/dont-go-here-nothing-here", (req, res) =>{
 })
 app.get("/listing", (req, res) =>{
     listingByID(req.query.id, res)
+    let redir = "/testing?id=".concat(req.query.id)
 })
 app.get("/testing", (req, res) =>{
     res.sendFile(path.join(__dirname.split, 'build', 'singleListing.html'))
