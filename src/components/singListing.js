@@ -25,10 +25,10 @@ class ListBody extends Component{
         Axios.get(queryId).then((response) =>{
             console.log(response.data)
             this.setState({
-                name: response.data.name,
-                pic: response.data.picture,
-                ogPrice: response.data.ogPrice,
-                disPrice: response.data.disPrice
+                name: response.data[0].name,
+                pic: response.data[0].picture,
+                ogPrice: response.data[0].ogPrice,
+                disPrice: response.data[0].disPrice
             })
         })
     }
