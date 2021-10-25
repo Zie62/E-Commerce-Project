@@ -54,7 +54,7 @@ class FullList extends Component {
             <div>
                 {zipper.map((listing, i) => (
                     <div className="feat-box col-2" key={i}>
-                        <a href={"/testing?id=".concat(listing[4])} className="feat-link">
+                        <a href={"/item?id=".concat(listing[4])} className="feat-link">
                             <img src={listing[1]} alt="oopsies" className="feat-img" />
                             <h4 className="feat-name">{listing[0]}</h4>
                         </a>
