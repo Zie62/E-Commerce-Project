@@ -4,8 +4,6 @@ import Axios from 'axios';
 const queryStr = window.location.search.substr(1);
 console.log(queryStr)
 var queryParams = queryStr.split("&").reduce((current, param) =>{
-    console.log(param)
-    console.log(current)
     const [key, value] = param.split('=');
     current[key] = value;
     return current

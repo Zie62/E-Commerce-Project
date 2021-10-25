@@ -78,6 +78,6 @@ app.get("/listing", (req, res) =>{
     let redir = "/testing?id=".concat(req.query.id)
 })
 app.get("/testing", (req, res) =>{
-    res.sendFile(path.join(__dirname.split, 'build', 'singleListing.html'))
+    res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
 })
 app.listen(port)
