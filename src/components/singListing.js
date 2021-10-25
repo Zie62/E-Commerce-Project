@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 
 const queryStr = window.location.search.substr(1);
-console.log(queryStr)
 var queryParams = queryStr.split("&").reduce((current, param) =>{
     const [key, value] = param.split('=');
     current[key] = value;
     return current
 }, {})
-console.log(queryParams)
 class ListBody extends Component{
     constructor(props) {
         super(props) 
@@ -22,7 +20,8 @@ class ListBody extends Component{
         this.componentDidMount = this.componentDidMount.bind(this)
     }
     componentDidMount(){
-        let queryId = "/listing?".concat(queryParams.Listing)
+        let queryId = "/listing?".concat(queryParams.id)
+        console.log(queryId)
         Axios.get(queryId).then((response) =>{
             console.log(response.data)
             this.setState({
