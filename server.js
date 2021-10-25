@@ -76,4 +76,7 @@ app.get("/dont-go-here-nothing-here", (req, res) =>{
 app.get("/listing", (req, res) =>{
     listingByID(req.query.id, res)
 })
+app.get("/testing", (req, res) =>{
+    res.sendFile(path.join(__dirname.split, 'build', 'singleListing.html'))
+})
 app.listen(port)
