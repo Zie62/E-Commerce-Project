@@ -22,7 +22,7 @@ class ListBody extends Component{
         this.componentDidMount = this.componentDidMount.bind(this)
     }
     componentDidMount(){
-        queryId = "/listing?".concat(queryParams.Listing)
+        let queryId = "/listing?".concat(queryParams.Listing)
         Axios.get(queryId).then((response) =>{
             console.log(response.data)
             this.setState({
