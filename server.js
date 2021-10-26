@@ -36,9 +36,11 @@ const timeCheck = () =>{
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
+            console.log("in here")
             Timestamp.updateOne({timestamp: oldTime}, {timestamp: oldTime+dayLength})
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
+                console.log("In here too")
                 let numArray = []
                 let saleArray = []
                 for (let i=0; i<listdata.length; i++){
