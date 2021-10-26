@@ -121,9 +121,11 @@ app.get("/full-db", (req, res) =>{
     giveAllListings(res)
 });
 app.get(("/"), (req, res) =>{
+    timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 });
 app.get("/products-page", (req, res) => {
+    timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'products.html'))
 });
 app.post('/database-upload', (req, res)=>{
@@ -137,6 +139,7 @@ app.get("/listing", (req, res) =>{
     listingByID(req.query.id, res)
 });
 app.get("/item", (req, res) =>{
+    timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
 });
 app.get("/timestamp-tool", (req, res) =>{
