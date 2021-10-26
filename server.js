@@ -52,6 +52,13 @@ const timeCheck = () =>{
         }
         else{};
 })};
+const createTimestamp = () =>{
+    var newTS = new Timestamp({timestamp: date.now()})
+    newTS.save(function(err,data){
+        if (err) return console.error(err);
+        done(null,data)
+    })
+}
 const listingByID = (id, res) =>{
     Listing.find({_id: id}, function(err,data){
         if (err) return console.error(err);
@@ -109,5 +116,8 @@ app.get("/listing", (req, res) =>{
 })
 app.get("/item", (req, res) =>{
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
+})
+app.get("/timestamp-creation-tool", (req, res) =>{
+    createTimestamp()
 })
 app.listen(port)
