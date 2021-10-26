@@ -54,13 +54,14 @@ const timeCheck = () =>{
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
-                for (let i=0; i<= 4; i++){
+                for (let i=0; i<= 4; i){
                     let selector = ~~(Math.random() * numArray.length);
                     if (saleArray.includes(selector)){
                         i--
                     }
                     else{
-                    saleArray.push(selector)};
+                    saleArray.push(selector)
+                    i++};
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
