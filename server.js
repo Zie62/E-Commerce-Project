@@ -53,13 +53,6 @@ const timeCheck = () =>{
         }
         else{};
 })};
-const createTimestamp = () =>{
-    var newTS = new Timestamp({timestamp: Date.now()})
-    newTS.save(function(err,data){
-        if (err) return console.error(err);
-        done(null,data)
-    })
-}
 const listingByID = (id, res) =>{
     Listing.find({_id: id}, function(err,data){
         if (err) return console.error(err);
