@@ -28,16 +28,12 @@ const timeCheck = () =>{
         if (err) return console.error(err);
         //This calculates time since last sale randomization
         let oldTime = timedata[0].timestamp
-        console.log(timedata)
-        console.log(oldTime)
-        console.log(curTime)
         let timeDiff = curTime - oldTime;
-        console.log(timeDiff)
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
             console.log("in here")
-            Timestamp.updateOne({timestamp: oldTime}, {timestamp: oldTime+dayLength})
+            Timestamp.findOneAndUpdate({timestamp: oldTime}, {timestamp: oldTime+dayLength})
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 console.log("In here too")
@@ -52,6 +48,9 @@ const timeCheck = () =>{
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
+                    console.log("Def in here but do it work tho")
+                    console.log(listdata)
+                    console.log(listdata[uniqueSales[i]])
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true})
                 }
