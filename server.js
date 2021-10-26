@@ -33,6 +33,8 @@ const timeCheck = () =>{
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
+            let oldtime = timedata[0].timestamp
+            Timestamp.updateOne({timestamp: oldtime}, {timestamp: oldtime+dayLength})
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 let numArray = []
@@ -113,5 +115,6 @@ app.get("/item", (req, res) =>{
 });
 app.get("/timestamp-tool", (req, res) =>{
     timeCheck()
+    res.json("time was checked")
 });
 app.listen(port)
