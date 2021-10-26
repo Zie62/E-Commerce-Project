@@ -99,26 +99,26 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get("/full-db", (req, res) =>{
     giveAllListings(res)
 })
-app.get("/"), (req, res) =>{
+app.get(("/"), (req, res) =>{
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
-}
+});
 app.get("/products-page", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'products.html'))
-})
+});
 app.post('/database-upload', (req, res)=>{
     createAndSaveListing(req.body.picture, req.body.listname, req.body.oriPrice, req.body.discPrice)
     res.json("Successfully Posted!")
-})
+});
 app.get("/dont-go-here-nothing-here", (req, res) =>{
     res.sendFile(path.join(__dirname,'build','dbentry.html'))
-})
+});
 app.get("/listing", (req, res) =>{
     listingByID(req.query.id, res)
-})
+});
 app.get("/item", (req, res) =>{
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
-})
-app.get("/timestamp-creation-tool", (req, res) =>{
-    createTimestamp()
-})
+});
+app.get("/timestamp-tool", (req, res) =>{
+    timeCheck()
+});
 app.listen(port)
