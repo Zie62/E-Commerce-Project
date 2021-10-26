@@ -28,6 +28,8 @@ const timeCheck = () =>{
         if (err) return console.error(err);
         //This calculates time since last sale randomization
         let oldTime = timedata[0].timestamp
+        console.log(timedata)
+        console.log(oldTime)
         let timeDiff = curTime - oldTime;
         console.log(timeDiff)
         //this number represents milliseconds in a day
