@@ -24,6 +24,7 @@ const Timestamp = mongoose.model("Timestamp", saleTime)
 const timeCheck = () =>{
     console.log("Timecheck has commensed")
     let curTime = Date.now()
+    console.log(curTime)
     Timestamp.find({}, function(err, timedata){
         if (err) return console.error(err);
         //This calculates time since last sale randomization
@@ -50,7 +51,7 @@ const timeCheck = () =>{
             })
         }
         else{};
-})}
+})};
 const listingByID = (id, res) =>{
     Listing.find({_id: id}, function(err,data){
         if (err) return console.error(err);
@@ -86,8 +87,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get("/*", (req, res) =>{
-})
+
 app.get("/full-db", (req, res) =>{
     giveAllListings(res)
 })

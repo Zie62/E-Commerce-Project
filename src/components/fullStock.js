@@ -24,6 +24,7 @@ class FullList extends Component {
     }
     componentDidMount() {
         Axios.get("/full-db").then((response) => {
+            console.log(response)
             var nameList = []
             var picList = []
             var ogPrices = []
