@@ -33,7 +33,7 @@ const timeCheck = () =>{
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
-            Timestamp.updateOne({timestamp: oldtime}, {timestamp: oldTime+dayLength})
+            Timestamp.updateOne({timestamp: oldTime}, {timestamp: oldTime+dayLength})
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 let numArray = []
