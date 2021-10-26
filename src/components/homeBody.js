@@ -8,7 +8,8 @@ class Body extends Component {
             names: [],
             pics: [],
             ogPrices: [],
-            disPrices: []
+            disPrices: [],
+            ids: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.featLoader = this.featLoader.bind(this)
@@ -19,23 +20,26 @@ class Body extends Component {
             var picList = []
             var ogPrices = []
             var disPrices = []
+            var idList = []
             for (let i = 0; i < response.data.length; i++) {
                 let listing = response.data[i]
                 nameList.push(listing.name)
                 picList.push(listing.picture)
                 ogPrices.push(listing.ogPrice)
                 disPrices.push(listing.disPrice)
+                idList.push(listing._id.toString())
             }
             this.setState({
                 names: nameList,
                 pics: picList,
                 ogPrices: ogPrices,
-                disPrices: disPrices
+                disPrices: disPrices,
+                ids: idList
             })
         });
     }
     featLoader() {
-        let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i]]);
+        let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
         return (
             <div>
                 {zipper.map((listing, i) => (
