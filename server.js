@@ -33,7 +33,8 @@ const timeCheck = () =>{
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
             console.log("in here")
-            Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+dayLength}},{new: true},
+            let daysPast = Math.floor(timeDiff / dayLength)
+            Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+(dayLength*daysPast)}},{new: true},
                 function(err, doc){
                     if (err) return console.error(err);
                     console.log(doc)
