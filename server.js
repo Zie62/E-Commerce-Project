@@ -50,7 +50,7 @@ const timeCheck = () =>{
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
-                    Listing.findOneAndUpdate({_id: listdata[saleArray[i]]._id},
+                    Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true})
                 }
             })
