@@ -39,9 +39,9 @@ const timeCheck = () =>{
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
-                var selector = ~~(Math.random() * numArray.length);
                 for (let i=0; i< 4; i++){
-                    selector.push(saleArray);
+                    let selector = ~~(Math.random() * numArray.length);
+                    saleArray.push(selector);
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
