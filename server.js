@@ -44,13 +44,13 @@ const timeCheck = () =>{
                 }
                 for (let i=0; i< 4; i++){
                     let selector = ~~(Math.random() * numArray.length);
+                    console.log(selector)
                     saleArray.push(selector);
                 }
                 let uniqueSales = [...new Set(saleArray)];
+                console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
-                    console.log("Def in here but do it work tho")
-                    console.log(listdata)
-                    console.log(listdata[uniqueSales[i]])
+                    console.log(listdata[uniqueSales[i]]._id)
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true})
                 }
