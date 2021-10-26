@@ -100,6 +100,11 @@ const giveAllListings = (res) =>{
         res.json(data)
     })
 };
+const giveSaleListings = (res) =>{
+    Listing.find({sale: true}, function(err, data){
+        if (err) return console.error(err);
+        res.json(data)
+})}
 const app = express();
 
 app.use(express.urlencoded({extended:"false"}));
@@ -133,5 +138,8 @@ app.get("/item", (req, res) =>{
 app.get("/timestamp-tool", (req, res) =>{
     timeCheck()
     res.json("time was checked")
+});
+app.get("/sale-db", (req, res) =>{
+    giveSaleListings(res)
 });
 app.listen(port)
