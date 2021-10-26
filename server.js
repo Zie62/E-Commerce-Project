@@ -33,7 +33,11 @@ const timeCheck = () =>{
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
             console.log("in here")
-            Timestamp.findOneAndUpdate({timestamp: oldTime}, {timestamp: oldTime+dayLength})
+            Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+dayLength}},{new: true},
+                function(err, doc){
+                    if (err) return console.error(err);
+                    console.log(doc)
+                })
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 console.log("In here too")
@@ -42,13 +46,11 @@ const timeCheck = () =>{
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
-                for (let i=0; i< 4; i++){
+                for (let i=0; i<= 4; i++){
                     let selector = ~~(Math.random() * numArray.length);
-                    console.log(selector)
                     saleArray.push(selector);
                 }
                 let uniqueSales = [...new Set(saleArray)];
-                console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
                     console.log(listdata[uniqueSales[i]]._id)
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
