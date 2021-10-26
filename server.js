@@ -24,17 +24,16 @@ const Timestamp = mongoose.model("Timestamp", saleTime)
 const timeCheck = () =>{
     console.log("Timecheck has commensed")
     let curTime = Date.now()
-    console.log(curTime)
     Timestamp.find({}, function(err, timedata){
         if (err) return console.error(err);
         //This calculates time since last sale randomization
-        let timeDiff = curTime - timedata[0].timestamp;
+        let oldTime = timedata[0].timestamp
+        let timeDiff = curTime - oldTime;
         console.log(timeDiff)
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
-            let oldtime = timedata[0].timestamp
-            Timestamp.updateOne({timestamp: oldtime}, {timestamp: oldtime+dayLength})
+            Timestamp.updateOne({timestamp: oldtime}, {timestamp: oldTime+dayLength})
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 let numArray = []
