@@ -30,6 +30,7 @@ const timeCheck = () =>{
         let oldTime = timedata[0].timestamp
         console.log(timedata)
         console.log(oldTime)
+        console.log(curTime)
         let timeDiff = curTime - oldTime;
         console.log(timeDiff)
         //this number represents milliseconds in a day
