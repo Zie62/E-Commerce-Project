@@ -43,7 +43,7 @@ const timeCheck = () =>{
                 if (err) return console.error(err);
                 console.log("In here too")
                 for (let i=0; i<listdata.length; i++){
-                    Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id}, {sale: false},{new: true},
+                    Listing.findOneAndUpdate({_id: listdata[i]._id}, {sale: false},{new: true},
                         (err, doc) =>{
                             if (err) return console.error(err);
                             console.log(doc)
