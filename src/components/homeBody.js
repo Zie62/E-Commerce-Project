@@ -11,6 +11,7 @@ class Body extends Component {
             disPrices: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.featLoader = this.featLoader.bind(this)
     }
     componentDidMount() {
         Axios.get("/sale-db").then((response) => {
