@@ -53,7 +53,7 @@ const timeCheck = () =>{
         else{};
 })};
 const createTimestamp = () =>{
-    var newTS = new Timestamp({timestamp: date.now()})
+    var newTS = new Timestamp({timestamp: Date.now()})
     newTS.save(function(err,data){
         if (err) return console.error(err);
         done(null,data)
