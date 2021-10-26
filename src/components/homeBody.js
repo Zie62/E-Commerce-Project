@@ -58,7 +58,7 @@ class Body extends Component {
                     <div id="featured" className="col-10">
                         <h1 id="intro">Featured Deals</h1>
                         <div className="col-10 feat-package">
-                            {featLoader()}
+                            {this.featLoader()}
                         </div>
                     </div>
                 </div>
