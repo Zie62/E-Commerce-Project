@@ -12,16 +12,45 @@ const listingSchema = new Schema({
     picture: {type: String, required: true},
     name: {type: String, required: true},
     ogPrice: {type: String, required: true},
-    disPrice: {type: String, required: true}
+    disPrice: {type: String, required: true},
+    sale: {type: Boolean, required: false}
 })
 const Listing = mongoose.model("Listing", listingSchema)
 
-const webviewSchema = new Schema({
-    page: {type: String, required: true},
-    Ip: {type: String, required:true}
-});
-const Webview = mongoose.model("Webview", webviewSchema);
-
+const saleTime = new Schema({
+    timestamp: {type: Number, required: true}
+})
+const Timestamp = mongoose.model("Timestamp", saleTime)
+const timeCheck = () =>{
+    console.log("Timecheck has commensed")
+    let curTime = Date.now()
+    Timestamp.find({}, function(err, timedata){
+        if (err) return console.error(err);
+        //This calculates time since last sale randomization
+        let timeDiff = curTime - timedata[0].timestamp;
+        //this number represents milliseconds in a day
+        let dayLength = 86400000;
+        if (timeDiff >= dayLength){
+            Listing.find({}, function(err,listdata){
+                if (err) return console.error(err);
+                let numArray = []
+                let saleArray = []
+                for (let i=0; i<listdata.length; i++){
+                    numArray.push(i)
+                }
+                var selector = ~~(Math.random() * numArray.length);
+                for (let i=0; i< 4; i++){
+                    selector.push(saleArray);
+                }
+                let uniqueSales = [...new Set(saleArray)];
+                for (let i=0; i<uniqueSales.length; i++){
+                    Listing.findOneAndUpdate({_id: listdata[saleArray[i]]._id},
+                    {sale: true})
+                }
+            })
+        }
+        else{};
+})}
 const listingByID = (id, res) =>{
     Listing.find({_id: id}, function(err,data){
         if (err) return console.error(err);
@@ -57,6 +86,8 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'build')));
 
+app.get("/*", (req, res) =>{
+})
 app.get("/full-db", (req, res) =>{
     giveAllListings(res)
 })
