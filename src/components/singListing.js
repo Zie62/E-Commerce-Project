@@ -32,21 +32,19 @@ class ListBody extends Component{
             })
         })
     }
-    saleCheck(){
-        console.log(this.state.sale)
-        console.log(this.state.name)
+    saleCheck(original, discount){
         if (this.state.sale){
             return(
                 <div>
-                    <h5 className="feat-price crossed">${this.state.ogPrice}</h5>
-                    <h5 className="feat-price">${this.state.disPrice}</h5>
+                    <h5 className="crossed">${original}</h5>
+                    <h5 className="">${discount}</h5>
                 </div>
             )
         }
         else{
             return(
                 <div>
-                    <h5 className="feat-price">${this.state.ogPrice}</h5>
+                    <h5 className="">${original}</h5>
                 </div>
             )
         }
@@ -54,10 +52,10 @@ class ListBody extends Component{
     render(){
         let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice]
         return(
-            <div className="feat-box col-2">
-                <img src={listing[1]} alt="oopsies" className="feat-img" />
-                <h4 className="feat-name">{listing[0]}</h4>
-                {this.saleCheck()}
+            <div className="sing-listing">
+                <img src={listing[1]} alt="oopsies" className="full-img" />
+                <h4 className="">{listing[0]}</h4>
+                {this.saleCheck(listing[2], listing[3])}
             </div>
         )
     }
