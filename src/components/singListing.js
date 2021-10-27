@@ -18,6 +18,7 @@ class ListBody extends Component{
             sale: false
         }
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.saleCheck = this.saleCheck.bind(this)
     }
     componentDidMount(){
         let queryId = "/listing?id=".concat(queryParams.id)
@@ -26,19 +27,36 @@ class ListBody extends Component{
                 name: response.data[0].name,
                 pic: response.data[0].picture,
                 ogPrice: response.data[0].ogPrice,
-                disPrice: response.data[0].disPrice
+                disPrice: response.data[0].disPrice,
+                sale: response.data[0].sale
             })
         })
+    }
+    saleCheck(){
+        console.log(this.state.sale)
+        if (this.state.sale){
+            return(
+                <div>
+                    <h5 className="feat-price crossed">${listing[2]}</h5>
+                    <h5 className="feat-price">${listing[3]}</h5>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <h5 className="feat-price">${listing[2]}</h5>
+                </div>
+            )
+        }
     }
     render(){
         let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice]
         return(
             <div className="feat-box col-2">
-                <a href="#" className="feat-link">
-                    <img src={listing[1]} alt="oopsies" className="feat-img" />
-                    <h4 className="feat-name">{listing[0]}</h4>
-                </a>
-                <h5 className="feat-price">${listing[2]}</h5>
+                <img src={listing[1]} alt="oopsies" className="feat-img" />
+                <h4 className="feat-name">{listing[0]}</h4>
+                {this.saleCheck()}
             </div>
         )
     }

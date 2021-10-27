@@ -65,7 +65,7 @@ const timeCheck = () =>{
                 for (let i=0; i<uniqueSales.length; i++){
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true}, {new: true},
-                    (err, doc) =>{
+                    (err) =>{
                         if (err) return console.error(err);
                     })
                 }
