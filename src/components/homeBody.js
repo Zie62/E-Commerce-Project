@@ -39,7 +39,7 @@ class Body extends Component {
         });
     }
     featLoader() {
-        let zipper = this.state.names.map((n, i) => [n, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
+        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
         return (
             <div>
                 {zipper.map((listing, i) => (
