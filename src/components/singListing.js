@@ -34,18 +34,19 @@ class ListBody extends Component{
     }
     saleCheck(){
         console.log(this.state.sale)
+        console.log(this.state.name)
         if (this.state.sale){
             return(
                 <div>
-                    <h5 className="feat-price crossed">${listing[2]}</h5>
-                    <h5 className="feat-price">${listing[3]}</h5>
+                    <h5 className="feat-price crossed">${this.state.ogPrice}</h5>
+                    <h5 className="feat-price">${this.state.disPrice}</h5>
                 </div>
             )
         }
         else{
             return(
                 <div>
-                    <h5 className="feat-price">${listing[2]}</h5>
+                    <h5 className="feat-price">${this.state.ogPrice}</h5>
                 </div>
             )
         }
