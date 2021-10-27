@@ -36,15 +36,15 @@ class ListBody extends Component{
         if (this.state.sale){
             return(
                 <div>
-                    <h5 className="crossed">${original}</h5>
-                    <h5 className="">${discount}</h5>
+                    <h5 className="sing-price crossed">${original}</h5>
+                    <h5 className="sing-price">${discount}</h5>
                 </div>
             )
         }
         else{
             return(
                 <div>
-                    <h5 className="">${original}</h5>
+                    <h5 className="sing-price">${original}</h5>
                 </div>
             )
         }
@@ -54,7 +54,7 @@ class ListBody extends Component{
         return(
             <div className="sing-listing">
                 <img src={listing[1]} alt="oopsies" className="full-img" />
-                <h4 className="">{listing[0]}</h4>
+                <h4 className="sing-name">{listing[0]}</h4>
                 {this.saleCheck(listing[2], listing[3])}
             </div>
         )
