@@ -11,7 +11,8 @@ class FullList extends Component {
             pics: [],
             ogPrices: [],
             disPrices: [],
-            ids:[]
+            ids:[],
+            sales: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.imgMap = this.imgMap.bind(this)
@@ -23,6 +24,7 @@ class FullList extends Component {
             var ogPrices = []
             var disPrices = []
             var idList = []
+            var salesList =[]
             for (let i = 0; i < response.data.length; i++) {
                 let listing = response.data[i]
                 nameList.push(listing.name)
@@ -30,20 +32,22 @@ class FullList extends Component {
                 ogPrices.push(listing.ogPrice)
                 disPrices.push(listing.disPrice)
                 idList.push(listing._id.toString())
+                salesList.push(listing.sale)
             }
             this.setState({
                 names: nameList,
                 pics: picList,
                 ogPrices: ogPrices,
                 disPrices: disPrices,
-                ids: idList
+                ids: idList,
+                sales: salesList
             })
         });
     }
     imgMap() {
         //zipper turns the state into an array of arrays where each one represents
         //a listing to be displayed on the webpage. 
-        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
+        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i], this.state.sales[i]]);
         return (
             <div>
                 {zipper.map((listing, i) => (
