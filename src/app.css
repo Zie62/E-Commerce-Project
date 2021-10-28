@@ -143,3 +143,7 @@ h2{
 .crossed{
     text-decoration: line-through;
 }
+.sing-listing{
+    width: 90vw;
+    background-color: rgb(197, 195, 163);
+}
