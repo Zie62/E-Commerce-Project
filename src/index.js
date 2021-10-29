@@ -3,11 +3,11 @@ import "./bootstrap.min.css"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import NavBar from './components/navBar';
-import Body from './components/homeBody';
+import HomeBody from './components/homeBody';
 
 ReactDOM.render(
     <div>
         <NavBar />
-        <Body />
+        <HomeBody />
     </div>,
     document.getElementById("root"));

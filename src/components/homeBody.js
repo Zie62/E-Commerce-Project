@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 
-class Body extends Component {
+class HomeBody extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -71,4 +71,4 @@ class Body extends Component {
     }
 }
 
-export default Body;
+export default HomeBody;

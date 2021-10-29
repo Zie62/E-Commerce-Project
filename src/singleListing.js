@@ -10,4 +10,4 @@ ReactDOM.render(
         <NavBar />
         <ListBody />
     </div>,
-    document.getElementById('root'))
+    document.getElementById('root'));
