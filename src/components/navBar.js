@@ -5,11 +5,9 @@ class NavBar extends Component {
         return (
             <div id="header" className="container-fluid">
                 <div id="headRow" className="row">
-                    <div className="col-8">
-                        <a className="co-link" href="/">
+                        <a className="co-link col-8" href="/">
                             <img id="logo" alt="company logo" src="https://bit.ly/3B6dgJ8" />
                         </a>
-                    </div>
                     <div className="drop-down col-4" id="cloth-drop">
                         <button id="drop-button">Clothes</button>
                         <div className="dd-content">
