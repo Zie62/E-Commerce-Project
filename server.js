@@ -64,12 +64,20 @@ const timeCheck = () => {
                     }
                 }
                 saleUpdater()
-                for (let i = 0; i < uniqueSales.length; i++) {
-                    Listing.findOneAndUpdate({ _id: listdata[uniqueSales[i]]._id },
-                        { sale: true }, { new: true },
-                        (err) => {
-                            if (err) return console.error(err);
-                        })
+                let saleMaker = async function(lData){
+                    try{
+                        for (let i = 0; i < uniqueSales.length; i++) {
+                            await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
+                                { sale: true }, { new: true },
+                                (err) => {
+                                    if (err) return console.error(err);
+                                })
+                        }
+                    }
+                    catch(err){
+                        console.log(err)
+                    }
+                    saleMaker(listdata)
                 }
             })
         }
