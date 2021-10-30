@@ -68,7 +68,7 @@ const timeCheck = () => {
                         console.error(err)
                     }
                 }
-                saleUpdater()
+                saleUpdater().all()
                 let saleMaker = async function (lData, i) {
                     try {
                         await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
@@ -84,7 +84,6 @@ const timeCheck = () => {
                 for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
                 }
-                saleMaker(listdata)
             })
         }
         else { };
