@@ -64,7 +64,7 @@ const timeCheck = () => {
                                 if (err)
                                     return console.error(err);
                                 return("successfully updated")
-                        }).clone().catch((error)=>{
+                        }).exec().catch((error)=>{
                             console.error(error);
                             console.log("Update rejected! This is causing delay")
                         })
