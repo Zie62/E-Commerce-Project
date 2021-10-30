@@ -33,9 +33,12 @@ const timeCheck = () =>{
         if (timeDiff >= dayLength){
             let daysPast = Math.floor(timeDiff / dayLength)
             Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+(dayLength*daysPast)}},{new: true},
-                function(err, doc){
+                function(err){
                     if (err) return console.error(err);
                 })
+            Listing.updateMany({}, {sale: false}, {new: true}, function(err){
+                if (err) return console.error(err)
+            });
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 let numArray = []
@@ -51,10 +54,6 @@ const timeCheck = () =>{
                     saleArray.push(selector)
                     i++};
                 }
-                Listing.updateMany({}, {sale: false}, {new: true}, function(err){
-                    if (err) return console.error(err)
-                });
-                console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
