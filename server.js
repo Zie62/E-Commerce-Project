@@ -84,7 +84,7 @@ const timeCheck = () => {
                                 console.log("boing")
                                 if (err) return console.error(err);
                             })
-                    }, 1000)
+                    }, 200)
                 }
                 for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
