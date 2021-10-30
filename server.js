@@ -51,7 +51,7 @@ const timeCheck = () =>{
                     saleArray.push(selector)
                     i++};
                 }
-                await Listing.updateMany({}, {sale: false}, {new: true}, function(err){
+                Listing.updateMany({}, {sale: false}, {new: true}, function(err){
                     if (err) return console.error(err)
                 });
                 console.log("home stretch")
