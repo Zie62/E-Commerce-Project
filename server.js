@@ -73,10 +73,10 @@ const timeCheck = () => {
                     }
                 }
                 Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }), saleUpdater()]);
-                let timer = 500
                 let saleMaker = (lData, i) => {
-                    /*this function has a timeout to avoid being intercepted by a still executing 
-                    saleUpdater function above*/
+                    /*this function has a 200ms timeout to avoid being intercepted by a still executing 
+                    saleUpdater function above, wanted to utilize async/await for it but couldnt get 
+                    that to work at the time, may revisit and find resources to explain it.*/
                     setTimeout(() => {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
                             { sale: true }, { new: true },
@@ -86,9 +86,10 @@ const timeCheck = () => {
                             })
                     }, 200)
                 }
-                for (let i = 0; i < uniqueSales.length; i++) {
+                setTimeout(() =>{for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
-                }
+                }}, 200)
+                
             })
         }
         else { };
