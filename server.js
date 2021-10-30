@@ -56,6 +56,9 @@ const timeCheck = () => {
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
+                /*this is an async function as i wanted to avoid the 200ms timeout 
+                initially but i found async documentation to be too confusing. 
+                For now, its going to be used as a regular function.*/ 
                 let saleUpdater = async function () {
                     try {
                         await Listing.updateMany({}, { sale: false }, { new: true },
@@ -72,20 +75,18 @@ const timeCheck = () => {
                         console.error(err)
                     }
                 }
-                Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }), saleUpdater()]);
+                saleUpdater()
                 let saleMaker = (lData, i) => {
-                    /*this function has a 200ms timeout to avoid being intercepted by a still executing 
-                    saleUpdater function above, wanted to utilize async/await for it but couldnt get 
-                    that to work at the time, may revisit and find resources to explain it.*/
-                    setTimeout(() => {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
                             { sale: true }, { new: true },
                             (err) => {
                                 console.log("boing")
                                 if (err) return console.error(err);
-                            })
-                    }, 200)
+                            })                    
                 }
+                /*this function has a 200ms timeout to avoid being intercepted by a still executing 
+                    saleUpdater function above, wanted to utilize async/await for it but couldnt get 
+                    that to work at the time, may revisit and find resources to explain it.*/
                 setTimeout(() =>{for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
                 }}, 200)
