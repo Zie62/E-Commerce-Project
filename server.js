@@ -36,7 +36,6 @@ const timeCheck = () =>{
                 function(err){
                     if (err) return console.error(err);
                 })
-
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
                 let numArray = []
@@ -58,7 +57,7 @@ const timeCheck = () =>{
                         await Listing.updateMany({}, {sale: false}, {new: true}, function(err){
                             if (err) return console.error(err)
                         });
-                        
+
                         await Listing.findOneAndUpdate({_id: idee},
                             {sale: true}, {new: true},
                             (err) =>{
