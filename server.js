@@ -51,9 +51,9 @@ const timeCheck = () =>{
                     saleArray.push(selector)
                     i++};
                 }
-                Listing.updateMany({}, {sale: false}, {new: true}, function(err){
+                await Listing.updateMany({}, {sale: false}, {new: true}, function(err){
                     if (err) return console.error(err)
-                })
+                });
                 console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
