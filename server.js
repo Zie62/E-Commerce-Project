@@ -42,10 +42,9 @@ const timeCheck = () =>{
             Listing.find({}, function(err,listdata){
                 console.log("find}{")
                 if (err) return console.error(err);
-                Listing.updateMany({}, {sale: false})
-                console.log("many updated")
                 let numArray = []
                 let saleArray = []
+                console.log(listdata.length)
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
@@ -58,6 +57,7 @@ const timeCheck = () =>{
                     saleArray.push(selector)
                     i++};
                 }
+                Listing.updateMany({}, {sale: false})
                 console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
@@ -111,13 +111,12 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'build')));
 
-
-app.get("/full-db", (req, res) =>{
-    giveAllListings(res)
-});
 app.get(("/"), (req, res) =>{
     timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
+});
+app.get("/full-db", (req, res) =>{
+    giveAllListings(res)
 });
 app.get("/products-page", (req, res) => {
     timeCheck()
