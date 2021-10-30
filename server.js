@@ -71,7 +71,7 @@ const timeCheck = () => {
                         console.error(err)
                     }
                 }
-                Promise.allSettled(saleUpdater())
+                Promise.allSettled([saleUpdater()])
                 let saleMaker = async function (lData, i) {
                     try {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
