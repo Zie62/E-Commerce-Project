@@ -63,15 +63,13 @@ const timeCheck = () => {
                                 console.log("bing")
                                 if (err)
                                     return console.error(err);
-                            }).then((listdata) => {for (let i = 0; i < uniqueSales.length; i++) {
-                                saleMaker(listdata, i)
-                            }});
+                        })
                     }
                     catch (err) {
                         console.error(err)
                     }
                 }
-                Promise.all(saleUpdater())
+                Promise.allSettled(saleUpdater())
                 let saleMaker = async function (lData, i) {
                     try {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
@@ -85,9 +83,9 @@ const timeCheck = () => {
                         console.log(err)
                     }
                 }
-                /*for (let i = 0; i < uniqueSales.length; i++) {
+                for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
-                }*/
+                }
             })
         }
         else { };
