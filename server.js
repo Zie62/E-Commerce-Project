@@ -7,7 +7,6 @@ const uri = process.env.URI;
 const TIMEOUT = 10000
 const connector = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const Schema = mongoose.Schema;
-Promise.allSettled([connector])
 
 const listingSchema = new Schema({
     picture: { type: String, required: true },
@@ -26,6 +25,7 @@ const Timestamp = mongoose.model("Timestamp", saleTime)
 I decided to do this to create an artificial "specials" page to have as the main page
 and it also helped me learn basic async/await functionality at the end.  */
 const timeCheck = () => {
+    Promise.allSettled([connector])
     let curTime = Date.now()
     Timestamp.find({}, function (err, timedata) {
         connector()
