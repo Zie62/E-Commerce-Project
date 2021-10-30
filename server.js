@@ -143,6 +143,7 @@ app.post('/database-upload', (req, res) => {
     createAndSaveListing(req.body.picture, req.body.listname, req.body.oriPrice, req.body.discPrice)
     res.json("Successfully Posted!")
 });
+//serves a basic input form that post to the above method, creating a new listing
 app.get("/dont-go-here-nothing-here", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'dbentry.html'))
 });

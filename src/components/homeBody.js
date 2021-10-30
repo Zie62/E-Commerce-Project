@@ -39,8 +39,10 @@ class HomeBody extends Component {
         });
     }
     featLoader() {
+        //maps the state object to an array of arrays, where each one represents a listing
         let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
         return (
+            //each listing is constructed into a listing on the UI using the zipper array above.
             <div>
                 {zipper.map((listing, i) => (
                     <div className="feat-box col-2" key={i}>

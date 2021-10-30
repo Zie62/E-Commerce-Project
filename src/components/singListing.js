@@ -20,6 +20,8 @@ class ListBody extends Component{
         this.componentDidMount = this.componentDidMount.bind(this)
         this.saleCheck = this.saleCheck.bind(this)
     }
+    /*fetches the relevant API as specified in the query
+    and puts its data into the state to be rendered*/
     componentDidMount(){
         let queryId = "/listing?id=".concat(queryParams.id)
         Axios.get(queryId).then((response) =>{
@@ -33,6 +35,7 @@ class ListBody extends Component{
         })
     }
     saleCheck(original, discount){
+        //shows sale or original price for a listing depending on its sale status
         if (this.state.sale){
             return(
                 <div>
