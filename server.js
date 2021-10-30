@@ -52,20 +52,20 @@ const timeCheck = () =>{
                 }
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
-                for (let i=0; i<uniqueSales.length; i++){
-                    let saleUpdater = async function(idee){
+                
+                    let saleUpdater = async function(sales){
                         await Listing.updateMany({}, {sale: false}, {new: true}, function(err){
                             if (err) return console.error(err)
                         });
-
-                        await Listing.findOneAndUpdate({_id: idee},
-                            {sale: true}, {new: true},
-                            (err) =>{
-                                if (err) return console.error(err);
-                            })
+                        for (let i=0; i<uniqueSales.length; i++){
+                            await Listing.findOneAndUpdate({_id: sales[uniqueSales[i]]._id},
+                                {sale: true}, {new: true},
+                                (err) =>{
+                                    if (err) return console.error(err);
+                                })}
                     }
-                    saleUpdater(listdata[uniqueSales[i]]._id)
-                }
+                    saleUpdater(listdata)
+                
             })
         }
         else{};
