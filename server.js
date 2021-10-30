@@ -7,6 +7,7 @@ const uri = process.env.URI;
 const TIMEOUT = 10000
 const connector = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const Schema = mongoose.Schema;
+Promise.allSettled([connector])
 
 const listingSchema = new Schema({
     picture: { type: String, required: true },
@@ -27,6 +28,7 @@ and it also helped me learn basic async/await functionality at the end.  */
 const timeCheck = () => {
     let curTime = Date.now()
     Timestamp.find({}, function (err, timedata) {
+        connector()
         if (err) return console.error(err);
         //This calculates time since last sale randomization
         let oldTime = timedata[0].timestamp
