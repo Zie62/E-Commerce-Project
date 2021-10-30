@@ -62,13 +62,13 @@ const timeCheck = () => {
                             (err) => {
                                 if (err)
                                     return console.error(err);
-                            });
+                            }).all;
                     }
                     catch (err) {
                         console.error(err)
                     }
                 }
-                saleUpdater().all()
+                Promise.all(saleUpdater())
                 let saleMaker = async function (lData, i) {
                     try {
                         await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
