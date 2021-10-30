@@ -63,6 +63,8 @@ const timeCheck = () => {
                                 console.log("bing")
                                 if (err)
                                     return console.error(err);
+                        }).catch(()=>{
+                            console.log("Update rejected! This is causing delay")
                         })
                     }
                     catch (err) {
