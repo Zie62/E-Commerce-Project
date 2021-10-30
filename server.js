@@ -22,7 +22,6 @@ const saleTime = new Schema({
 })
 const Timestamp = mongoose.model("Timestamp", saleTime)
 const timeCheck = () =>{
-    console.log("Timecheck has commensed")
     let curTime = Date.now()
     Timestamp.find({}, function(err, timedata){
         if (err) return console.error(err);
@@ -32,7 +31,6 @@ const timeCheck = () =>{
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
-            console.log("timeChange function")
             let daysPast = Math.floor(timeDiff / dayLength)
             Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+(dayLength*daysPast)}},{new: true},
                 function(err, doc){
@@ -40,7 +38,6 @@ const timeCheck = () =>{
                     console.log(doc)
                 })
             Listing.find({}, function(err,listdata){
-                console.log("find}{")
                 if (err) return console.error(err);
                 let numArray = []
                 let saleArray = []
@@ -52,6 +49,7 @@ const timeCheck = () =>{
                     let selector = ~~(Math.random() * numArray.length);
                     if (saleArray.includes(selector)){
                         i--
+                        console.log("infinite")
                     }
                     else{
                     saleArray.push(selector)
@@ -60,6 +58,7 @@ const timeCheck = () =>{
                 Listing.updateMany({}, {sale: false})
                 console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
+                console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true}, {new: true},
