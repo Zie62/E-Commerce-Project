@@ -43,6 +43,7 @@ const timeCheck = () =>{
                 console.log("find}{")
                 if (err) return console.error(err);
                 Listing.updateMany({}, {sale: false})
+                console.log("many updated")
                 let numArray = []
                 let saleArray = []
                 for (let i=0; i<listdata.length; i++){
