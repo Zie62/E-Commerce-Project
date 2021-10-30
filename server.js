@@ -28,7 +28,6 @@ const timeCheck = () => {
     Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })])
     let curTime = Date.now()
     Timestamp.find({}, function (err, timedata) {
-        connector()
         if (err) return console.error(err);
         //This calculates time since last sale randomization
         let oldTime = timedata[0].timestamp
