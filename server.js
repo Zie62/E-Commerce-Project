@@ -22,10 +22,9 @@ const saleTime = new Schema({
 })
 const Timestamp = mongoose.model("Timestamp", saleTime)
 /*this checks if midnight (EST) of the next day has passed and updates the specials sales if it has. 
-I decided to do this to create an artificial "specials" page to have as the main page
-and it also helped me learn basic async/await functionality at the end.  */
+I decided to do this to create an artificial "specials" page that would change when people open
+the site, and it also helped me learn basic async/await functionality at the end.  */
 const timeCheck = () => {
-    Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })])
     let curTime = Date.now()
     Timestamp.find({}, function (err, timedata) {
         if (err) return console.error(err);
@@ -74,7 +73,7 @@ const timeCheck = () => {
                         console.error(err)
                     }
                 }
-                Promise.allSettled([saleUpdater()])
+                Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }),saleUpdater()]);
                 let saleMaker = async function (lData, i) {
                     try {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
