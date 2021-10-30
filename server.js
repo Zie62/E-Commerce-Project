@@ -63,29 +63,28 @@ const timeCheck = () => {
                                 console.log("bing")
                                 if (err)
                                     return console.error(err);
-                                return("successfully updated")
-                        }).exec().catch((error)=>{
-                            console.error(error);
-                            console.log("Update rejected! This is causing delay")
-                        })
+                                return ("successfully updated")
+                            }).catch((error) => {
+                                console.error(error);
+                            })
                     }
                     catch (err) {
                         console.error(err)
                     }
                 }
-                Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }),saleUpdater()]);
-                let saleMaker = async function (lData, i) {
-                    try {
+                Promise.allSettled([mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }), saleUpdater()]);
+                let timer = 500
+                let saleMaker = (lData, i) => {
+                    /*this function has a timeout to avoid being intercepted by a still executing 
+                    saleUpdater function above*/
+                    setTimeout(() => {
                         Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
                             { sale: true }, { new: true },
                             (err) => {
                                 console.log("boing")
                                 if (err) return console.error(err);
                             })
-                    }
-                    catch (err) {
-                        console.log(err)
-                    }
+                    }, 1000)
                 }
                 for (let i = 0; i < uniqueSales.length; i++) {
                     saleMaker(listdata, i)
