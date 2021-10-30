@@ -60,6 +60,7 @@ const timeCheck = () => {
                     try {
                         await Listing.updateMany({}, { sale: false }, { new: true },
                             (err) => {
+                                console.log("bing")
                                 if (err)
                                     return console.error(err);
                             }).all;
@@ -74,6 +75,7 @@ const timeCheck = () => {
                         await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
                             { sale: true }, { new: true },
                             (err) => {
+                                console.log("boing")
                                 if (err) return console.error(err);
                             })
                     }
