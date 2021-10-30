@@ -40,13 +40,7 @@ const timeCheck = () =>{
                 })
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
-                for (let i=0; i<listdata.length; i++){
-                    Listing.findOneAndUpdate({_id: listdata[i]._id}, {sale: false},{new: true},
-                        (err, doc) =>{
-                            if (err) return console.error(err);
-                            console.log(doc)
-                        })    
-                }
+                Listing.updateMany({}, {sale: false})
                 let numArray = []
                 let saleArray = []
                 for (let i=0; i<listdata.length; i++){
