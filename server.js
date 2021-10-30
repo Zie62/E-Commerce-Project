@@ -57,29 +57,32 @@ const timeCheck = () => {
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
                 let saleUpdater = async function () {
-                    try{
-                        await Listing.updateMany({}, { sale: false }, { new: true }, function (err) {
-                            if (err) return console.error(err)
-                        });
+                    try {
+                        await Listing.updateMany({}, { sale: false }, { new: true },
+                            (err) => {
+                                if (err)
+                                    return console.error(err);
+                            });
                     }
-                    catch(err){
+                    catch (err) {
                         console.error(err)
                     }
                 }
                 saleUpdater()
-                let saleMaker = async function(lData){
-                    try{
-                        for (let i = 0; i < uniqueSales.length; i++) {
-                            await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
-                                { sale: true }, { new: true },
-                                (err) => {
-                                    if (err) return console.error(err);
-                                })
-                        }
+                let saleMaker = async function (lData, i) {
+                    try {
+                        await Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
+                            { sale: true }, { new: true },
+                            (err) => {
+                                if (err) return console.error(err);
+                            })
                     }
-                    catch(err){
+                    catch (err) {
                         console.log(err)
                     }
+                }
+                for (let i = 0; i < uniqueSales.length; i++) {
+                    saleMaker(listdata, i)
                 }
                 saleMaker(listdata)
             })
