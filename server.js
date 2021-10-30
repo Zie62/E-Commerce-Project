@@ -35,7 +35,6 @@ const timeCheck = () =>{
             Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+(dayLength*daysPast)}},{new: true},
                 function(err, doc){
                     if (err) return console.error(err);
-                    console.log(doc)
                 })
             Listing.find({}, function(err,listdata){
                 if (err) return console.error(err);
@@ -45,17 +44,16 @@ const timeCheck = () =>{
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
-                for (let i=0; i<= 4; i){
+                for (let i=0; i< 5; i){
                     let selector = ~~(Math.random() * numArray.length);
-                    if (saleArray.includes(selector)){
-                        i--
-                        console.log("infinite")
-                    }
+                    if (saleArray.includes(selector)){}
                     else{
                     saleArray.push(selector)
                     i++};
                 }
-                Listing.updateMany({}, {sale: false})
+                Listing.updateMany({}, {sale: false}, {new: true}, function(err){
+                    if (err) return console.error(err)
+                })
                 console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
