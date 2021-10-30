@@ -54,13 +54,12 @@ const timeCheck = () => {
                         i++
                     };
                 }
-                let uniqueSales = [...new Set(saleArray)];
-                console.log(uniqueSales)
                 /*this is an async function as i wanted to avoid the 200ms timeout 
-                initially but i found async documentation to be too confusing. 
+                initially but i found the relevant documentation to be confusing. 
                 For now, its going to be used as a regular function.*/ 
                 let saleUpdater = async function () {
                     try {
+                        //makes all listing items sale porperty false
                         await Listing.updateMany({}, { sale: false }, { new: true },
                             (err) => {
                                 console.log("bing")
@@ -77,7 +76,8 @@ const timeCheck = () => {
                 }
                 saleUpdater()
                 let saleMaker = (lData, i) => {
-                        Listing.findOneAndUpdate({ _id: lData[uniqueSales[i]]._id },
+                    //makes the new sales be assinged to their relevant listings
+                        Listing.findOneAndUpdate({ _id: lData[saleArray[i]]._id },
                             { sale: true }, { new: true },
                             (err) => {
                                 console.log("boing")
@@ -87,7 +87,7 @@ const timeCheck = () => {
                 /*this function has a 200ms timeout to avoid being intercepted by a still executing 
                     saleUpdater function above, wanted to utilize async/await for it but couldnt get 
                     that to work at the time, may revisit and find resources to explain it.*/
-                setTimeout(() =>{for (let i = 0; i < uniqueSales.length; i++) {
+                setTimeout(() =>{for (let i = 0; i < saleArray.length; i++) {
                     saleMaker(listdata, i)
                 }}, 200)
                 
@@ -109,15 +109,6 @@ const createAndSaveListing = (picture, listname, oriPrice, discPrice) => {
         done(null, data)
     });
 };
-const findListingByName = (listName, res) => {
-    Listing.find({ name: listName }, function (err, data) {
-        if (err) return console.error(err);
-        res.json(data)
-    });
-};
-const findList = (listName, res) => {
-    findListingByName(listName, res)
-};
 const giveAllListings = (res) => {
     Listing.find({}, function (err, data) {
         if (err) return console.error(err);
@@ -137,7 +128,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get(("/"), (req, res) => {
+app.get("/", (req, res) => {
     timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 });
@@ -161,10 +152,6 @@ app.get("/listing", (req, res) => {
 app.get("/item", (req, res) => {
     timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
-});
-app.get("/timestamp-tool", (req, res) => {
-    timeCheck()
-    res.json("time was checked")
 });
 app.get("/sale-db", (req, res) => {
     giveSaleListings(res)
