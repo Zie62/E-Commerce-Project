@@ -43,7 +43,6 @@ const timeCheck = () =>{
                 if (err) return console.error(err);
                 let numArray = []
                 let saleArray = []
-                console.log(listdata.length)
                 for (let i=0; i<listdata.length; i++){
                     numArray.push(i)
                 }
@@ -57,11 +56,12 @@ const timeCheck = () =>{
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
-                    Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
+                    let saleUpdate = await Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true}, {new: true},
                     (err) =>{
                         if (err) return console.error(err);
                     })
+                    saleUpdate()
                 }
             })
         }
