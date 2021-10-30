@@ -40,6 +40,7 @@ const timeCheck = () =>{
                     console.log(doc)
                 })
             Listing.find({}, function(err,listdata){
+                console.log("find}{")
                 if (err) return console.error(err);
                 Listing.updateMany({}, {sale: false})
                 let numArray = []
