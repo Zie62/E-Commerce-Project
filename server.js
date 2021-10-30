@@ -56,7 +56,7 @@ const timeCheck = () =>{
                 let uniqueSales = [...new Set(saleArray)];
                 console.log(uniqueSales)
                 for (let i=0; i<uniqueSales.length; i++){
-                    var saleUpdate = Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
+                    var saleUpdate = await Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
                     {sale: true}, {new: true},
                     (err) =>{
                         if (err) return console.error(err);
