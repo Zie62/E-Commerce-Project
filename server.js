@@ -32,6 +32,7 @@ const timeCheck = () =>{
         //this number represents milliseconds in a day
         let dayLength = 86400000;
         if (timeDiff >= dayLength){
+            console.log("timeChange function")
             let daysPast = Math.floor(timeDiff / dayLength)
             Timestamp.findOneAndUpdate({timestamp: oldTime}, {$set: {timestamp: oldTime+(dayLength*daysPast)}},{new: true},
                 function(err, doc){
@@ -55,6 +56,7 @@ const timeCheck = () =>{
                     saleArray.push(selector)
                     i++};
                 }
+                console.log("home stretch")
                 let uniqueSales = [...new Set(saleArray)];
                 for (let i=0; i<uniqueSales.length; i++){
                     Listing.findOneAndUpdate({_id: listdata[uniqueSales[i]]._id},
