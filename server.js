@@ -140,7 +140,8 @@ app.get("/products-page", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'products.html'))
 });
 app.post('/database-upload', (req, res) => {
-    createAndSaveListing(req.body.picture, req.body.listname, req.body.oriPrice, req.body.discPrice)
+    let data = req.body
+    createAndSaveListing(data.picture, data.listname, data.oriPrice, data.discPrice)
     res.json("Successfully Posted!")
 });
 //serves a basic input form that post to the above method, creating a new listing
@@ -155,6 +156,7 @@ app.get("/item", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
 });
 app.get("/sale-db", (req, res) => {
+    timeCheck()
     giveSaleListings(res)
 });
 app.listen(port)
