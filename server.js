@@ -7,7 +7,7 @@ const uri = process.env.URI;
 const TIMEOUT = 10000
 const connector = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const Schema = mongoose.Schema;
-
+//schemas for listings
 const listingSchema = new Schema({
     picture: { type: String, required: true },
     name: { type: String, required: true },
@@ -16,7 +16,7 @@ const listingSchema = new Schema({
     sale: { type: Boolean, required: false }
 })
 const Listing = mongoose.model("Listing", listingSchema)
-
+//schema for timestamp which is used for the timeCheck function below
 const saleTime = new Schema({
     timestamp: { type: Number, required: true }
 })
@@ -54,9 +54,9 @@ const timeCheck = () => {
                         i++
                     };
                 }
-                /*this is an async function as i wanted to avoid the 200ms timeout 
-                initially but i found the relevant documentation to be confusing. 
-                For now, its going to be used as a regular function.*/ 
+                /*this is an async function as i wanted to avoid the 200ms timeout used below
+                initially but i found the relevant documentation to be confusing,
+                For now its going to be used as a regular function.*/ 
                 let saleUpdater = async function () {
                     try {
                         //makes all listing items sale porperty false
@@ -76,7 +76,7 @@ const timeCheck = () => {
                 }
                 saleUpdater()
                 let saleMaker = (lData, i) => {
-                    //makes the new sales be assinged to their relevant listings
+                    //makes the new sales be assigned to their relevant listings
                         Listing.findOneAndUpdate({ _id: lData[saleArray[i]]._id },
                             { sale: true }, { new: true },
                             (err) => {
