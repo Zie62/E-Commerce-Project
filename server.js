@@ -139,6 +139,7 @@ app.get("/products-page", (req, res) => {
     timeCheck()
     res.sendFile(path.join(__dirname, 'build', 'products.html'))
 });
+//post method for creating new methods utilizing form input
 app.post('/database-upload', (req, res) => {
     let data = req.body
     createAndSaveListing(data.picture, data.listname, data.oriPrice, data.discPrice)

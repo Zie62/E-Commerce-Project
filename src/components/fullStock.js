@@ -48,6 +48,22 @@ class FullList extends Component {
         /*zipper turns the state into an array of arrays where each one represents
         a listing to be displayed on the webpage. */
         let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i], this.state.sales[i]]);
+        if (zipper[5]){
+            return (
+                <div>
+                    {zipper.map((listing, i) => (
+                        <div className="feat-box col-2" key={i}>
+                            <a href={"/item?id=".concat(listing[4])} className="feat-link">
+                                <img src={listing[1]} alt="oopsies" className="feat-img" />
+                                <h4 className="feat-name">{listing[0]}</h4>
+                            </a>
+                            <h5 className="feat-price crossed">${listing[2]}</h5>
+                            <h5 className="feat-price">${listing[5]}</h5>
+                        </div>
+                    ))}
+                </div>
+            )
+        }
         return (
             <div>
                 {zipper.map((listing, i) => (
