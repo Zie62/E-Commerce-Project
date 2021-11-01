@@ -148,3 +148,6 @@ h2{
     height: 87vh;
     background-color: rgb(197, 195, 163);
 }
+.clear{
+    display:none;
+}
