@@ -53,7 +53,7 @@ class FullList extends Component {
         let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
         //checks sale status of each item at index i and returns a class that either makes it display:none or show regularly
         let saleCheck = (i)=>{
-            if (this.state.sale[i]){
+            if (this.state.sales[i]){
                 return "feat-price"
             }
             else{return "clear"}
