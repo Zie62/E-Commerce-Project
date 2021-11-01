@@ -15,7 +15,7 @@ class FullList extends Component {
             sales: []
         }
         this.componentDidMount = this.componentDidMount.bind(this)
-        this.imgMap = this.imgMap.bind(this)
+        this.listingsMap = this.listingsMap.bind(this)
     }
     componentDidMount() {
         /*this axios function calls my /full-db REST API then passes the JSON to a nameless 
@@ -51,7 +51,7 @@ class FullList extends Component {
         /*zipper turns the state into an array of arrays where each one represents
         a listing to be displayed on the webpage. */
         let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
-        let saleOutput =[]
+        //checks sale status of each item at index i and returns a class that either makes it display:none or show regularly
         let saleCheck = (i)=>{
             if (this.state.sale[i]){
                 return "feat-price"
