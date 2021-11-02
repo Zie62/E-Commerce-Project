@@ -93,7 +93,7 @@ h2{
     height: 80%;
     position: relative;
     margin: 0 auto;
-    background-color: rgb(197, 195, 163);
+    background-color: #f2f2f2;
     border-radius: 0px 0px 50% 50%;
 }
 .feat-box{
@@ -119,10 +119,7 @@ h2{
 .feat-name{
     color: rgb(72, 72, 167);
 }
-.feat-link{
-    text-decoration: none;
-}
-.feat-link:hover{
+.feat-link, .feat-link:hover{
     text-decoration: none;
 }
 .feat-img{
@@ -136,7 +133,7 @@ h2{
     text-align: center;
 }
 #stock{
-    background-color: rgb(197, 195, 163);
+    background-color: #f2f2f2;
     position: relative;
     margin: 0 auto;
 }
@@ -146,7 +143,7 @@ h2{
 .sing-listing{
     width: 90vw;
     height: 87vh;
-    background-color: rgb(197, 195, 163);
+    background-color: #f2f2f2;
 }
 .clear{
     display:none;

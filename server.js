@@ -160,4 +160,8 @@ app.get("/sale-db", (req, res) => {
     timeCheck()
     giveSaleListings(res)
 });
+app.get("/new-design", (req, res) =>{
+    timeCheck()
+    res.sendFile(path.join(__dirname, 'build', 'newDesign.html'))
+})
 app.listen(port)
