@@ -7,6 +7,5 @@ import FullStock from './components/fullStock';
 ReactDOM.render(
     <div>
         <NavBar />
-        <FullStock />
     </div>,
     document.getElementById("root"));

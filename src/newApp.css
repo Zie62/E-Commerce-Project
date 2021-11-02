@@ -1,13 +1,33 @@
 
-.dropdown-bar::after{
-    content:'\2807';
+.header{
+    display: flex;
+}
+.dropdown{
+    width: 100px;
+    height: 50px;
+    position: relative;
+    left:80%
+}
+.dropdown-bar{
+    width: 100px;
+    height: 100px;
     font-size: 100px;
+    margin: 0 auto;
+}
+.dropdown-item{
+    font-size: 20px;
+    color:purple;
+    display:block;
 }
 .dropdown-contents{
-    display:none
+    display:none;
+    height:auto;
+    width: 500px;
+    background-color:red;
+    float:right;
 }
-.dropdown-bar:hover .dropdown-contents{
-    display:grid;
+.dropdown:hover .dropdown-contents{
+    display:block;
 }
 .logo{
     max-width: 100%;

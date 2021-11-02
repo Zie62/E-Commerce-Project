@@ -10,10 +10,10 @@ class NavBar extends Component{
                     </a>
                 </div>
                 <div className="dropdown">
-                    <button classname="dropdown-bar"></button>
+                    <div className="dropdown-bar">≡</div>
                     <div className="dropdown-contents">
-                        <a className="dropdown-item">Specials</a>
-                        <a className="dropdown-item">All Clothes</a>
+                        <a href="#" className="dropdown-item">Specials</a>
+                        <a href="#" className="dropdown-item">All Clothes</a>
                     </div>
                 </div>
             </div>
