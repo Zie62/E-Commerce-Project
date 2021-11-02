@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 class NavBar extends Component{
     render(){
+        /*returns a top nav bar which contains a logo( links tohome page), company name,
+        and a dropdown menu using a ≡ symbol*/
         return(
             <div className="header">
                 <div className="logo">
