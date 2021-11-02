@@ -1,12 +1,12 @@
-import react from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import "./newApp.css"
-import NavBar from "./components/navBar"
+import NavBar from "./components/newNav"
 import FullStock from './components/fullStock';
 
 ReactDOM.render(
     <div>
         <NavBar />
         <FullStock />
-    </div>
-)
+    </div>,
+    document.getElementById("root"));

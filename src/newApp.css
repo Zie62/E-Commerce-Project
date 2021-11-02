@@ -1,0 +1,15 @@
+
+.dropdown-bar::after{
+    content:'\2807';
+    font-size: 100px;
+}
+.dropdown-contents{
+    display:none
+}
+.dropdown-bar:hover .dropdown-contents{
+    display:grid;
+}
+.logo{
+    max-width: 100%;
+    height: auto;
+}
