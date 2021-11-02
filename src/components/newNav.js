@@ -15,7 +15,7 @@ class NavBar extends Component{
                     <div className="dropdown-bar">≡</div>
                     <div className="dropdown-contents">
                         <a href="#" className="dropdown-item">Specials</a>
-                        <a href="#" className="dropdown-item">All Clothes</a>
+                        <br /><a href="#" className="dropdown-item">All Clothes</a>
                     </div>
                 </div>
             </div>

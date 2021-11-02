@@ -1,5 +1,10 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+body{
+    font-family: 'Oswald', sans-serif;
+    height: 100vh;
+}
 .header{
+    margin: 1em 0;
     display: flex;
     justify-content: space-between;
     width: 98vw;
@@ -13,20 +18,23 @@
 }
 .dropdown-bar{
     width: 125px;
-    height: 100px;
-    font-size: 100px;
+    height: 125px;
+    font-size: 90px;
     text-align: center;
 }
 .dropdown-item{
     font-size: 20px;
-    color:purple;
+    color:white;
     display:block;
+    text-align: right;
+    text-decoration: none;
+    font-size: px;
 }
 .dropdown-contents{
     display:none;
     height:auto;
     width: 500px;
-    background-color:red;
+    background-color:rgb(137, 202, 134);
     float:right;
     padding: 10px;
 }
