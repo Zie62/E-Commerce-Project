@@ -12,17 +12,18 @@ class FullList extends Component {
             disPrices: [],
             ids: [],
             sales: [],
-            cartConfirmation: { class: 'clear', item: 'none' }
+            cartConfirmation: { class: 'clear', message: 'none' }
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.listingsMap = this.listingsMap.bind(this)
         this.cartOnClick = this.cartOnClick.bind(this)
     }
-    componentDidMount() {
+    async componentDidMount() {
         /*this axios function calls my /full-db REST API then passes the JSON to a nameless 
         function which puts the relevant data into the state to be referenced every time the
         web page is opened*/
-        Axios.get("/full-db").then((response) => {
+        try {
+            let response = await Axios.get("/full-db")
             var nameList = []
             var picList = []
             var ogPrices = []
@@ -46,7 +47,12 @@ class FullList extends Component {
                 ids: idList,
                 sales: salesList
             })
-        });
+        }
+        catch {
+            this.setState({
+                cartConfirmation: {class: "confirmation", message: "The page has failed to load. Either retry, or try again later."}
+            })
+        }
     }
     cartOnClick(listing) {
         /*props function to pass the cart up to the parent state, which is then synced 
@@ -55,10 +61,10 @@ class FullList extends Component {
         /*these change the class and text of a banner to confirm items being added
         to the cart, then causes it to disappear. */
         this.setState({
-            cartConfirmation: { class: 'confirmation', item: listing[0] }
+            cartConfirmation: { class: 'confirmation', message: `The ${listing[0]} has been added to your cart` }
         })
         setTimeout((() => this.setState({
-            cartConfirmation: { class: 'clear', item: 'none' }
+            cartConfirmation: { class: 'clear', message: 'none' }
         })), 5000)
     }
     listingsMap() {
@@ -106,7 +112,7 @@ class FullList extends Component {
         return (
             <div className="display-body">
                 <div className={confirm.class}>
-                    <h1>The {confirm.item} has been added to your cart</h1>
+                    <h1>{confirm.message}</h1>
                 </div>
                 <h1 className="feat-text">All Clothes</h1>
                 <div className="feat-package">

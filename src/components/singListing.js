@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-//gets the query such that the ID of the item to be rendered can be referenced from the database.
-const queryStr = window.location.search.substr(1);
-var queryParams = queryStr.split("&").reduce((current, param) => {
-    const [key, value] = param.split('=');
-    current[key] = value;
-    return current
-}, {})
+//gets URL query parameters for use in an api call for a specific item.
+const params = new URLSearchParams(window.location.search)
 //strings instead of arrays because only 1 listing should ever be shown.
 class ListBody extends Component {
     constructor(props) {
@@ -18,7 +13,7 @@ class ListBody extends Component {
             disPrice: "",
             sale: false,
             description: "",
-            cartConfirmation: { class: 'clear', item: 'none' },
+            cartConfirmation: { class: 'clear', message: 'none' },
             imgFocus: 0
         }
         this.componentDidMount = this.componentDidMount.bind(this)
@@ -28,10 +23,10 @@ class ListBody extends Component {
     }
     /*fetches the relevant API as specified in the query
     and puts its data into the state to be rendered*/
-    componentDidMount() {
+    async componentDidMount() {
         //fetches the specific listing for the single page
-        let queryId = "/listing?id=".concat(queryParams.id)
-        Axios.get(queryId).then((response) => {
+        try {
+            let response = await Axios.get("/listing?id=".concat(params.get('id')))
             let data = response.data[0]
             this.setState({
                 name: data.name,
@@ -42,7 +37,13 @@ class ListBody extends Component {
                 sale: data.sale,
                 description: data.description
             })
-        })
+        }
+        catch {
+            //displays an error message if the item information cannot be retrieved.
+            this.setState({
+                cartConfirmation: { class: "confirmation", message: "Item failed to load. Please try again or come back later." }
+            })
+        }
     }
     cartOnClick(listing) {
         /*props function to pass the cart up to the parent state, which is then synced 
@@ -51,11 +52,11 @@ class ListBody extends Component {
         /*this cartConfirmation state object conditionally changes the class of the 
         confirmation bar when an add to cart button is pressed*/
         this.setState({
-            cartConfirmation: { class: 'confirmation', item: listing[0] }
+            cartConfirmation: { class: 'confirmation', message: `The ${listing[0]} has been added to your cart` }
         })
         //timeout to make the confirmation message last 5 seconds
         setTimeout((() => this.setState({
-            cartConfirmation: { class: 'clear', item: 'none' }
+            cartConfirmation: { class: 'clear', message: 'none' }
         })), 5000)
     }
     saleCheck(original, discount) {
@@ -129,7 +130,7 @@ class ListBody extends Component {
         return (
             <div>
                 <div className={confirm.class}>
-                    <h1>The {confirm.item} has been added to your cart</h1>
+                    <h1>{confirm.message}</h1>
                 </div>
                 <h1 className="feat-text item-text">{this.state.name}</h1>
                 <div className="sing-listing">

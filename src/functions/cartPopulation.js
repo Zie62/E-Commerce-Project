@@ -5,7 +5,13 @@ const populateCart = async () => {
     let listings = [];
     //this retrieves the full database of listings so the cart can be populated.
     //it is only stored with 2 values in DB, item _id and quantity.
-    let fulldb = await Axios.get("/full-db")
+    let fulldb
+    try {
+        fulldb = await Axios.get("/full-db")
+    }
+    catch {
+        return [['There was an error loading your cart']]
+    }
     for (let i = 0; i < fulldb.data.length; i++) {
         let listing = fulldb.data[i]
         let localListing = []
@@ -18,7 +24,13 @@ const populateCart = async () => {
     let newCart = []
     let listing = []
     //api which returns a users cart based on the session ID.
-    let userCart = await Axios.get('/this-user-cart')
+    let userCart
+    try{
+        userCart = await Axios.get('/this-user-cart')
+    }
+    catch{
+        return [['There was an error loading your cart']]
+    }
     if (userCart['data'].length == 0) {
         return [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']]
     }

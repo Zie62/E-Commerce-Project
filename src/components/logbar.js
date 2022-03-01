@@ -12,13 +12,19 @@ class LogBar extends Component {
         this.logOut = this.logOut.bind(this)
     }
     async componentDidMount() {
+        try{
         let logStatus = await Axios.get("/loginStatus")
         this.setState({
-            logStatus: logStatus.data.email
+            logStatus: logStatus.data.email 
         })
+    }   
+    catch {
+        //dont really need to do anything, just prevent logStatus from being overwritten
+    }
     }
     logOut(e) {
         e.preventDefault();
+        //doesnt need to be awaited as I dont need any response data
         Axios.post('/logout', { email: this.state.logStatus })
         this.setState({
             logStatus: false

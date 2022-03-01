@@ -10,17 +10,18 @@ class HomeBody extends Component {
             ogPrices: [],
             disPrices: [],
             ids: [],
-            cartConfirmation: { class: 'clear', item: 'none' }
+            cartConfirmation: { class: 'clear', message: 'none' }
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.featLoader = this.featLoader.bind(this)
         this.cartOnClick = this.cartOnClick.bind(this)
     }
-    componentDidMount() {
+    async componentDidMount() {
         /*axios gets a REST api which responds with a JSON object containing all
         listing items which are on sale. I then use a for loop to organize the
         JSON object into categories to be put in the state and referenced later.*/
-        Axios.get("/sale-db").then((response) => {
+        try {
+            let response = await Axios.get("/sale-db")
             var nameList = []
             var picList = []
             var ogPrices = []
@@ -43,17 +44,23 @@ class HomeBody extends Component {
                 disPrices: disPrices,
                 ids: idList
             })
-        });
+        }
+        catch {
+            //if for some reason the axios call cannot work, this shows an error message in a banner
+            this.setState({
+                cartConfirmation: { class: "confirmation", message: "The page has failed to load. Please try again, or come back later." }
+            })
+        }
     }
     cartOnClick(listing) {
         /*props function to pass the cart up to the parent state, which is then synced 
         across child components*/
         this.props.parentCall(listing)
         this.setState({
-            cartConfirmation: { class: 'confirmation', item: listing[0] }
+            cartConfirmation: { class: 'confirmation', message: (`The ${listing[0]} was added to your cart`) }
         })
         setTimeout((() => this.setState({
-            cartConfirmation: { class: 'clear', item: 'none' }
+            cartConfirmation: { class: 'clear', message: 'none' }
         })), 5000)
     }
     featLoader() {
@@ -90,7 +97,7 @@ class HomeBody extends Component {
         return (
             <div className="display-body">
                 <div className={confirm.class}>
-                    <h1>The {confirm.item} has been added to your cart</h1>
+                    <h1>{confirm.message}</h1>
                 </div>
                 <h2 className="feat-text">Featured Deals</h2>
                 <div className="feat-package">
