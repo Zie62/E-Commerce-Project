@@ -7,7 +7,6 @@ const cron = require('node-cron')
 const bcrypt = require('bcrypt');
 const { v4: uuid } = require('uuid');
 const session = require('express-session');
-const { AsyncDependenciesBlock } = require("webpack");
 const sessionStorage = require('connect-mongodb-session')(session);
 require('dotenv').config();
 
