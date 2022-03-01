@@ -99,7 +99,11 @@ cron.schedule('0 0 0 * * *', () => {
 //returns a listing based on the provided id value.
 const listingByID = async (id, res) => {
     try {
-        res.json(await Listing.find({ _id: id }))
+        let results = await Listing.find({ _id: id })
+        if (results.length < 1) {
+            res.status(500).send();
+        }
+        res.json(results)
     }
     catch (error) {
         console.log(error)
@@ -120,21 +124,35 @@ const listingByID = async (id, res) => {
 //Gives all item listings, async to prevent repeated requests to database
 const giveAllListings = async (res) => {
     try {
-        res.json(await Listing.find({}))
+        let results = await Listing.find({})
+        if (results.length < 5) {
+            res.status(500).send();
+        }
+        else {
+            res.json(results)
+        }
     }
     catch (error) {
         console.log(error)
+        res.status(500.).send();
         return
     }
 };
 //gives all item listings that are on sale
 const giveSaleListings = async (res) => {
     try {
-        res.json(await Listing.find({ sale: true }))
+        let results = await Listing.find({ sale: true })
+        //returns an error if the listings are not found properly.
+        if (results.length < 5) {
+            res.status(500).send()
+        }
+        else {
+            res.json(results)
+        }
     }
     catch (error) {
         console.log(error)
-        return
+        res.status(500).send()
     }
 };
 /*checks if the user has a cart based on a post request with cookies and 
@@ -289,7 +307,7 @@ const createUserAccount = async (body, res) => {
     This is also validated on the frontend, but a user could post to this API using
     Postman or a similar dev utility to circumvent that.*/
     let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if(!emailRegex.test(email)){
+    if (!emailRegex.test(email)) {
         return false
     }
     //checks if account already exists
@@ -389,24 +407,24 @@ const checkLogin = async (session, res) => {
     /*makes sure session is not null to prevent being logged into an account that
     has its session assigned to "null"*/
     if (session) {
-        try{
-        let account = await User.findOne({ sessionId: session })
-        
-        if (account) {
-            res.json({ email: account.email })
+        try {
+            let account = await User.findOne({ sessionId: session })
+
+            if (account) {
+                res.json({ email: account.email })
+                return
+            }
+            else {
+                /*if the account does not exist, it returns false as that is the value i use on
+                front end to express not being logged into an account*/
+                res.json({ email: false })
+                return
+            }
+        }
+        catch (error) {
+            console.log(error)
             return
         }
-        else {
-            /*if the account does not exist, it returns false as that is the value i use on
-            front end to express not being logged into an account*/
-            res.json({ email: false })
-            return
-        }
-    }
-    catch (error) {
-        console.log(error)
-        return
-    }
     }
 }
 const logOut = async (session, email, res) => {
@@ -538,6 +556,6 @@ app.post("/logout", async (req, res) => {
     await logOut(req.cookies.usesh, req.body.email, res)
     /*this only serves to prevent timeouts on calling this api; there is nothing 
     of meaning to respond with*/
-    res.json({ logged: "out" })
+    res.status(200).send()
 })
 app.listen(port)

@@ -4,15 +4,42 @@ import Decimalizer from '../functions/decimalizer';
 class Cart extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            loaded: false
+        }
         this.itemsDisplay = this.itemsDisplay.bind(this)
         this.totalCalculations = this.totalCalculations.bind(this)
+        this.loading = this.loading.bind(this)
+    }
+    loading(status) {
+        /*returns either a class with display:none or no class depending on loading 
+        status and which entry is being displayed.*/
+        if (status && this.state.loaded){
+            return ""
+        }
+        else if (!status && this.state.loaded){
+            
+            return "clear"
+        }
+        else if (status && !this.state.loaded){
+            return "clear"
+        }
+        else{
+            setTimeout(() => {
+                this.setState({
+                    loaded:true
+                })
+            }, 5000);
+            return ""
+        }
     }
     itemsDisplay() {
-        //This is the message shown if the cart does not exist 
+        //This is the message shown before the cart is filled
         if (this.props.cart[0].length < 5) {
             return (
                 <div>
-                    <h1>The cart is empty or still loading.</h1>
+                    <h1 className={this.loading(false)}>loading...</h1>
+                    <h1 className={this.loading(true)}>It appears your cart is empty. If not, do you have cookies disabled?</h1>
                 </div>
             )
         }

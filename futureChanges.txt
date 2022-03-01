@@ -1,3 +1,2 @@
-Make sure backend awaited functionality is all contained within try/catch blocks
-Add proper loading animation to cart page / eventually all pages
+Add proper loading animation to all pages
 verify server returns errors when needed 

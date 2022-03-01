@@ -346,6 +346,9 @@ h1{
 }
 .minus{
     border-right: 2px solid black;
+    /*This aligns the minus symbol with the middle of the plus sign, rather than
+    having it be along the bottom of the text area. Tested on desktop and mobile*/
+    padding-bottom: 5px;
 }
 .plus{
     border-left: 2px solid black;
