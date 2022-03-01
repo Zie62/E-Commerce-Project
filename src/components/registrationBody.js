@@ -56,6 +56,7 @@ class LoginBody extends Component {
             }
         }
         else {
+            //if the email is not valid within the regex provoided, this error message is displayed
             this.setState({
                 error: "The email format is invalid"
             })

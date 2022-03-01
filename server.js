@@ -7,6 +7,7 @@ const cron = require('node-cron')
 const bcrypt = require('bcrypt');
 const { v4: uuid } = require('uuid');
 const session = require('express-session');
+const { AsyncDependenciesBlock } = require("webpack");
 const sessionStorage = require('connect-mongodb-session')(session);
 require('dotenv').config();
 
@@ -66,25 +67,30 @@ const Cart = mongoose.model("Carts", cartSchema)
 property of random listings if it has. I decided to do this to create an artificial 
 "specials" page that would change on a timer to give an illusion of daily sales.*/
 const timeCheck = async () => {
-    //takes all listings off sale
-    await Listing.updateMany({}, { $set: { sale: false } }, { new: true })
-    //supplies an array of the listings to be referenced at the end
-    let listings = await Listing.find({})
-    //this serves as storage for the items to be put on sale 
-    let saleArray = []
-    //for loop to generate 6 unique values to represent the items being put on sale
-    for (let i = 0; i < 6; i) {
-        //generates random values, pushes if it is unique, otherwise loops again
-        let selector = ~~(Math.random() * listings.length);
-        if (saleArray.includes(selector)) { }
-        else {
-            saleArray.push(selector)
-            i++
-        };
+    try {
+        //takes all listings off sale
+        await Listing.updateMany({}, { $set: { sale: false } }, { new: true })
+        //supplies an array of the listings to be referenced at the end
+        let listings = await Listing.find({})
+        //this serves as storage for the items to be put on sale 
+        let saleArray = []
+        //for loop to generate 6 unique values to represent the items being put on sale
+        for (let i = 0; i < 6; i) {
+            //generates random values, pushes if it is unique, otherwise loops again
+            let selector = ~~(Math.random() * listings.length);
+            if (saleArray.includes(selector)) { }
+            else {
+                saleArray.push(selector)
+                i++
+            };
+        }
+        //updates each new item which is on sale
+        for (let i = 0; i < saleArray.length; i++) {
+            await Listing.findOneAndUpdate({ _id: listings[saleArray[i]]._id }, { sale: true }, { new: true })
+        }
     }
-    //updates each new item which is on sale
-    for (let i = 0; i < saleArray.length; i++) {
-        await Listing.findOneAndUpdate({ _id: listings[saleArray[i]]._id }, { sale: true }, { new: true })
+    catch (error) {
+        console.log(error)
     }
 };
 //this schedules the timeCheck / sale updating function once a day at midnight
@@ -119,6 +125,7 @@ const giveAllListings = async (res) => {
     }
     catch (error) {
         console.log(error)
+        return
     }
 };
 //gives all item listings that are on sale
@@ -128,41 +135,64 @@ const giveSaleListings = async (res) => {
     }
     catch (error) {
         console.log(error)
+        return
     }
 };
 /*checks if the user has a cart based on a post request with cookies and 
 passes down the rest of the post information.*/
-const checkForCart = (uid, poster) => {
-    //poster is the payload for the item being updated in users cart
-    Cart.find({ uid: uid }, function (err, data) {
-        if (err) { return console.error(err) }
-        else if (data[0] === undefined) { createNewCart(uid, poster) };
-        if (poster['id'] != undefined) { addToCart(uid, poster) };
-    })
+const checkForCart = async (session, update) => {
+    try {
+        //checks if the user has a cart
+        let data = await Cart.find({ uid: session })
+        //If they dont have a cart, create a new cart for them
+        if (data[0] === undefined) { createNewCart(session, update) }
+        /*if they do have a cart, and there is an update to be made (rather than simply 
+        checking for the cart), add the update to cart*/
+        if (update.id) { addToCart(session, update) }
+    }
+    catch (error) {
+        console.log(error)
+        return
+    }
 };
 /*creates a new cart if the session cookie does not match an existing user. this allows
 for a cart to consistently be brought through a browsing experience on a given browser
 in a given session.*/
 const createNewCart = async (uid, poster, email) => {
-    let newCart
-    if (email) {
-        newCart = new Cart({ uid: uid, cart: [], timestamp: Date.now(), account: email })
+    try {
+        let newCart
+        /*checks if this new cart is being made with an email (aka if it is from an 
+            account logging in), or if it is a guest cart being created */
+        if (email) {
+            newCart = new Cart({ uid: uid, cart: [], timestamp: Date.now(), account: email })
+        }
+        else {
+            newCart = new Cart({ uid: uid, cart: [], timestamp: Date.now() })
+        }
+        //saves the new cart to the database
+        await newCart.save(function (err, data) {
+            if (err) return console.error(err)
+            //if there is an item to be added to the cart after saving the new cart, it is added here.
+            if (poster['id']) { addToCart(uid, poster) }
+        })
+        return "cart created"
     }
-    else {
-        newCart = new Cart({ uid: uid, cart: [], timestamp: Date.now() })
+    catch (error) {
+        console.log(error)
+        return "cart failed to create"
     }
-    await newCart.save(function (err, data) {
-        if (err) return console.error(err)
-        if (poster['id'] != undefined) { addToCart(uid, poster) }
-    })
-    return "cart created"
 };
+/*This function adds an item to a users cart, checking for a handful of potential 
+data states within the cart to make sure duplicate items cannot be added. This
+function is only called after either creating a new guest cart (which is done
+    on first item add) or after checking if a cart exists within CheckForCart()*/
 const addToCart = async (uid, poster) => {
     /*this prevents someone with cookies disabled from adding items to a cart
     with a currently undefined / null uid. These occur when a cart is linked to
     a user account, but that account has logged out.*/
     if (!uid) { return "Cookies disabled" }
     let cart
+    //finds the cart in database with the relevant session id
     try {
         cart = await Cart.find({ uid: uid })
     }
@@ -191,12 +221,12 @@ const addToCart = async (uid, poster) => {
         }
     }
     else {
-        //checks if each item previously in the cart is the new item being added
+        //checks if each item previously in the cart has the ID of the new item being added
         for (let i = 0; i < cart.length; i++) {
             //updates the existing item if it does
             if (cart[i].includes(itemid)) {
                 cart[i] = updateObj
-                //sends cart update to database
+                //sends cart update to database and returns void
                 try {
                     await Cart.updateOne({ uid: uid }, { $set: { cart: cart } }, { new: true })
                     return
@@ -219,9 +249,9 @@ const addToCart = async (uid, poster) => {
         }
     }
 }
-//gets a user cart based on their UID cookie
+//gets a users cart based on their Session ID cookie (abbreviated as "uid" or user ID)
 const getTheirCart = async (uid, res) => {
-    //makes sure the user has a UID to prevent access to carts with "null" cookies
+    //makes sure the user has a sessionID cookie to prevent access to carts with "null" cookies
     if (uid) {
         try {
             res.json(await Cart.find({ uid: uid }))
@@ -245,6 +275,7 @@ const deleteFromCart = (data, uid) => {
     if (slimCart[0] === undefined || slimCart[0][0] === undefined) {
         slimCart = []
     }
+    //Data doesnt need to be awaited on, so is called synchronously with a callback for errors.
     Cart.findOneAndUpdate({ uid: uid }, { $set: { cart: slimCart } }, { new: true },
         (err) => {
             if (err) return console.error(err);
@@ -253,14 +284,24 @@ const deleteFromCart = (data, uid) => {
     )
 }
 const createUserAccount = async (body, res) => {
-    //checks if account already exists
+    //makes email lowercase to prevent duplicate accounts from slightly different upper/lowercase distribution
     let email = (body.email).toLowerCase();
+    /*this tests to make sure the email in the body fulfils the email formating requirements.
+    This is also validated on the frontend, but a user could post to this API using
+    Postman or a similar dev utility to circumvent that.*/
+    let emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(!emailRegex.test(email)){
+        return false
+    }
+    //checks if account already exists
     let account = await User.findOne({ email: email })
     if (account) {
         console.log("existing")
+        /*if the account exists, returns false so it is known a new account was not created.
+        This displays an error on the frontend.*/
         return false
     }
-    //gonna do email/password input validation on frontend so it can better be integrated in the UI
+    //email format is validated on frontend using a regex
     try {
         //creates a salt and subsequent hash value for the password to be stored more securely
         const salt = await bcrypt.genSalt(10)
@@ -268,8 +309,10 @@ const createUserAccount = async (body, res) => {
         await User.create({ email: email, password: hashed, salt: salt })
         return true
     }
-    catch {
+    catch (error) {
+        console.log(error)
         res.status(500).send()
+        return false
     }
 
 }
@@ -323,7 +366,7 @@ const accountCartCheck = async (email, sessionid) => {
             if (!currentCart) {
                 //this creates an empty cart to assign to the account
                 /*id: undefined makes it so the function knows there 
-                is no item to add to the cart after creating it (see line 168)*/
+                is no item to add to the cart after creating it*/
                 await createNewCart(sessionid, { id: undefined }, email)
             }
             //if the cart does exist already, add the accounts email to it
@@ -347,7 +390,9 @@ const checkLogin = async (session, res) => {
     /*makes sure session is not null to prevent being logged into an account that
     has its session assigned to "null"*/
     if (session) {
+        try{
         let account = await User.findOne({ sessionId: session })
+        
         if (account) {
             res.json({ email: account.email })
             return
@@ -358,6 +403,11 @@ const checkLogin = async (session, res) => {
             res.json({ email: false })
             return
         }
+    }
+    catch (error) {
+        console.log(error)
+        return
+    }
     }
 }
 const logOut = async (session, email, res) => {
@@ -445,8 +495,8 @@ app.get("/sale-db", (req, res) => {
 });
 //updates the cart to contain a new item / updated quantity of an item
 app.post("/cart-add-now", (req, res) => {
-    let data = req.body
-    checkForCart(req.cookies.usesh, data)
+    let update = req.body
+    checkForCart(req.cookies.usesh, update)
     res.json({ status: "Cart Item Added Successfully" })
 });
 //deletes an item from the cart and handles making the cart truly empty if relevant.
