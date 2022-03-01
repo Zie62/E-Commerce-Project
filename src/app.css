@@ -1,0 +1,668 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap');
+
+
+:root{
+    /*using a variable to represent the theme color so theme can be changed without manually
+changing each CSS entry */
+    --mainTheme: #67a564;
+}
+body{
+    font-family: 'Oswald', sans-serif;
+    height: 100%;
+    width: 100%;
+    scrollbar-width: thin;
+    overflow-x: hidden;
+    font-size: 24px;
+    margin: 0;
+}
+body::-webkit-scrollbar{
+    width: 12px;
+}
+body::-webkit-scrollbar-track{
+    background: white;
+}
+body::-webkit-scrollbar-thumb{
+    background-color:var(--mainTheme);
+    border-radius: 20px;
+    border: 2px solid white;
+}
+h1{
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+#header{ 
+    align-items:center;
+    display:grid;
+    height: 22vh;
+    background-color:white;
+    text-align:center;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "lo lo . . ca mn";
+}  
+.logo-div{
+    grid-area: lo;
+    justify-self:flex-start;
+}
+.logo-div img{
+    max-height:20vh;
+}
+.logo{
+    max-width: 33vw;
+    width:auto;
+}
+.dropdown{
+    grid-area: mn;
+    justify-self: end;
+    font-size: 8vh;
+}
+.dropdown-bar{
+    position:relative;
+    font-size: 10vh;
+}
+.dropdown-item{
+    color:white;
+    display:block;
+    text-align:right;
+    text-decoration: none; 
+    font-size: 30px;
+    z-index: 26;
+}
+.dropdown-contents{
+    z-index: 500;
+    display: none;
+    position:absolute;
+    right: 0;
+    height: auto;
+    width: 200px;
+    background-color:var(--mainTheme);
+    float:right;
+    padding: 10px;
+}
+.dropdown:hover .dropdown-contents{
+    display: block;
+    z-index: 500;
+}
+.feat-text{
+    width: 100%;
+    height: 9.5vh;
+    font-size: 7vh;
+    text-align: center;
+    background-color: var(--mainTheme);
+    color:white;
+}
+.feat-package{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    margin: 0 auto;
+}
+.feat-box{
+    display: flex;
+    width:45vw;
+    height: 40vh;
+    margin-top: 3vh;
+    margin-left: 2.5vw;
+    box-shadow: 8px 4px 4px rgb(49,48,48);
+    background-color: white;
+    float: left;
+    align-content: center;
+    text-align: center;
+    flex-direction: column;
+    z-index: 10;
+}
+.feat-link, .feat-link:hover, .feat-link:active{
+    text-decoration: none;
+}
+.feat-img{
+    order: 1;
+    width: auto;
+    height: 20vh;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--mainTheme);
+    overflow: hidden;
+    max-width: -webkit-fill-available;
+}
+.feat-name{
+    margin-left: 5px;
+    color: black;
+}
+.feat-price{
+    text-align: center;
+}
+.crossed{
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+.feat-not-img{
+    height: 32px;
+    display:flex;
+    order: 2;
+    justify-content: center;
+    flex-shrink: 1.1;
+}
+.feat-not-img h2{
+    margin-block-end: 0;
+    margin-block-start: 0;
+    font-size: 2.5vh;
+    /*this margin prevents overlap with other text*/
+    margin: 1px;
+}
+#prices{
+    height: 35px;
+    order: 3;
+    padding-bottom: 0.5vh;
+}
+.add-cart{
+    align-self: center;
+    background-color: var(--mainTheme);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    order: 4;
+    font-size: 2.5vh;
+    width: 80%;
+    height: auto;
+    margin-bottom: 5px;
+}
+.add-cart:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.4);
+}
+.add-cart-single{
+    align-self: center;
+    background-color: var(--mainTheme);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    order: 4;
+    font-size: 5vh;
+    width: 80%;
+    height: auto;
+}
+.add-cart-single:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.4);
+}
+.clear{
+    display: none;
+}
+.confirmation{
+    display:flex;
+    position:fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 2vh;
+    align-items: center;
+    justify-content: center;
+    height: 12vh;
+    background-color: rgb(177, 3, 3);
+    color: black;
+    z-index: 501
+}
+/*sing represents single, and these rules apply to the single listing page*/
+.sing-listing{
+    display:flex;
+    flex-direction: column;
+    font-size: 7vw;
+}
+.item-text{
+    color:black
+}
+.full-img{
+    width:auto;
+    height: 40vh;
+    max-height: 50vh;
+    max-width: 99vw;
+    order: 1;
+    margin-top: 2vh;
+    padding-bottom: 2vh;
+    border-bottom: 2px solid var(--mainTheme);
+    align-self: center;
+}
+#single-middle{
+    text-align: center;
+    order: 2;
+}
+.right-side{
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    order: 3;
+    justify-content:space-between;
+}
+.price-cart{
+    margin-bottom: 10px;
+}
+
+/*cart stuff for navbar starts here */
+#empty-cart{
+    font-size: 8vh
+}
+.cart-drop{
+    grid-area: ca;
+    z-index: 25;
+    font-size: 8vh;
+    justify-self:flex-end;
+    padding-bottom: 30px;
+}
+#cart-icon{
+    font-size: 8vh;
+    color:black;
+    float:right;
+}
+#cart-icon-link{
+    text-decoration: none;
+}
+#cart-icon-link:visited{
+    text-decoration: none;
+    color:black;
+}
+.cart-contents{
+    z-index: 500;
+    display:none;
+    top: 18vh;
+    right: 10vw;
+    position: absolute;
+    width: 28vh;
+    height: 60vh;
+    background-color:var(--mainTheme);
+    float:right;
+    padding: 10px;
+    overflow-y: scroll;
+}
+.cart-item{
+    height: 200px;
+    color:white;
+    display:flex;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    z-index: 500;
+    justify-content: space-evenly;
+    margin: 2vh 0;
+    /* this is to prevent overlap with the bottom oriented total window on mobile.*/
+}
+.cart-name{
+    margin-block: 0.5em;
+}
+.cart-name .cart-name:visited{
+    color:black
+}
+.cart-links{
+    text-decoration: none;
+    color:black;
+}
+.cart-links:visited{
+    text-decoration: none;
+    color:black
+}
+.cart-img{
+    width: 150px;
+    height: 150px;
+    order: 1;
+    background-color: white;
+}
+.cart-text{
+    display: flex;
+    flex-direction: column;
+    order: 2;
+    justify-content: flex-end;
+}
+.big-cart-name{
+    font-size: 4vh;
+}
+.quantity-handlers{
+    order: 3;
+}
+.counter{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--mainTheme);
+    border: 2px solid black;
+}
+.dd-counter{
+    border: none;
+}
+.increment-buttons{
+    width: 1em;
+    font-size: 1em;
+    background-color: var(--mainTheme);
+    color:white;
+    border: none;
+    padding: 0 3px;
+}
+.increment-buttons:active{
+    box-shadow:rgb(0,0,0,0.5);
+    transform: scale(0.97)
+}
+.minus{
+    border-right: 2px solid black;
+}
+.plus{
+    border-left: 2px solid black;
+}
+.quantity{
+    padding: 0 15px;
+    color:white;
+    margin: 0 auto;
+}
+.remove{
+    text-decoration: underline;
+    color: black;
+    border: none;
+}
+.remove:active{
+    color: red;
+    box-shadow: 8px 4px 4px rgb(0,0,0, 0.50);
+}
+.cart-page{
+    align-content: center;
+}
+.cart-page-price{
+    color: var(--mainTheme);
+    font-size: 1em;
+}
+#totals{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    font-weight: bold;
+    border-top: 2px solid var(--mainTheme);
+}
+.disclaimer{
+    /*The margin top here is to divorce the main body from the disclaimer text. this
+     also serves to prevent the footer and totals div from overlapping on a small cart*/
+    width: 50vw;
+    margin-top: 25vh;
+    font-size: large;
+}
+#footer{
+    font-size: large;
+    margin-top: 1vh;
+    display:flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+}
+.footer-p{
+    width: 40vw;
+    color:white;
+}
+#scroll-button{
+    margin-right: 3vw;
+    text-decoration: underline;
+    color: black;
+    border: none;
+}
+#scroll-button:active{
+    color:red;
+    box-shadow: 8px 4px 4px rgb(0,0,0, 0.50);
+}
+.image-display{
+    display: flex;
+    height: 50vh;
+    width:auto;
+    max-width: 98vw;
+    justify-content: center;
+}
+.image-selector{
+    display:flex;
+    width: 98vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    justify-content: flex-start;
+}
+.thumb-button{
+    border: none;
+    padding: 0;
+    height: auto;
+    width: 10vh;
+    max-height: 10vh;
+    border: 2px solid black;
+    margin-left: 5px;
+}
+.thumbnail{
+    height: auto;
+    width: 9.5vh;
+    max-height: 9.5vh;
+}
+#login-bar{
+    display:flex;
+    height: 8vh;
+    align-items: center;
+    justify-content: flex-end;
+}
+.login{
+    font-size: 0.9em;
+    margin-right: 10vw;
+}
+#bottom{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+#errors{
+    color:red;
+}
+#login-page{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#login-form{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 80vw;
+    background-color: var(--mainTheme);
+}
+.submit-form{
+    margin-top: 5px;
+}
+.form-input{
+    width: 60vw
+}
+.input-label{
+    padding: 10px 0px;
+    color:white
+}
+
+/*This can generally be used to determine whether or not a screen should utilize a desktop
+or phone view. This prioritizes optimizing for small laptops (1336x768px) vs large phones*/
+@media (min-width: 961px) and (min-height: 720px) {
+    .dropdown{
+        width: 100px;
+    }
+    .logo{
+        width: auto;
+        height: 20vh;
+    }
+    .feat-text{
+        height: 6.5vh;
+        font-size: 4vh;
+    }
+    .feat-img{
+        margin-top: 2%;
+    }
+    .feat-box{
+        display: flex;
+        width:30vw;
+        height: 40vh;
+        margin-top: 3vh;
+        margin-left: 2.5vw;
+        box-shadow: 8px 4px 4px rgb(49,48,48);
+        background-color: white;
+        float: left;
+        align-content: center;
+        text-align: center;
+        flex-direction: column;
+        z-index: 10;
+    }
+    .feat-not-img{
+        font-size: 3vh;
+    }
+    .header{
+        height: 20vh;
+    }
+    .add-cart{
+        margin-top: 2.5vh;
+        font-size: 2.5vh;
+    }
+    .sing-listing{
+        max-height: 60vh;
+        display:flex;
+        flex-direction: row;
+        justify-content:space-around;
+        font-size: 4.5vh;
+        margin-top: 5vh;
+    }
+    .full-img{
+        height: auto;
+        width: auto;
+        border-bottom: none;
+        padding-right: 5px;
+        margin-top: 0;
+        min-width: 20vw;
+        max-width: 30vw;
+    }
+    #single-middle{
+        width: 20vw;
+        font-size: 3.5vh;
+    }
+    .right-side{
+        width: 20vw;
+    }
+    #cart-icon{
+        height: 125px;
+        width: 125px;
+        font-size: 90px;
+        position: relative;
+    }
+    /*awkward font size to make it sized like an h5 without usin*/
+    .cart-price{
+        font-size: 0.83em;
+    }
+    .cart-contents::-webkit-scrollbar{
+        width: 12px;
+    }
+    .cart-contents::-webkit-scrollbar-track{
+        background: var(--mainTheme);
+    }
+    .cart-contents::-webkit-scrollbar-thumb{
+        background-color: rgba(97, 97, 93, 0.897);
+        border-radius: 20px;
+        border: 2px solid var(--mainTheme);
+    }
+    .cart-item{
+        height: 200px;
+    }
+    .cart-drop:hover .cart-links{
+        text-decoration: none;
+    }
+    .cart-drop:hover .cart-contents{
+        display:block;
+        z-index: 500;
+        min-width: 350px;
+    }
+    .cart-drop:hover #cart-icon{
+        float:right;
+    } 
+    .cart{
+        max-width: 66vw;
+    }
+    #cart-body{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+    .big-cart-name{
+        font-size: 5vh;
+    }
+    #totals{
+        align-content: center;
+        justify-content: center;
+        border-top: none;
+        grid-template-columns: none;
+        grid-template-rows: repeat(2, 1fr);
+        position:fixed;
+        border: 2px solid var(--mainTheme);
+        padding: 4vh 3vw;
+        margin-top: 5px;
+        text-align: center;
+    }
+    .cart-summary{
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+    }
+    .confirmation{
+        font-size: 1.2em;
+        height: 10vh;
+    }
+    .disclaimer{
+        font-size: inherit;
+    }
+    #footer{
+        font-size: inherit;
+    }
+    .image-display{
+        height: 50vh;
+        width:auto;
+        width: 30vw;
+    }
+    .image-selector{
+        width: 30vw;
+    }
+    .image-selector::-webkit-scrollbar{
+        height: 3px;
+    }
+    .image-selector::-webkit-scrollbar-track{
+        background: var(--mainTheme);
+    }
+    #login-bar{
+        display:flex;
+        height: 4vh;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .login{
+        margin-right: 4vw;
+    }
+    #login-page{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #login-form{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+        width: 30vw;
+        background-color: var(--mainTheme);
+    }
+    .submit-form{
+        margin-top: 5px;
+    }
+    .input-label{
+        padding: 10px 0px;
+        color:white
+    }
+    .form-input{
+        width: 20vw;
+    }
+}

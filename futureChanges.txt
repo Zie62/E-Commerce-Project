@@ -1,0 +1,3 @@
+Fix single listing page to add to cart properly
+Make component api calls asynchronous
+Make sure backend awaited functionality is all contained within try/catch blocks
