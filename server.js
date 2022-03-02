@@ -465,7 +465,7 @@ app.use(session({
     cookie: {
         //12 hours in miliseconds, easier to understand than a raw number
         maxAge: 1000 * 60 * 60 * 12,
-        secure: true
+        secure: false
     },
     store: sessions,
     resave: true,
@@ -557,5 +557,8 @@ app.post("/logout", async (req, res) => {
     /*this only serves to prevent timeouts on calling this api; there is nothing 
     of meaning to respond with*/
     res.status(200).send()
+})
+app.get("/skelington", (req, res) =>{
+    res.sendFile(path.join(__dirname, 'build', 'loading.html'))
 })
 app.listen(port)

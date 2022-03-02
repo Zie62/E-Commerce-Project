@@ -19,7 +19,7 @@ class LogBar extends Component {
         })
     }   
     catch {
-        //dont really need to do anything, just prevent logStatus from being overwritten
+        //dont need to do anything, just prevent logStatus from being overwritten with undefined/error
     }
     }
     logOut(e) {

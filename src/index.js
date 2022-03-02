@@ -5,6 +5,7 @@ import LogBar from './components/logbar'
 import NavBar from './components/navBar';
 import HomeBody from './components/homeBody';
 import Footer from './components/footer';
+import MainLoading from './components/mainLoading';
 import populateCart from "./functions/cartPopulation";
 import Axios from "axios";
 
@@ -14,7 +15,8 @@ class HomePage extends Component {
         super(props)
         this.state = {
             cart: [["The cart is empty"]],
-            logStatus: false
+            logStatus: false,
+            loading: true
         }
         this.initializeCart = this.initializeCart.bind(this)
         this.handleCartAdd = this.handleCartAdd.bind(this)
@@ -25,7 +27,8 @@ class HomePage extends Component {
     async componentDidMount() {
         const newCart = await populateCart();
         this.setState({
-            cart: newCart
+            cart: newCart,
+            loading: false
         })
     }
     /*initializes the cart in the parent state to prevent an empty cart overwriting state
@@ -78,6 +81,15 @@ class HomePage extends Component {
         })
     }
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <LogBar logout={this.cartLogout} />
+                    <NavBar cart={this.state.cart} />
+                    <MainLoading />
+                </div>
+            )
+        }
         return (
             <div>
                 <LogBar logout={this.cartLogout} />

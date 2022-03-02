@@ -5,6 +5,7 @@ import NavBar from './components/navBar';
 import FullStock from './components/fullStock';
 import Footer from './components/footer';
 import LogBar from './components/logbar';
+import MainLoading from "./components/mainLoading";
 import populateCart from "./functions/cartPopulation";
 import Axios from 'axios';
 
@@ -13,7 +14,8 @@ class FullPage extends Component {
         super(props)
         this.state = {
             cart: [],
-            logStatus: false
+            logStatus: false,
+            loading: true
         }
         this.initializeCart = this.initializeCart.bind(this)
         this.handleCartAdd = this.handleCartAdd.bind(this)
@@ -24,7 +26,8 @@ class FullPage extends Component {
     async componentDidMount() {
         const newCart = await populateCart();
         this.setState({
-            cart: newCart
+            cart: newCart,
+            loading:false
         })
     }
     /*initializes the cart in the parent state to prevent an empty cart overwriting state
@@ -77,6 +80,15 @@ class FullPage extends Component {
         })
     }
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <LogBar logout={this.cartLogout} />
+                    <NavBar cart={this.state.cart} />
+                    <MainLoading />
+                </div>
+            )
+        }
         return (
             <div>
                 <LogBar logout={this.cartLogout} />

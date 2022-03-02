@@ -145,7 +145,7 @@ h1{
     margin-block-start: 0;
     font-size: 2.5vh;
     /*this margin prevents overlap with other text*/
-    margin: 1px;
+    margin: 1px 5px;
 }
 #prices{
     height: 35px;
@@ -482,7 +482,45 @@ h1{
     padding: 10px 0px;
     color:white
 }
-
+.skele-img{
+    height:20vh;
+    width:20vw;
+    margin: 5px auto;
+}
+.skele-text{
+    width: 60%;
+    height: 10%;
+    margin: 5px auto;
+}
+.skele-prices{
+    width: 60%;
+    height: 10%;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;   
+}
+.skele-price{
+    width: 70%;
+    height: 100%;
+    margin: 0 5px;
+}
+.skele-btn{
+    height: 15%;
+    width: 80%;
+    margin: 5px auto;
+}
+.skeleton{
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+@keyframes skeleton-loading{
+    0%{
+        background-color: rgb(115, 115, 117, 0.3);
+    }
+    100%{
+        background-color: rgba(79, 78, 88, 0.3);
+    }
+}
 /*This can generally be used to determine whether or not a screen should utilize a desktop
 or phone view. This prioritizes optimizing for small laptops (1336x768px) vs large phones*/
 @media (min-width: 961px) and (min-height: 720px) {
