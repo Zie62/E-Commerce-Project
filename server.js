@@ -107,6 +107,7 @@ const listingByID = async (id, res) => {
     }
     catch (error) {
         console.log(error)
+        res.status(500).send();
     }
 }
 //this commented out function was used to create and save new store listings
@@ -162,14 +163,14 @@ const checkForCart = async (session, update) => {
         //checks if the user has a cart
         let data = await Cart.find({ uid: session })
         //If they dont have a cart, create a new cart for them
-        if (data[0] === undefined) { createNewCart(session, update) }
+        if (data[0] === undefined) { return await createNewCart(session, update) }
         /*if they do have a cart, and there is an update to be made (rather than simply 
         checking for the cart), add the update to cart*/
-        if (update.id) { addToCart(session, update) }
+        if (update.id) { return await addToCart(session, update) }
     }
     catch (error) {
         console.log(error)
-        return
+        return false
     }
 };
 /*creates a new cart if the session cookie does not match an existing user. this allows
@@ -192,11 +193,11 @@ const createNewCart = async (uid, poster, email) => {
             //if there is an item to be added to the cart after saving the new cart, it is added here.
             if (poster['id']) { addToCart(uid, poster) }
         })
-        return "cart created"
+        return true
     }
     catch (error) {
         console.log(error)
-        return "cart failed to create"
+        return false
     }
 };
 /*This function adds an item to a users cart, checking for a handful of potential 
@@ -215,11 +216,11 @@ const addToCart = async (uid, poster) => {
     }
     catch (error) {
         console.log(error)
-        return
+        return false
     }
     //if the query does not return any objects, return void
     if (!cart[0]) {
-        return
+        return false
     }
     //this is where the actual array of items is in the cart
     cart = cart[0].cart
@@ -230,11 +231,11 @@ const addToCart = async (uid, poster) => {
         cart.push(updateObj)
         try {
             await Cart.findOneAndUpdate({ uid: uid }, { $set: { cart: cart } }, { new: true })
-            return
+            return true
         }
         catch (error) {
             console.log(error)
-            return
+            return false
         }
     }
     else {
@@ -246,11 +247,11 @@ const addToCart = async (uid, poster) => {
                 //sends cart update to database and returns void
                 try {
                     await Cart.updateOne({ uid: uid }, { $set: { cart: cart } }, { new: true })
-                    return
+                    return true
                 }
                 catch (error) {
                     console.log(error)
-                    return
+                    return false
                 }
             }
         }
@@ -258,11 +259,11 @@ const addToCart = async (uid, poster) => {
         cart.push(updateObj)
         try {
             await Cart.updateOne({ uid: uid }, { $set: { cart: cart } }, { new: true })
-            return
+            return true
         }
         catch (error) {
             console.log(error)
-            return
+            return false
         }
     }
 }
@@ -465,7 +466,7 @@ app.use(session({
     cookie: {
         //12 hours in miliseconds, easier to understand than a raw number
         maxAge: 1000 * 60 * 60 * 12,
-        secure: false
+        secure: true
     },
     store: sessions,
     resave: true,
@@ -503,7 +504,7 @@ app.get("/listing", async (req, res) => {
     await listingByID(req.query.id, res)
 });
 //single listing, fetched from the above API using the ID in the redirect query.
-app.get("/item", async (req, res) => {
+app.get("/item", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'singleListing.html'))
 });
 //returns all sale listings using a function defined earlier in the document
@@ -511,10 +512,17 @@ app.get("/sale-db", (req, res) => {
     giveSaleListings(res)
 });
 //updates the cart to contain a new item / updated quantity of an item
-app.post("/cart-add-now", (req, res) => {
+app.post("/cart-add-now", async (req, res) => {
     let update = req.body
-    checkForCart(req.cookies.usesh, update)
-    res.json({ status: "Cart Item Added Successfully" })
+    let status = await checkForCart(req.cookies.usesh, update)
+    console.log(status)
+    //status returns boolean value of true (meaning successful) or false.
+    if (status){
+        res.json({status: true})
+    }
+    else{
+        res.json({status: false})
+    }
 });
 //deletes an item from the cart and handles making the cart truly empty if relevant.
 app.post("/cart-delete-now", (req, res) => {

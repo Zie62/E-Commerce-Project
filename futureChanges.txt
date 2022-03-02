@@ -1,4 +1,3 @@
-Add proper loading animation to all pages (skeleton loading and ... for cart)
 verify server always returns errors when needed (sale-db, full-db, loginStatus, register, this-user-cart, listing)
 Frontend error messages for failed cart updating (cart-add-now, cart-delete-now)
 Re-structure listings to utilize the object they come in.

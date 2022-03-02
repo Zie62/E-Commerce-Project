@@ -10,8 +10,7 @@ class SingleLoading extends Component {
         super(props)
     }
     render() {
-        /*this is used to make 6 copies of these skeleton objects 
-        to populate the page during loading*/
+        //This mimics the structure of the single listing page but in grey blocks.
         return (
             <div>
                 <h2 className="feat-text">Loading...</h2>

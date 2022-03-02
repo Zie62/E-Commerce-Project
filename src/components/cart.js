@@ -100,7 +100,7 @@ class Cart extends Component {
             of that item*/
             //replace removes the . from the string to allow it to be parsed as an integer for calculations
             if (userCart[i][6]) {
-                discount += (parseInt((userCart[i][2]).replace(".", "")) - parseInt((userCart[i][3]).replace(".", ""))  * userCart[i][5])
+                discount += ((parseInt((userCart[i][2]).replace(".", "")) - parseInt((userCart[i][3]).replace(".", "")))  * userCart[i][5])
                 subTotal += (parseInt((userCart[i][3]).replace(".", "")) * userCart[i][5])
             }
             else { subTotal += (parseInt((userCart[i][2]).replace(".", "")) * userCart[i][5]) }
