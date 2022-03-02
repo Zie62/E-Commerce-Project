@@ -5,8 +5,10 @@ import NavBar from './components/navBar';
 import ListBody from './components/singListing';
 import Footer from './components/footer'
 import LogBar from './components/logbar'
+import singleLoading from './loadingcomponents/singleLoading';
 import populateCart from "./functions/cartPopulation";
 import Axios from 'axios';
+import SingleLoading from "./loadingcomponents/singleLoading";
 
 /*this array and get request populates a registry of all listings in the DB to be used
 for populating the cart entries which come in a stripped down form from the database 
@@ -16,7 +18,8 @@ class SingleListingDisplay extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cart: []
+            cart: [],
+            loading: true
         }
         this.cartLogout = this.cartLogout.bind(this)
         this.handleCartAdd = this.handleCartAdd.bind(this)
@@ -26,7 +29,8 @@ class SingleListingDisplay extends Component {
     async componentDidMount() {
         const newCart = await populateCart();
         this.setState({
-            cart: newCart
+            cart: newCart,
+            loading: false
         })
     }
     cartLogout() {
@@ -72,6 +76,15 @@ class SingleListingDisplay extends Component {
         })
     }
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <LogBar logout={this.cartLogout} />
+                    <NavBar cart={this.state.cart} />
+                    <SingleLoading />
+                </div>
+            )
+        }
         return (
             <div>
                 <LogBar logout={this.cartLogout} />

@@ -227,6 +227,8 @@ h1{
     align-self: center;
 }
 #single-middle{
+    height: 40vh;
+    width: 100%;
     text-align: center;
     order: 2;
 }
@@ -580,10 +582,12 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         max-width: 30vw;
     }
     #single-middle{
+        height: 30vh;
         width: 20vw;
         font-size: 3.5vh;
     }
     .right-side{
+        height: 40vh;
         width: 20vw;
     }
     #cart-icon{
@@ -660,7 +664,6 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
     }
     .image-display{
         height: 50vh;
-        width:auto;
         width: 30vw;
     }
     .image-selector{
