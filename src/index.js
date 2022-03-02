@@ -5,7 +5,7 @@ import LogBar from './components/logbar'
 import NavBar from './components/navBar';
 import HomeBody from './components/homeBody';
 import Footer from './components/footer';
-import MainLoading from './components/mainLoading';
+import MainLoading from './loadingcomponents/mainLoading';
 import populateCart from "./functions/cartPopulation";
 import Axios from "axios";
 

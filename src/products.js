@@ -5,7 +5,7 @@ import NavBar from './components/navBar';
 import FullStock from './components/fullStock';
 import Footer from './components/footer';
 import LogBar from './components/logbar';
-import MainLoading from "./components/mainLoading";
+import MainLoading from "./loadingcomponents/mainLoading";
 import populateCart from "./functions/cartPopulation";
 import Axios from 'axios';
 

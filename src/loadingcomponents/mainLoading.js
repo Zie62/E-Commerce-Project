@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-
+/*This component is loaded before the users cart or the actual item data is loaded on
+the sales and products page. This is done to allow for a contenful paint more quickly
+on slower networks so the user is not staring at what seems to be nothing more than an
+unpopulated page. Conveys that the page is loading, and they just have to wait a bit.
+Improves first contentful paint by about 5 seconds on slow 3g throttle setting. (chrome
+dev tools) */
 class MainLoading extends Component {
     constructor(props) {
         super(props)
