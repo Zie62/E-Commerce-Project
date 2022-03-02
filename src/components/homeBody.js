@@ -5,11 +5,7 @@ class HomeBody extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            names: [],
-            pics: [],
-            ogPrices: [],
-            disPrices: [],
-            ids: [],
+            listings: [],
             cartConfirmation: { class: 'clear', message: 'none' }
         }
         this.componentDidMount = this.componentDidMount.bind(this)
@@ -17,32 +13,15 @@ class HomeBody extends Component {
         this.cartOnClick = this.cartOnClick.bind(this)
     }
     async componentDidMount() {
-        /*axios gets a REST api which responds with a JSON object containing all
-        listing items which are on sale. I then use a for loop to organize the
-        JSON object into categories to be put in the state and referenced later.*/
+        /*these comments are preparing for updating this system to use the objects
+         they come in rather than splitting them into these arrays (i dont know why
+            i did this 3 months ago, it was a terrible approach).*/
+        //response.data = [{}, {}, ...] ; response.data[i] = {}
+        //this.setState({listings: response.data})
         try {
             let response = await Axios.get("/sale-db")
-            var nameList = []
-            var picList = []
-            var ogPrices = []
-            var disPrices = []
-            var idList = []
-            for (let i = 0; i < response.data.length; i++) {
-                let listing = response.data[i]
-                nameList.push(listing.name)
-                picList.push(listing.picture)
-                ogPrices.push(listing.ogPrice)
-                disPrices.push(listing.disPrice)
-                /*used to make URL's for each listing, referencing the ObjectID from the 
-                database. I turn them into strings to be concatenated later*/
-                idList.push(listing._id.toString())
-            }
             this.setState({
-                names: nameList,
-                pics: picList,
-                ogPrices: ogPrices,
-                disPrices: disPrices,
-                ids: idList
+                listings: response.data
             })
         }
         catch {
@@ -57,40 +36,67 @@ class HomeBody extends Component {
         across child components*/
         this.props.parentCall(listing)
         this.setState({
-            cartConfirmation: { class: 'confirmation', message: (`The ${listing[0]} was added to your cart`) }
+            cartConfirmation: { class: 'confirmation', message: (`The ${listing.name} was added to your cart`) }
         })
         setTimeout((() => this.setState({
             cartConfirmation: { class: 'clear', message: 'none' }
         })), 5000)
     }
     featLoader() {
-        //maps the state object to an array of arrays, where each one represents a listing
-        let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
+        //sample code for updated structuring:
+        // listing = {name, picture, ogPrice, disPrice, _id, sale}
+        //     picture = ["", "", "", ...]
+        console.log(this.state.listings)
+        console.log(this.state.listings.map((listing, i) => {return listing.name}))
         return (
-            /*each listing is constructed into a listing on the UI by mapping the zipper
-             array above, which is a map of the state such that each array within zipper
-             is a listing with each one of the relevant properties. indexing numbers are defined
-             within the zipper array defined above.*/
-            <div>
-                {zipper.map((listing, i) => (
+            <div> {
+                this.state.listings.map((listing, i) => (
                     <div className="feat-box" key={i}>
-                        <a href={"/item?id=".concat(listing[4])} className="feat-link">
-                            <img src={listing[1][0]} alt="image not loading" className="feat-img" />
+                        <a href={"/item?id=".concat(listing._id)} className="feat-link">
+                            <img src={listing.picture[0]} alt="image not loading" className="feat-img" />
                         </a>
                         <div className="feat-not-img">
-                            <a href={"/item?id=".concat(listing[4])} className="feat-link">
-                                <h2 className="feat-name">{listing[0]}</h2>
+                            <a href={"/item?id=".concat(listing._id)} className="feat-link">
+                                <h2 className="feat-name">{listing.name}</h2>
                             </a>
                         </div>
                         <div id="prices" className="feat-not-img">
-                            <h2 className="feat-price crossed">${listing[2]}</h2>
-                            <h2 className="feat-price">${listing[3]}</h2>
+                            <h2 className="feat-price crossed">${listing.ogPrice}</h2>
+                            <h2 className="feat-price">${listing.disPrice}</h2>
                         </div>
                         <button className="add-cart" onClick={() => { this.cartOnClick(listing) }}>Add to Cart</button>
                     </div>
-                ))}
+                ))
+            }
             </div>
         )
+        //maps the state object to an array of arrays, where each one represents a listing
+        // let zipper = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
+        // return (
+        //     /*each listing is constructed into a listing on the UI by mapping the zipper
+        //      array above, which is a map of the state such that each array within zipper
+        //      is a listing with each one of the relevant properties. indexing numbers are defined
+        //      within the zipper array defined above.*/
+        //     <div>
+        //         {zipper.map((listing, i) => (
+        //             <div className="feat-box" key={i}>
+        //                 <a href={"/item?id=".concat(listing[4])} className="feat-link">
+        //                     <img src={listing[1][0]} alt="image not loading" className="feat-img" />
+        //                 </a>
+        //                 <div className="feat-not-img">
+        //                     <a href={"/item?id=".concat(listing[4])} className="feat-link">
+        //                         <h2 className="feat-name">{listing[0]}</h2>
+        //                     </a>
+        //                 </div>
+        //                 <div id="prices" className="feat-not-img">
+        //                     <h2 className="feat-price crossed">${listing[2]}</h2>
+        //                     <h2 className="feat-price">${listing[3]}</h2>
+        //                 </div>
+        //                 <button className="add-cart" onClick={() => { this.cartOnClick(listing) }}>Add to Cart</button>
+        //             </div>
+        //         ))}
+        //     </div>
+        //)
     }
     render() {
         let confirm = this.state.cartConfirmation
