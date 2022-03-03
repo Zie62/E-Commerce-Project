@@ -4,62 +4,43 @@ import React, { Component } from 'react';
 class NavBar extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            cart: [["The Cart is Empty"]]
-        }
-        this.componentWillUpdate = this.componentWillUpdate.bind(this)
         this.cartUI = this.cartUI.bind(this)
-    }
-    componentWillUpdate() {
-        //handles updating the cart when new items are added to it
-        if (this.state.cart != this.props.cart && this.props.cart[0] != undefined) {
-            this.setState({
-                cart: this.props.cart
-            })
-        }
     }
     //handles the building of the cart UI based on the current parent state
     cartUI() {
-        //this and next if prevent undefined state or prop carts from crashing the page
-        if (this.state.cart[0] === undefined) {
-            this.setState({
-                cart: [["The cart is empty"]]
-            })
-            return (
-                <div>
-                    <h1 id="empty-cart">{this.props.cart[0][0]}</h1>
-                </div>
-            )
-        }
-        if (this.props.cart[0] === undefined || this.props.cart[0].length < 5) {
+        /*checks if the cart contains only a placeholder error message rather than 
+        an actual item listing.*/
+        if (Object.keys(this.props.cart[0]).length < 8) {
             // returns strings expressing the cart is empty if that is the case.
             return (
                 <div>
-                    <h1 id="empty-cart">{this.state.cart[0][0]}</h1>
+                    <h1 id="empty-cart">{this.props.cart[0].name}</h1>
                 </div>
             )
         }
         let saleMaker = (listing) => {
-            //listing[6] gives the sale status as a boolean
+            //listing.sale gives the sale status as a boolean
             /*Sale status is not required in the listing schema, 
-            but is added during sale turnover at midnight unix*/
-            if (listing[6] === undefined) {
+            but is added during sale turnover at midnight unix, so this 
+            makes sure if it has not had a sale value assigned it will
+            not crash the page.*/
+            if (listing.sale === undefined) {
                 return (
                     <div>
-                        <h2 className="cart-price">{listing[2]}</h2>
+                        <h2 className="cart-price">{listing.ogPrice}</h2>
                     </div>)
             }
-            if (listing[6]) {
+            else if (listing.sale) {
                 //2 and 3 are the indexs of original and sale prices respectively.
                 return (
                     <div>
-                        <h2 className="cart-price crossed">${listing[2]}</h2>
-                        <h2 className="cart-price">${listing[3]}</h2>
+                        <h2 className="cart-price crossed">${listing.ogPrice}</h2>
+                        <h2 className="cart-price">${listing.disPrice}</h2>
                     </div>
                 )
             }
             return (<div>
-                <h2 className="cart-price">{listing[2]}</h2>
+                <h2 className="cart-price">{listing.ogPrice}</h2>
             </div>)
         }
         /*maps each listing in the cart to a cart-item which contains the image, price,
@@ -68,19 +49,19 @@ class NavBar extends Component {
             <div>
                 {this.props.cart.map((listing, i) => (
                     <div className="cart-item" key={i}>
-                        <a href={"/item?id=".concat(listing[4])} className="cart-links">
-                            <img className="cart-img" src={listing[1][0]} />
+                        <a href={"/item?id=".concat(listing._id)} className="cart-links">
+                            <img className="cart-img" src={listing.picture[0]} />
                         </a>
                         <div id="cart-text">
-                            <a href={"/item?id=".concat(listing[4])} className="cart-links">
-                                <h4 className="cart-name">{listing[0]}</h4>
+                            <a href={"/item?id=".concat(listing._id)} className="cart-links">
+                                <h4 className="cart-name">{listing.name}</h4>
                             </a>
                             <div className="cart-prices">
                                 {saleMaker(listing)}
                             </div>
                         </div>
                         <div className="counter dd-counter">
-                            <h5 className="quantity">{listing[5]}</h5>
+                            <h5 className="quantity">{listing.quantity}</h5>
                         </div>
                     </div>
                 ))}

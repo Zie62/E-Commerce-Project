@@ -34,34 +34,36 @@ class Cart extends Component {
         }
     }
     itemsDisplay() {
-        //This is the message shown before the cart is filled
-        if (this.props.cart[0].length < 5) {
+        /*if the cart has an object at index 0 that does not have adequite keys (meaning it is a placeholder),
+        return loading text for 5 seconds, then tell the user it appears the cart is empty. This is no longer relevant
+        once the cart is loaded from the API call.*/
+        if (Object.keys(this.props.cart[0]).length < 5) {
             return (
                 <div>
                     <h1 className={this.loading(false)}>loading...</h1>
-                    <h1 className={this.loading(true)}>It appears your cart is empty. If not, do you have cookies disabled?</h1>
+                    <h1 className={this.loading(true)}>It appears your cart is empty or still loading. If not, do you have cookies disabled?</h1>
                 </div>
             )
         }
         let saleCheck = (listing) => {
             //listing[2] original price listing[3] discounted price
             //listing[6] is the sale indicator which is a boolean.
-            if (listing[6]) {
-                return listing[3]
+            if (listing.sale) {
+                return listing.disPrice
             }
-            return listing[2]
+            return listing.ogPrice
         }
         //maps the cart from the props
         return (
             <>
                 {this.props.cart.map((listing, i) => (
                     <div className="cart-item" key={i}>
-                        <a href={"/item?id=".concat(listing[4])} className="cart-links">
-                            <img className="cart-img" src={listing[1][0]} />
+                        <a href={"/item?id=".concat(listing._id)} className="cart-links">
+                            <img className="cart-img" src={listing.picture[0]} />
                         </a>
                         <div id="cart-text">
-                            <a href={"/item?id=".concat(listing[4])} className="cart-links">
-                                <h2 className="cart-name big-cart-name">{listing[0]}</h2>
+                            <a href={"/item?id=".concat(listing._id)} className="cart-links">
+                                <h2 className="cart-name big-cart-name">{listing.name}</h2>
                             </a>
                             {/*change the cart prices div to be conditional to the sale
                             of the given item.*/}
@@ -72,7 +74,7 @@ class Cart extends Component {
                         <div className='quantity-handlers'>
                             <div className="counter">
                                 <button className="increment-buttons minus" onClick={() => this.props.updater(listing, "-")}>-</button>
-                                <h2 className="quantity">{listing[5]}</h2>
+                                <h2 className="quantity">{listing.quantity}</h2>
                                 <button className="increment-buttons plus" onClick={() => this.props.updater(listing, "+")}>+</button>
                             </div>
                             <div className="remover">
@@ -85,9 +87,8 @@ class Cart extends Component {
         )
     }
     totalCalculations() {
-        //this has to be fixed to use integers rather than floats at some point.
-        //prevents an empty cart from rendering these elements.
-        if (this.props.cart[0] === undefined || this.props.cart[0].length < 5) {
+        //prices and price calculations are not shown if the cart contains a placeholder.
+        if (Object.keys(this.props.cart[0]).length < 5) {
             return (<div></div>)
         }
         let userCart = this.props.cart
@@ -99,20 +100,20 @@ class Cart extends Component {
             which expresses whether or not an item is on sale, 5 is the quantity
             of that item*/
             //replace removes the . from the string to allow it to be parsed as an integer for calculations
-            if (userCart[i][6]) {
-                discount += ((parseInt((userCart[i][2]).replace(".", "")) - parseInt((userCart[i][3]).replace(".", "")))  * userCart[i][5])
-                subTotal += (parseInt((userCart[i][3]).replace(".", "")) * userCart[i][5])
+            if (userCart[i].sale) {
+                discount += ((parseInt((userCart[i].ogPrice).replace(".", "")) - parseInt((userCart[i].disPrice).replace(".", "")))  * userCart[i].quantity)
+                subTotal += (parseInt((userCart[i].disPrice).replace(".", "")) * userCart[i].quantity)
             }
-            else { subTotal += (parseInt((userCart[i][2]).replace(".", "")) * userCart[i][5]) }
+            else { subTotal += (parseInt((userCart[i].ogPrice).replace(".", "")) * userCart[i].quantity) }
         }
         //parses the subtotal * .06 tax rate 
         let salesTax = parseInt(subTotal * 0.06)
         if (subTotal == 0) {
             salesTax = 0
         }
-        //putting these values to 2 decimal points to represent money
+        /*Decimalizer takes the integer values which represent total cents and turns them into
+        a string which takes the format of money ($$$$.¢¢)*/
         let total = Decimalizer((subTotal + salesTax));
-        //at this point it will be all integers with the last 2 numbers representing cents.
         subTotal = Decimalizer(subTotal);
         discount = Decimalizer(discount);
         salesTax = Decimalizer(salesTax);
@@ -125,7 +126,7 @@ class Cart extends Component {
                 </div>
                 <div>
                     <p id="total">Total: ${total}</p>
-                    <button className="add-cart" onClick={() => { location.href = 'https://no-rscripts.herokuapp.com/'; }}>Checkout</button>
+                    <button className="add-cart" onClick={() => { location.href = 'https://no-rscripts.herokuapp.com/' }}>Checkout</button>
                 </div>
             </div>
         )

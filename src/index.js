@@ -14,34 +14,22 @@ class HomePage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cart: [["The cart is empty"]],
+            cart: [{ name: "The Cart Is empty" }],
             logStatus: false,
             loading: true
         }
-        // this.initializeCart = this.initializeCart.bind(this)
         this.handleCartAdd = this.handleCartAdd.bind(this)
         this.serverCartAdd = this.serverCartAdd.bind(this)
         this.cartLogout = this.cartLogout.bind(this)
         this.componentDidMount = this.componentDidMount.bind(this)
     }
     async componentDidMount() {
-        // const newCart = await populateCart();
-        // this.setState({
-        //     cart: newCart,
-        //     loading: false
-        // })
+        const newCart = await populateCart();
         this.setState({
-            loading:false
+            cart: newCart,
+            loading: false
         })
     }
-    /*initializes the cart in the parent state to prevent an empty cart overwriting state
-     of child elements*/
-    // initializeCart(cart) {
-        // if (cart == undefined) { return }
-        // this.setState({
-        //     cart: cart
-        // })
-    // }
     cartLogout() {
         /*after logging the account out, this loads any potential previous cart
         linked to user session or if there is none, an empty cart*/
@@ -49,21 +37,16 @@ class HomePage extends Component {
     }
     //handles add to cart buttons in the body of the page.
     handleCartAdd(listing) {
-        //code for fixing cart structuring issues:
-        /* 
-        listing = {name, picture[], ogPrice, disPrice, _id, sale, quantity}
-        listing    [0]    [1]        [2]     [3]       [4]  [n/a]   [5]
-        */
         let newCart = this.state.cart
         if (newCart.length == 0) { }
-        /*if the new cart [0] is not an array of an item listing, (such as a string saying
-           its empty), remove that to allow the cart to resume regular functionality*/
-        else if (newCart[0].length < 5) {
+        /*if the new cart [0] object contains less than 5 keys, remove it as it is
+        an empty cart placeholder */
+        else if (Object.keys(this.state.cart[0]).length < 5) {
             newCart.splice(0, 1)
         }
         listing.quantity = 1
         for (let i = 0; i < newCart.length; i++) {
-            if (newCart[i]._id = listing._id) {
+            if (newCart[i]._id == listing._id) {
                 newCart[i].quantity = newCart[i].quantity + 1
                 this.setState({ cart: newCart })
                 this.serverCartAdd(listing._id, newCart[i].quantity)
@@ -71,36 +54,9 @@ class HomePage extends Component {
             }
         }
         newCart.push(listing)
-        this.setState
+        this.setState({ cart: newCart })
         this.serverCartAdd(listing._id, listing.quantity)
         return
-        //     let newCart = this.state.cart
-        //     //checks if the cart is empty, as if it is the next conditional crashes the function
-        //     if (newCart.length == 0) { }
-        //     /*if the new cart [0] is not an array of an item listing, (such as a string saying
-        //     its empty), remove that to allow the cart to resume regular functionality*/
-        //     else if (newCart[0].length < 5) {
-        //         newCart.splice(0, 1)
-        //     }
-        //     /*this will add a counter value to the end of the listing array
-        //     which i will use to maintain the number of a given item in the
-        //     shopping cart*/
-        //     listing.push(1)
-        //     for (let i = 0; i < newCart.length; i++) {
-        //         if (newCart[i].includes(listing[4])) {
-        //             //5 is the index of the quantity of an item in the shopping cart
-        //             newCart[i][5]++
-        //             this.setState({ cart: newCart })
-        //             //4 and 5 are the indexes of ObjectID and quantity within a given listing array
-        //             this.serverCartAdd(newCart[i][4], newCart[i][5])
-        //             return
-        //         };
-        //     }
-
-        //     newCart.push(listing)
-        //     this.setState({ cart: newCart })
-        //     this.serverCartAdd(listing[4], listing[5])
-        //
     }
     serverCartAdd(id, quant) {
         //this posts the ObjectID of the item added to the cart as well as the new quantity

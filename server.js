@@ -281,13 +281,13 @@ const getTheirCart = async (uid, res) => {
 }
 const deleteFromCart = (data, uid) => {
     let cart = data.cart
+    console.log(cart)
     /*slimCart is the stripped down cart stored in the database, only containing
     the ID of an item and the quantity of that item. The display information is populated
     on the frontend before being shown on UI.*/
     let slimCart = []
     for (i = 0; i < cart.length; i++) {
-        //4 and 5 are the indexes of the ID and quantity of a listing within the passed data structure
-        slimCart[i] = [cart[i][4], cart[i][5]]
+        slimCart[i] = [cart[i]._id, cart[i].quantity]
     }
     //for loop populates slimCart[0] with null when cart is empty, this clears that out.
     if (slimCart[0] === undefined || slimCart[0][0] === undefined) {
@@ -466,7 +466,7 @@ app.use(session({
     cookie: {
         //12 hours in miliseconds, easier to understand than a raw number
         maxAge: 1000 * 60 * 60 * 12,
-        secure: true
+        secure: false
     },
     store: sessions,
     resave: true,

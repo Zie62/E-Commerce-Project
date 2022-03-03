@@ -7,12 +7,7 @@ class ListBody extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            pic: [],
-            ogPrice: "",
-            disPrice: "",
-            sale: false,
-            description: "",
+            listing: {},
             cartConfirmation: { class: 'clear', message: 'none' },
             imgFocus: 0
         }
@@ -27,21 +22,14 @@ class ListBody extends Component {
         //fetches the specific listing for the single page
         try {
             let response = await Axios.get("/listing?id=".concat(params.get('id')))
-            let data = response.data[0]
             this.setState({
-                name: data.name,
-                pic: data.picture,
-                ogPrice: data.ogPrice,
-                disPrice: data.disPrice,
-                id: data._id.toString(),
-                sale: data.sale,
-                description: data.description
+                listing: response.data[0]
             })
         }
         catch {
-            //displays an error message if the item information cannot be retrieved.
+            //if for some reason the axios call cannot work, this shows an error message in a banner
             this.setState({
-                cartConfirmation: { class: "confirmation", message: "Item failed to load. Please try again or come back later." }
+                cartConfirmation: { class: "confirmation", message: "The page has failed to load. Please try again, or come back later." }
             })
         }
     }
@@ -52,7 +40,7 @@ class ListBody extends Component {
         /*this cartConfirmation state object conditionally changes the class of the 
         confirmation bar when an add to cart button is pressed*/
         this.setState({
-            cartConfirmation: { class: 'confirmation', message: `The ${listing[0]} has been added to your cart` }
+            cartConfirmation: { class: 'confirmation', message: `The ${listing.name} has been added to your cart` }
         })
         //timeout to make the confirmation message last 5 seconds
         setTimeout((() => this.setState({
@@ -61,7 +49,7 @@ class ListBody extends Component {
     }
     saleCheck(original, discount) {
         //shows sale or original price for a listing depending on its sale status
-        if (this.state.sale) {
+        if (this.state.listing.sale) {
             return (
                 <div>
                     <h5 className="sing-price crossed">${original}</h5>
@@ -88,28 +76,34 @@ class ListBody extends Component {
             return "clear"
         }
         let imageMapper = () => {
-            return (
-                <>
-                    {pictures.map((pic, i) => (
-                        <>
-                            <img src={pic} key={"big".concat(i)} className={displayClass(i)} alt="Image failed to load" />
-                        </>
-                    ))}
-                </>
-            )
+            if (pictures) {
+                return (
+                    <>
+                        {pictures.map((pic, i) => (
+                            <>
+                                <img src={pic} key={"big".concat(i)} className={displayClass(i)} alt="Image failed to load" />
+                            </>
+                        ))}
+                    </>
+                )
+            }
+            else { return console.log("pictures not here yet") }
         }
         let thumbMapper = () => {
-            return (
-                <>
-                    {pictures.map((pic, i) => (
-                        <>
-                            <button className="thumb-button" onClick={() => { thumbOnClick(i) }}>
-                                <img src={pic} key={"small".concat(i)} className="thumbnail" alt="oops" />
-                            </button>
-                        </>
-                    ))}
-                </>
-            )
+            if (pictures) {
+                return (
+                    <>
+                        {pictures.map((pic, i) => (
+                            <>
+                                <button className="thumb-button" onClick={() => { thumbOnClick(i) }}>
+                                    <img src={pic} key={"small".concat(i)} className="thumbnail" alt="oops" />
+                                </button>
+                            </>
+                        ))}
+                    </>
+                )
+            }
+            else {return console.log("pictures not here yet")}
         }
         //controls which image is displayed depending on which one is clicked by the user
         return (
@@ -125,25 +119,24 @@ class ListBody extends Component {
     }
     render() {
         //some abbreviations for using throughout the render function
-        let listing = [this.state.name, this.state.pic, this.state.ogPrice, this.state.disPrice, this.state.id]
         let confirm = this.state.cartConfirmation
         return (
             <div>
                 <div className={confirm.class}>
                     <h1>{confirm.message}</h1>
                 </div>
-                <h1 className="feat-text item-text">{this.state.name}</h1>
+                <h1 className="feat-text item-text">{this.state.listing.name}</h1>
                 <div className="sing-listing">
                     {/*Creates a layout for displaying any number of images*/}
-                    {this.imagesHandler(this.state.pic)}
+                    {this.imagesHandler(this.state.listing.picture)}
                     <div id="single-middle">
-                        <p className="description">{this.state.description}
+                        <p className="description">{this.state.listing.description}
                         </p>
                     </div>
                     <div className="right-side">
                         <div className="price-cart">
-                            {this.saleCheck(this.state.ogPrice, this.state.disPrice)}
-                            <button className="add-cart-single" onClick={() => { this.cartOnClick(listing) }}>Add to Cart</button>
+                            {this.saleCheck(this.state.listing.ogPrice, this.state.listing.disPrice)}
+                            <button className="add-cart-single" onClick={() => { this.cartOnClick(this.state.listing) }}>Add to Cart</button>
                         </div>
                     </div>
                 </div>

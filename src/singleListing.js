@@ -5,10 +5,9 @@ import NavBar from './components/navBar';
 import ListBody from './components/singListing';
 import Footer from './components/footer'
 import LogBar from './components/logbar'
-import singleLoading from './loadingcomponents/singleLoading';
+import SingleLoading from './loadingcomponents/singleLoading';
 import populateCart from "./functions/cartPopulation";
 import Axios from 'axios';
-import SingleLoading from "./loadingcomponents/singleLoading";
 
 /*this array and get request populates a registry of all listings in the DB to be used
 for populating the cart entries which come in a stripped down form from the database 
@@ -18,7 +17,7 @@ class SingleListingDisplay extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cart: [],
+            cart: [{name: "Cart is empty"}],
             loading: true
         }
         this.cartLogout = this.cartLogout.bind(this)
@@ -28,6 +27,8 @@ class SingleListingDisplay extends Component {
     }
     async componentDidMount() {
         const newCart = await populateCart();
+        console.log("This is newCart in parent js file")
+        console.log(newCart)
         this.setState({
             cart: newCart,
             loading: false
@@ -41,32 +42,25 @@ class SingleListingDisplay extends Component {
     //handles add to cart buttons in the body of the page.
     handleCartAdd(listing) {
         let newCart = this.state.cart
-        //checks if the cart is empty, as if it is the next conditional crashes the function
-        console.log(listing)
-        console.log(newCart)
         if (newCart.length == 0) { }
-        /*if the new cart [0] is not an array of an item listing, (such as a string saying
-        its empty), remove that to allow the cart to resume regular functionality*/
-        else if (newCart[0].length < 5) {
+        /*if the new cart [0] object contains less than 5 keys, remove it as it is
+        an empty cart placeholder */
+        else if (Object.keys(this.state.cart[0]).length < 5) {
             newCart.splice(0, 1)
         }
-        /*this will add a counter value to the end of the listing array
-        which i will use to maintain the number of a given item in the
-        shopping cart*/
-        listing.push(1)
+        listing.quantity = 1
         for (let i = 0; i < newCart.length; i++) {
-            if (newCart[i].includes(listing[4])) {
-                //5 is the index of the quantity of an item in the shopping cart
-                newCart[i][5]++
+            if (newCart[i]._id = listing._id) {
+                newCart[i].quantity = newCart[i].quantity + 1
                 this.setState({ cart: newCart })
-                //4 and 5 are the indexes of ObjectID and quantity within a given listing array
-                this.serverCartAdd(newCart[i][4], newCart[i][5])
+                this.serverCartAdd(listing._id, newCart[i].quantity)
                 return
-            };
+            }
         }
         newCart.push(listing)
         this.setState({ cart: newCart })
-        this.serverCartAdd(listing[4], listing[5])
+        this.serverCartAdd(listing._id, listing.quantity)
+        return
     }
     serverCartAdd(id, quant) {
         //this posts the ObjectID of the item added to the cart as well as the new quantity

@@ -1,3 +1,1 @@
-Frontend error messages for failed cart updating (cart-add-now, cart-delete-now)
-Re-structure listings to utilize the object they come in. (index.js and homeBody.js are done)
-still needed: (navBar.js, products.js/fullStock, singleListing)
+Make UI scalable with zoom so it can fit on any desktop properly. (avoid vh and vw)

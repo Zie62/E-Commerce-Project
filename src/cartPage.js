@@ -31,33 +31,42 @@ class CartPage extends Component {
         this.componentDidMount();
     }
     updateCart(newListing, operation) {
-        let localIndex = this.state.cart.indexOf(newListing)
+        //this isnt working lol
+        let localIndex
+        /*this filter determines the index of the relevant object within the cart so 
+        it can be updated to the same index later.*/
+        this.state.cart.filter((obj, i) =>{
+            if (obj._id == newListing._id){
+                localIndex = i
+                return
+            }
+        })
         //if the + button is pressed, this adds to the quantity of the item
         if (operation == "+") {
-            //quantity of an item within the listing array structure is at index 5.
-            newListing[5]++
+            //sets the quantity equal to existing quantity + 1
+            newListing.quantity++
         }
         //handles delete operations using the "remove" button on the cart page.
         else if (operation == 'delete') {
-            let newCart = this.state.cart
+            let newCart = [...this.state.cart]
             /*if the newCart length is 1 and that single item is being removed, this handles
             making the cart empty on the database and showing an empty cart message*/
             if (newCart.length == 1) {
-                newCart = []
                 this.setState({
                     cart: [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']]
                 })
                 //posts the new, empty cart to the database
                 Axios.post(
                     "/cart-delete-now", {
-                    cart: newCart
+                    cart: []
                 }
                 )
                 return
             }
-            /*if the item being removed is not the last item, this splices it out then
+            /*if the item being removed is not the only item, this splices it out then
             sets the state with the new cart*/
             else { newCart.splice(localIndex, 1) }
+            console.log(newCart)
             this.setState({
                 cart: newCart
             })
@@ -71,12 +80,12 @@ class CartPage extends Component {
         /*The only remaining operation is the minus button, so this subtracts from the
         item if that button is pressed*/
         else {
-            newListing[5]--
+            newListing.quantity--
         }
         let newCart = this.state.cart
         /*if this makes quantity 0, this removes the item from the cart and handles
         database and UI updating*/
-        if (newListing[5] <= 0) {
+        if (newListing.quantity <= 0) {
             newCart.splice(localIndex, 1);
             if (newCart.length == 0) {
                 Axios.post(
@@ -98,11 +107,11 @@ class CartPage extends Component {
         })
         /*last check to make sure the quantity of an item is greater than 0 and 
          updates the database accordingly*/
-        if (newListing[5] > 0) {
+        if (newListing.quantity > 0) {
             Axios.post(
                 "/cart-add-now", {
-                id: newListing[4],
-                quantity: newListing[5]
+                id: newListing._id,
+                quantity: newListing.quantity
             }
             )
         }

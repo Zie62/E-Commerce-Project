@@ -245,7 +245,7 @@ h1{
 
 /*cart stuff for navbar starts here */
 #empty-cart{
-    font-size: 8vh
+    font-size: 0.5em
 }
 .cart-drop{
     grid-area: ca;

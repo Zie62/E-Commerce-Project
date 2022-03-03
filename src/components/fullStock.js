@@ -6,12 +6,7 @@ class FullList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            names: [],
-            pics: [],
-            ogPrices: [],
-            disPrices: [],
-            ids: [],
-            sales: [],
+            listings: [],
             cartConfirmation: { class: 'clear', message: 'none' }
         }
         this.componentDidMount = this.componentDidMount.bind(this)
@@ -19,38 +14,17 @@ class FullList extends Component {
         this.cartOnClick = this.cartOnClick.bind(this)
     }
     async componentDidMount() {
-        /*this axios function calls my /full-db REST API then passes the JSON to a nameless 
-        function which puts the relevant data into the state to be referenced every time the
-        web page is opened*/
         try {
+            //retrieves all the items then sets the state.listings = those listings
             let response = await Axios.get("/full-db")
-            var nameList = []
-            var picList = []
-            var ogPrices = []
-            var disPrices = []
-            var idList = []
-            var salesList = []
-            for (let i = 0; i < response.data.length; i++) {
-                let listing = response.data[i]
-                nameList.push(listing.name)
-                picList.push(listing.picture)
-                ogPrices.push(listing.ogPrice)
-                disPrices.push(listing.disPrice)
-                idList.push(listing._id.toString())
-                salesList.push(listing.sale)
-            }
             this.setState({
-                names: nameList,
-                pics: picList,
-                ogPrices: ogPrices,
-                disPrices: disPrices,
-                ids: idList,
-                sales: salesList
+                listings: response.data
             })
         }
         catch {
+            //if for some reason the axios call cannot work, this shows an error message in a banner
             this.setState({
-                cartConfirmation: {class: "confirmation", message: "The page has failed to load. Either retry, or try again later."}
+                cartConfirmation: { class: "confirmation", message: "The page has failed to load. Please try again, or come back later." }
             })
         }
     }
@@ -61,45 +35,45 @@ class FullList extends Component {
         /*these change the class and text of a banner to confirm items being added
         to the cart, then causes it to disappear. */
         this.setState({
-            cartConfirmation: { class: 'confirmation', message: `The ${listing[0]} has been added to your cart` }
+            cartConfirmation: { class: 'confirmation', message: `The ${listing.name} has been added to your cart` }
         })
         setTimeout((() => this.setState({
             cartConfirmation: { class: 'clear', message: 'none' }
         })), 5000)
     }
     listingsMap() {
-        /*listings turns the state into an array of arrays where each one represents
-        a listing to be displayed on the webpage. */
-        let listings = this.state.names.map((name, i) => [name, this.state.pics[i], this.state.ogPrices[i], this.state.disPrices[i], this.state.ids[i]]);
-        /*checks sale status of each item at index i and returns a */
-        let crossCheck = (i) => {
-            if (this.state.sales[i]) {
-                return "feat-price crossed"
-            }
-            return "feat-price"
-        }
-        let saleCheck = (i) => {
-            if (this.state.sales[i]) {
+        /*checks sale status of each item and returns appropriate CSS classes. */
+        let saleCheck = (sale, discount) => {
+            /*if the item is on sale, display discounted price properly
+            if it is not, display original price properly*/
+            if (sale && discount || !sale && !discount) {
                 return "feat-price"
             }
-            return "clear"
+            //if the item is on sale but it is not the discount price being checked, cross out the original price
+            else if (sale && !discount){
+                return "feat-price crossed"
+            }
+            //if the item is not on sale, do not display the discount price
+            else if(discount){
+                return "clear"
+            }
         }
         return (
             //maps the zipper array into individual UI elements to be rendered. 
             <div>
-                {listings.map((listing, i) => (
+                {this.state.listings.map((listing, i) => (
                     <div className="feat-box" key={i}>
-                        <a href={"/item?id=".concat(listing[4])} className="feat-link">
-                            <img src={listing[1][0]} alt="oopsies" className="feat-img" />
+                        <a href={"/item?id=".concat(listing._id)} className="feat-link">
+                            <img src={listing.picture[0]} alt="image not loading" className="feat-img" />
                         </a>
                         <div className="feat-not-img">
-                            <a href={"/item?id=".concat(listing[4])} className="feat-link">
-                                <h2 className="feat-name">{listing[0]}</h2>
+                            <a href={"/item?id=".concat(listing._id)} className="feat-link">
+                                <h2 className="feat-name">{listing.name}</h2>
                             </a>
                         </div>
                         <div id="prices" className="feat-not-img">
-                            <h2 className={crossCheck(i)}>${listing[2]} </h2>
-                            <h2 className={saleCheck(i)} >${listing[3]}</h2>
+                            <h2 className={saleCheck(listing.sale, false)}>${listing.ogPrice}</h2>
+                            <h2 className={saleCheck(listing.sale, true)}>${listing.disPrice}</h2>
                         </div>
                         <button className="add-cart" onClick={() => { this.cartOnClick(listing) }}>Add to Cart</button>
                     </div>

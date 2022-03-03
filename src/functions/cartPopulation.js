@@ -2,57 +2,46 @@ import Axios from 'axios';
 /*this function is used in multiple components, so I  created it as a standalone function
 to prevent code repeating itsself.*/
 const populateCart = async () => {
-    let listings = [];
-    //this retrieves the full database of listings so the cart can be populated.
-    //it is only stored with 2 values in DB, item _id and quantity.
-    let fulldb
-    try {
-        fulldb = await Axios.get("/full-db")
-    }
-    catch {
-        return [['There was an error loading your cart']]
-    }
-    for (let i = 0; i < fulldb.data.length; i++) {
-        let listing = fulldb.data[i]
-        let localListing = []
-        //this order is arbitrary, but maintained throughout the app.
-        //in the future i would not do this, but instead use the objects in an array to get mapped.
-        localListing.push(listing.name, listing.picture, listing.ogPrice,
-            listing.disPrice, listing._id.toString(), undefined, listing.sale)
-        listings.push(localListing)
-    }
-    let newCart = []
-    let listing = []
     //api which returns a users cart based on the session ID.
     let userCart
-    try{
+    try {
         userCart = await Axios.get('/this-user-cart')
+        console.log(userCart)
     }
-    catch{
-        return [['There was an error loading your cart']]
+    catch {
+        return [{ name: "There was an error loading your cart" }]
     }
-    if (userCart['data'].length == 0) {
-        return [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']]
+    //if their cart does not exist, returns a message saying it is empty.
+    /*this prevents retrievedCart definition from crashing page due to
+    userCart.data[0] not existing*/
+    if (userCart.data.length == 0) {
+        return [{ name: 'There is nothing in your cart. If this is incorrect, do you have cookies enabled?' }]
     }
-    let retrievedCart = userCart['data'][0]['cart'] || ""
-    if (retrievedCart.length == 0) {
-        newCart = [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']]
+    //retrievedCart = [[id, quantity], [], [], ...]
+    let retrievedCart = userCart.data[0].cart
+    console.log(retrievedCart)
+    //if their cart exists but is empty, returns a message saying that.
+    if (retrievedCart.length < 1) {
+        return [{ name: 'There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.' }]
     }
+    //retrieves all items from the database to be referenced against the id's of items in the users cart
+    let listings = await Axios.get("/full-db");
+    // .data is the object adress of the listings from the API.
+    listings = listings.data
+    //listings.data = [{}, {}, {}, ...]
     //i is the index of the item in user cart from DB, j is index of all listings
+    let newCart = []
     for (let i = 0; i < retrievedCart.length; i++) {
         for (let j = 0; j < listings.length; j++) {
             /*i want to cross reference each user cart item ID with each listing to 
             find the one with the relevant information*/
-            if (retrievedCart[i][0] == listings[j][4]) {
-                //this populates the listing to be pushed to the local cart.
-                listing = listings[j]
-                /*fills the index 5 with the quantity of the item. this is the index
-                all of my code expects it at but i had to add sales to the listings
-                arrays so i couldnt just push.*/
-                listing[5] = (retrievedCart[i][1])
-                newCart.push(listing)
+            if (retrievedCart[i][0] == listings[j]._id.toString()) {
+                //this populates the listing with the quantity in a users cart.
+                listings[j].quantity = retrievedCart[i][1]
+                //this then pushes that listing into the users cart.
+                newCart.push(listings[j])
             }
-            else { }
+            //if the ID's do not match up, simply allow the loop to continue
         }
     }
     return newCart
