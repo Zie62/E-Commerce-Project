@@ -572,7 +572,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         display:flex;
         flex-direction: row;
         justify-content:space-around;
-        font-size: 4.5vh;
+        font-size: 3rem;
         margin-top: 5vh;
     }
     .full-img{

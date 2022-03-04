@@ -115,7 +115,12 @@ class Cart extends Component {
         a string which takes the format of money ($$$$.¢¢)*/
         let total = Decimalizer((subTotal + salesTax));
         subTotal = Decimalizer(subTotal);
+        if(!discount){
+            discount = "0.00"
+        }
+        else{
         discount = Decimalizer(discount);
+        }
         salesTax = Decimalizer(salesTax);
         return (
             <div id="totals">

@@ -38,6 +38,9 @@ class HomeBody extends Component {
         })), 5000)
     }
     featLoader() {
+        /* This div has className width100 because for some reason it was defaulting to ~60% width
+        despite the same structure not doing that on the products page. Still unsure what caused it,
+        but I do know what fixed it.*/
         return (
             <div className="width100"> {
                 this.state.listings.map((listing, i) => (
