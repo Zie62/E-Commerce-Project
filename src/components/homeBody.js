@@ -39,7 +39,7 @@ class HomeBody extends Component {
     }
     featLoader() {
         return (
-            <div> {
+            <div className="width100"> {
                 this.state.listings.map((listing, i) => (
                     <div className="feat-box" key={i}>
                         <a href={"/item?id=".concat(listing._id)} className="feat-link">
@@ -68,7 +68,7 @@ class HomeBody extends Component {
                 <div className={confirm.class}>
                     <h1>{confirm.message}</h1>
                 </div>
-                <h2 className="feat-text">Featured Deals</h2>
+                <h1 className="feat-text">Featured Deals</h1>
                 <div className="feat-package">
                     {/*This calls a function which maps the state imported from the 
                         database sale API on component mount into HTML elements to be

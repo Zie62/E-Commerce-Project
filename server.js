@@ -466,7 +466,7 @@ app.use(session({
     cookie: {
         //12 hours in miliseconds, easier to understand than a raw number
         maxAge: 1000 * 60 * 60 * 12,
-        secure: false
+        secure: true
     },
     store: sessions,
     resave: true,

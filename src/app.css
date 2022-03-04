@@ -33,7 +33,7 @@ h1{
 #header{ 
     align-items:center;
     display:grid;
-    height: 22vh;
+    height: 22%;
     background-color:white;
     text-align:center;
     grid-template-columns: repeat(6, 1fr);
@@ -44,7 +44,7 @@ h1{
     justify-self:flex-start;
 }
 .logo-div img{
-    max-height:20vh;
+    max-height:30%;
 }
 .logo{
     max-width: 33vw;
@@ -57,7 +57,7 @@ h1{
 }
 .dropdown-bar{
     position:relative;
-    font-size: 10vh;
+    font-size: larger;
 }
 .dropdown-item{
     color:white;
@@ -484,6 +484,9 @@ h1{
     padding: 10px 0px;
     color:white
 }
+.width100{
+    width:100%
+}
 .skele-img{
     height:20vh;
     width:20vw;
@@ -531,21 +534,21 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
     }
     .logo{
         width: auto;
-        height: 20vh;
+        height: 20%;
     }
     .feat-text{
-        height: 6.5vh;
-        font-size: 4vh;
+        height: 7%;
+        font-size: xxx-large;
     }
     .feat-img{
         margin-top: 2%;
     }
     .feat-box{
         display: flex;
-        width:30vw;
-        height: 40vh;
-        margin-top: 3vh;
-        margin-left: 2.5vw;
+        width:30%;
+        height: 100%;
+        margin-top: 3%;
+        margin-left: 2.5%;
         box-shadow: 8px 4px 4px rgb(49,48,48);
         background-color: white;
         float: left;
@@ -554,11 +557,11 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         flex-direction: column;
         z-index: 10;
     }
-    .feat-not-img{
-        font-size: 3vh;
+    .feat-not-img h2{
+        font-size: 1.3em;
     }
     .header{
-        height: 20vh;
+        height: 20%;
     }
     .add-cart{
         margin-top: 2.5vh;

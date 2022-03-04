@@ -68,26 +68,26 @@ class HomePage extends Component {
     render() {
         if (this.state.loading) {
             return (
-                <div>
+                <>
                     <LogBar logout={this.cartLogout} />
                     <NavBar cart={this.state.cart} />
                     <MainLoading />
-                </div>
+                </>
             )
         }
         return (
-            <div>
+            <>
                 <LogBar logout={this.cartLogout} />
                 <NavBar cart={this.state.cart} />
                 <HomeBody parentCall={this.handleCartAdd} />
                 <Footer />
-            </div>
+            </>
         )
     }
 }
 
 ReactDOM.render(
-    <div>
+    <>
         <HomePage />
-    </div>,
+    </>,
     document.getElementById("root"));

@@ -72,25 +72,25 @@ class FullPage extends Component {
     render() {
         if (this.state.loading) {
             return (
-                <div>
+                <>
                     <LogBar logout={this.cartLogout} />
                     <NavBar cart={this.state.cart} />
                     <MainLoading />
-                </div>
+                </>
             )
         }
         return (
-            <div>
+            <>
                 <LogBar logout={this.cartLogout} />
                 <NavBar cart={this.state.cart} />
                 <FullStock parentCall={this.handleCartAdd} />
                 <Footer />
-            </div>
+            </>
         )
     }
 }
 ReactDOM.render(
-    <div>
+    <>
         <FullPage />
-    </div>,
+    </>,
     document.getElementById("root"));
