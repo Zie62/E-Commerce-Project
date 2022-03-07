@@ -650,7 +650,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         padding: 4vh 3vw;
         margin-top: 5px;
         text-align: center;
-        font-size: 2.2rem
+        font-size: 1.4rem
     }
     .cart-summary{
         display: flex;
