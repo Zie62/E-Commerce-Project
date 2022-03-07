@@ -61,7 +61,13 @@ const cartSchema = new Schema({
     account: { type: String, required: false },
 }, { capped: { max: 5000, autoIndexId: true } })
 const Cart = mongoose.model("Carts", cartSchema)
-
+//schema for ordered carts / "order history" for users.
+const ordersSchema = new Schema({
+    account: {type: String, required: true},
+    cart: {type: Array, required: true},
+    timestamp: {type: Date, required: true},
+    })
+const Orders = mongoose.model("Orders", ordersSchema)
 /*this checks if the next day has passed and updates the sales 
 property of random listings if it has. I decided to do this to create an artificial 
 "specials" page that would change on a timer to give an illusion of daily sales.*/

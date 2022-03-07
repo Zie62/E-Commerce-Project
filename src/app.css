@@ -636,11 +636,12 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         grid-template-columns: 2fr 1fr;
     }
     .big-cart-name{
-        font-size: 5vh;
+        font-size: 4rem;
     }
     #totals{
         align-content: center;
         justify-content: center;
+        max-height: 40vh;
         border-top: none;
         grid-template-columns: none;
         grid-template-rows: repeat(2, 1fr);
@@ -649,6 +650,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         padding: 4vh 3vw;
         margin-top: 5px;
         text-align: center;
+        font-size: 2.2rem
     }
     .cart-summary{
         display: flex;

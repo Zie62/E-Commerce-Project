@@ -1,1 +1,5 @@
 Make UI scalable with zoom so it can fit on any desktop properly. (avoid vh and vw)
+Currently done all but cart listing name + price 
+make account page with previous "orders" and integrate cart checkout button moving cart to
+previous orders rather than simply redirecting to the homepage.
+Make cart page default to saying it is empty when the cart is emptied.
