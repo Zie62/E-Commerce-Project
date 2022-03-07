@@ -15,7 +15,6 @@ class HomePage extends Component {
         super(props)
         this.state = {
             cart: [{ name: "The Cart Is empty" }],
-            logStatus: false,
             loading: true
         }
         this.handleCartAdd = this.handleCartAdd.bind(this)

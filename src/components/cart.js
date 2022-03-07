@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { Component } from 'react';
 import Decimalizer from '../functions/decimalizer';
 
@@ -10,6 +11,7 @@ class Cart extends Component {
         this.itemsDisplay = this.itemsDisplay.bind(this)
         this.totalCalculations = this.totalCalculations.bind(this)
         this.loading = this.loading.bind(this)
+        this.checkOut = this.checkOut.bind(this)
     }
     loading(status) {
         /*returns either a class with display:none or no class depending on loading 
@@ -31,6 +33,16 @@ class Cart extends Component {
                 })
             }, 5000);
             return ""
+        }
+    }
+    async checkOut(e){
+        e.preventDefault();
+        let results = await Axios.post("/checkout");
+        if (results){
+            location.href = "http://localhost:5000"
+        }
+        else{
+            console.log("Was not checked out :(")
         }
     }
     itemsDisplay() {
@@ -131,7 +143,7 @@ class Cart extends Component {
                 </div>
                 <div>
                     <p id="total">Total: ${total}</p>
-                    <button className="add-cart" onClick={() => { location.href = 'https://no-rscripts.herokuapp.com/' }}>Checkout</button>
+                    <button className="add-cart" onClick={(e) => this.checkOut(e)}>Checkout</button>
                 </div>
             </div>
         )

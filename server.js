@@ -63,11 +63,11 @@ const cartSchema = new Schema({
 const Cart = mongoose.model("Carts", cartSchema)
 //schema for ordered carts / "order history" for users.
 const ordersSchema = new Schema({
-    account: {type: String, required: true},
-    cart: {type: Array, required: true},
-    timestamp: {type: Date, required: true},
-    })
-const Orders = mongoose.model("Orders", ordersSchema)
+    account: { type: String, required: true },
+    cart: { type: Array, required: true },
+    timestamp: { type: Date, required: true },
+})
+const Order = mongoose.model("Orders", ordersSchema)
 /*this checks if the next day has passed and updates the sales 
 property of random listings if it has. I decided to do this to create an artificial 
 "specials" page that would change on a timer to give an illusion of daily sales.*/
@@ -136,7 +136,13 @@ const giveAllListings = async (res) => {
             res.status(500).send();
         }
         else {
+            //responds with results to frontend if relevant, otherwise returns the values.
+            if(res){
             res.json(results)
+            }
+            else{
+            return results
+            }
         }
     }
     catch (error) {
@@ -360,7 +366,7 @@ const loginUserAccount = async (body, sessionid, res) => {
             await User.findOneAndUpdate({ email: email }, { $set: { sessionId: sessionid } }, { new: true })
             //Checks for existing cart linked to the account and links it to users session
             try {
-                accountCartCheck(email, sessionid)
+                accountCartCheck(email, sessionid, res)
                 await Cart.findOneAndUpdate({ account: email }, { $set: { uid: sessionid } }, { new: true })
                 /*currently this wont do anything as I havent made the mechanism for linking a cart to
                 an account when its made, but will be useful later. */
@@ -375,11 +381,11 @@ const loginUserAccount = async (body, sessionid, res) => {
         }
     }
     catch {
-        res.status(500).send()
+        return false
     }
 }
 //checks for existing account cart
-const accountCartCheck = async (email, sessionid) => {
+const accountCartCheck = async (email, sessionid, res) => {
     try {
         //looks for a potential, existing cart linked to their account
         let potentialCart = await Cart.findOne({ account: email })
@@ -399,11 +405,15 @@ const accountCartCheck = async (email, sessionid) => {
             }
         }
         else {
+            /*if there exists a cart for their account, remove thier sessionId from their guest cart,
+            this prevents multiple carts with shared sessionId which could screw up checkout process*/
+            await Cart.findOneAndUpdate({ uid: sessionid }, { $set: { uid: undefined } }, { new: true })
             //if there exists a cart for their account, add their current session id to it
             await Cart.findOneAndUpdate({ account: email }, { $set: { uid: sessionid } }, { new: true })
         }
     }
     catch (error) {
+        console.log(error)
         res.status(500).send()
     }
     return
@@ -447,6 +457,67 @@ const logOut = async (session, email, res) => {
         res.status(500).send();
     }
     return
+}
+//"checks out" a users cart, which can then be viewed on the account page's "Orders" section.
+const checkOut = async (session) => {
+    //finds the relevant user
+    try {
+        let user = await User.findOne({ sessionId: session })
+        if (!user) {
+            //if the person checking out is a guest, simply empties their cart.
+            //might integrate an email confirmation system to make this meaningful
+            await Cart.findOneAndUpdate({ uid: session }, { $set: { cart: [] } }, { new: true })
+            return true
+        }
+        //retrieves relevant cart, populates the order, then saves the order
+        let cart = await Cart.findOne({ account: user.email, uid: session })
+        //cart.cart = [[], [], []]
+        let populated = await populateOrder(cart.cart)
+        console.log(populated[0])
+        let order = new Order({ cart: populated, account: user.email, timestamp: Date.now() })
+        await order.save()
+        //clears the cart as it has been "Checked out"
+        await Cart.findOneAndUpdate({ account: user.email, uid: session }, { $set: { cart: [] } }, { new: true })
+        return true
+    }
+    catch (error) {
+        console.log(error)
+        return false
+    }
+}
+const getOrders = async (session) =>{
+    try{
+        //finds if the person accessing the page is logged in, if not returns false.
+        let user = await User.findOne({sessionId: session})
+        if (!user){
+            return false
+        }
+        //this will return all orders associated with the users email
+        let orders = await Order.find({account: user.email})
+        return orders
+    }
+    catch (error){
+        console.log(error)
+        return false
+    }
+}
+const populateOrder = async(cart) =>{
+    //listings = [{}, {}, {}, ...]
+    let listings = await giveAllListings();
+    //cart = [[id, quantity], [0, 1], []]
+    let completedCart = []
+    cart.forEach((item) =>{
+        for(let i=0; i<listings.length; i++){
+            if (item[0] == listings[i]._id){
+                //populates the listing object with the quantity from the cart item
+                //._doc is where the targeted data is stored, listings[i] contains lots of metadata as well.
+                let popListing = {quantity: item[1], ...listings[i]._doc}
+                completedCart.push(popListing)
+            }
+        }
+    })
+    //completedCart = [{}, {}, {}, ...]
+    return completedCart
 }
 
 const app = express();
@@ -523,11 +594,11 @@ app.post("/cart-add-now", async (req, res) => {
     let status = await checkForCart(req.cookies.usesh, update)
     console.log(status)
     //status returns boolean value of true (meaning successful) or false.
-    if (status){
-        res.json({status: true})
+    if (status) {
+        res.json({ status: true })
     }
-    else{
-        res.json({status: false})
+    else {
+        res.json({ status: false })
     }
 });
 //deletes an item from the cart and handles making the cart truly empty if relevant.
@@ -552,6 +623,7 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     // body = {email: "", pass: ""}
     // session cookie = req.cookies.usersession
+    console.log(req.cookies.usesh)
     let loginAttempt = await loginUserAccount(req.body, req.cookies.usesh, res)
     res.json({ status: loginAttempt })
 })
@@ -572,7 +644,20 @@ app.post("/logout", async (req, res) => {
     of meaning to respond with*/
     res.status(200).send()
 })
-app.get("/skelington", (req, res) =>{
-    res.sendFile(path.join(__dirname, 'build', 'loading.html'))
+app.post("/checkout", (req, res) => {
+    let status = checkOut(req.cookies.usesh)
+    //returns true if the cart has been "checked out" or false if there was an error
+    res.json({ status: status })
+})
+//these frontend files dont exist yet (in a built state), that is tomorrows work.
+// app.get("/account", (req, res) =>{
+//     res.sendFile(__dirname, 'build', 'account.html')
+// })
+app.post("/orders", async (req, res) => {
+    /*If you take your cookie from browser and use POstman or a similar utility you can see your stored orders.
+    In the near future this will serve a frontend file to populate an account page.*/
+    let orders = await getOrders(req.cookies.usesh)
+    //returns a json object which contains the orders associated with the account they are logged in to.
+    res.json(orders)
 })
 app.listen(port)

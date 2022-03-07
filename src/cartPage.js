@@ -12,8 +12,7 @@ class CartPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cart: [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']],
-            logStatus: false
+            cart: [['There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.']]
         }
         this.componentDidMount = this.componentDidMount.bind(this)
         this.updateCart = this.updateCart.bind(this)
