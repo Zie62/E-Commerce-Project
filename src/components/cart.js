@@ -39,7 +39,7 @@ class Cart extends Component {
         e.preventDefault();
         let results = await Axios.post("/checkout");
         if (results){
-            location.href = "http://localhost:5000"
+            location.href = "https://no-rscripts.herokuapp.com"
         }
         else{
             console.log("Was not checked out :(")
