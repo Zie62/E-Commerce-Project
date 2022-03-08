@@ -1,6 +1,6 @@
+import './app.css'
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import Axios from 'axios';
 import LogBar from './components/logbar';
 import NavBar from './components/navBar';
 import Orders from './components/orders';

@@ -293,7 +293,6 @@ const getTheirCart = async (uid, res) => {
 }
 const deleteFromCart = (data, uid) => {
     let cart = data.cart
-    console.log(cart)
     /*slimCart is the stripped down cart stored in the database, only containing
     the ID of an item and the quantity of that item. The display information is populated
     on the frontend before being shown on UI.*/
@@ -326,7 +325,6 @@ const createUserAccount = async (body, res) => {
     //checks if account already exists
     let account = await User.findOne({ email: email })
     if (account) {
-        console.log("existing")
         /*if the account exists, returns false so it is known a new account was not created.
         This displays an error on the frontend.*/
         return false
@@ -592,7 +590,6 @@ app.get("/sale-db", (req, res) => {
 app.post("/cart-add-now", async (req, res) => {
     let update = req.body
     let status = await checkForCart(req.cookies.usesh, update)
-    console.log(status)
     //status returns boolean value of true (meaning successful) or false.
     if (status) {
         res.json({ status: true })
@@ -623,7 +620,6 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     // body = {email: "", pass: ""}
     // session cookie = req.cookies.usersession
-    console.log(req.cookies.usesh)
     let loginAttempt = await loginUserAccount(req.body, req.cookies.usesh, res)
     res.json({ status: loginAttempt })
 })
@@ -649,10 +645,9 @@ app.post("/checkout", (req, res) => {
     //returns true if the cart has been "checked out" or false if there was an error
     res.json({ status: status })
 })
-//these frontend files dont exist yet (in a built state), that is tomorrows work.
-// app.get("/account", (req, res) =>{
-//     res.sendFile(__dirname, 'build', 'account.html')
-// })
+app.get("/account", (req, res) =>{
+    res.sendFile(path.join(__dirname, 'build', 'account.html'))
+})
 app.post("/orders", async (req, res) => {
     /*If you take your cookie from browser and use POstman or a similar utility you can see your stored orders.
     In the near future this will serve a frontend file to populate an account page.*/

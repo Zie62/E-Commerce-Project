@@ -6,7 +6,6 @@ const populateCart = async () => {
     let userCart
     try {
         userCart = await Axios.get('/this-user-cart')
-        console.log(userCart)
     }
     catch {
         return [{ name: "There was an error loading your cart" }]
@@ -19,7 +18,7 @@ const populateCart = async () => {
     }
     //retrievedCart = [[id, quantity], [], [], ...]
     let retrievedCart = userCart.data[0].cart
-    console.log(retrievedCart)
+
     //if their cart exists but is empty, returns a message saying that.
     if (retrievedCart.length < 1) {
         return [{ name: 'There is nothing in your cart. If this is wrong, please refresh after the page has finished loading.' }]
