@@ -1,3 +1,2 @@
-make account page with previous "orders" and integrate cart checkout button moving cart to previous orders rather than simply redirecting to the homepage.
-currently orders.js component + account.js parent.
+Order totals and total item count at bottom. 
 Make cart page default to saying it is empty when the cart is emptied. (currently shows loading screen despite nothing loading.)

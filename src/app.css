@@ -804,12 +804,17 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         font-weight: 700;
         margin-block: 0;
     }
-    .order-item, .order-key{
+    .order-item, .order-key, .order-totals{
         width:90%;
         display:grid;
         grid-template-columns: repeat(auto-fill, 20%);
         justify-content: center;
         align-items: center;
+    }
+    .order-totals{
+        border-top: 2px solid black;
+        font-size: xx-large;
+        font-weight: 400;
     }
     .order-img{
         max-height: 90%;

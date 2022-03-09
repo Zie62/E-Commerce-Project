@@ -11,6 +11,8 @@ class Orders extends Component {
             user: "",
             error: ""
         }
+        this.orderTotals = this.orderTotals.bind(this)
+        this.ordersMap = this.ordersMap.bind(this)
     }
     async componentDidMount() {
         let user = await Axios.get("/loginStatus")
@@ -47,8 +49,36 @@ class Orders extends Component {
             })
         }
     }
+    orderTotals(i) {
+        let order = this.state.orders[i]
+        //order = [item{sale, ogPrice, disPrice}, item{}, item{}]
+        let orderTotal = 0
+        let items = 0
+        /*Iterates through the orders array and adds the total price of each item in 
+        the order's cart as well as adds the number of an item ordered. Total price
+        is calculated as integers, then turned into decimal format for display.*/
+        order.forEach(item => {
+            //if the item was on sale, calculate using the discounted price for that item.
+            if (item.sale){
+                orderTotal+=(parseInt(item.disPrice.replace(".", "")) * item.quantity)
+            }
+            else{
+                orderTotal+=(parseInt(item.ogPrice.replace(".", "")) * item.quantity)
+            }
+            items+=item.quantity
+        })
+        return (
+            <div className='order-totals'>
+                {/*These divs space the items and total price within a grid to save on CSS */}
+                <div></div>
+                <div></div>
+                <p>Items: {items}</p>
+                <p>Total: ${Decimalizer(orderTotal)}</p>
+            </div>
+        )
+    }
     ordersMap() {
-        //this.state.orders = [[{}, {}, {}], [{}, {}, {}], ...]
+        //this.state.orders = [[item{}, {}, {}], [{}, {}, {}], ...]
         if (this.state.orders.length == 0) {
             return (
                 <>
@@ -93,6 +123,7 @@ class Orders extends Component {
                             </div>
                         ))
                     }
+                    {this.orderTotals(i)}
                 </div>
             ))
         )
