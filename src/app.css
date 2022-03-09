@@ -266,11 +266,13 @@ h1{
     text-decoration: none;
     color:black;
 }
+#cart-relative-box{
+    position:relative
+}
 .cart-contents{
     z-index: 500;
     display:none;
-    top: 18vh;
-    right: 10vw;
+    top: 12vh;
     position: absolute;
     width: 28vh;
     height: 60vh;

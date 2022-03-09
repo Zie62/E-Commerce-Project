@@ -80,8 +80,10 @@ class NavBar extends Component {
                 </div>
                 <div className="cart-drop" key={this.props.cart}>
                     <a id="cart-icon-link" href="/cart"><h1 id="cart-icon">🛒</h1></a>
-                    <div className="cart-contents" key={this.props.cart}>
-                        {this.cartUI()}
+                    <div id="cart-relative-box">
+                        <div className="cart-contents" key={this.props.cart}>
+                            {this.cartUI()}
+                        </div>
                     </div>
                 </div>
                 <div className="dropdown">
