@@ -27,7 +27,7 @@ class Orders extends Component {
             let orderNumbers = []
             orders.data.forEach((order, i) => {
                 formattedOrders.push(order.cart)
-                orderNumbers.push(order._id)
+                orderNumbers.push({ id: order._id, date: order.timestamp })
             })
             this.setState({
                 orders: formattedOrders,
@@ -68,19 +68,23 @@ class Orders extends Component {
             }
             return total
         }
+        console.log(this.state.orders[0])
         return (
             //mapping the array of orders, then mapping an order to iterate through the items in the order
             this.state.orders.map((order, i) => (
                 <div className="single-order">
-                    <h2 id="orderNum">Order #{this.state.orderNums[i]}</h2>
+                    <div className="order-info">
+                        <h2 className="order-num">Order #{this.state.orderNums[i].id}</h2>
+                        <h3 className="order-date">{(this.state.orderNums[i].date).substring(0, 10)}</h3>
+                    </div>
                     <div className="order-key">
-                        <p id="key-start">Image</p>
+                        <p className="key-value">Image</p>
                         <p className="key-value">Name</p>
                         <p className="key-value">Quantity</p>
                         <p className="key-value">Total</p>
                     </div>
                     {
-                        order.map((item, i) => (
+                        order.map((item) => (
                             <div className="order-item">
                                 <img className="order-img" src={item.picture[0]}></img>
                                 <p className="order-name order-txt">{item.name}</p>

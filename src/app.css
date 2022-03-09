@@ -727,31 +727,34 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         background-color: #c4c4c4;
         display:flex;
         flex-direction: column;
+        justify-content: center;
+        margin-top: 10px;
     }
-    .order-key{
+    .order-info{
         display:flex;
         flex-direction: row;
         align-items: center;
-        font-size: xx-large;
+        justify-content: space-between;
     }
-    #key-start{
+    .key-start{
         width: 8%;
     }
     .key-value{
-        margin-left: 20%
+        font-size: xx-large;
     }
-    .order-item{
-        display:flex;
-        flex-direction: row;
+    .order-item, .order-key{
+        width:90%;
+        display:grid;
+        grid-template-columns: repeat(auto-fill, 20%);
+        justify-content: center;
         align-items: center;
     }
     .order-img{
-        max-height: 15%;
-        width:8%;
-        height: 12%;
+        max-height: 90%;
+        width: 50%;
+        height: auto;
     }
     .order-txt{
         font-size: xxx-large;
-        margin-left: 20%;
     }
 }

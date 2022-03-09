@@ -37,7 +37,7 @@ class LogBar extends Component {
             //if the user is logged in (which will be truthy), display their login email
             return (
                 <div id="login-bar">
-                    <p className="login">User: {this.state.logStatus}</p>
+                    <p className="login"><a href='/account'>User: {this.state.logStatus}</a></p>
                     <a href="" onClick={(e) => { this.logOut(e) }}>Log Out</a>
                 </div>
             )
