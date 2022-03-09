@@ -77,19 +77,19 @@ class Orders extends Component {
                         <h2 className="order-num">Order #{this.state.orderNums[i].id}</h2>
                         <h3 className="order-date">{(this.state.orderNums[i].date).substring(0, 10)}</h3>
                     </div>
-                    <div className="order-key">
+                    {/* <div className="order-key">
                         <p className="key-value">Image</p>
                         <p className="key-value">Name</p>
                         <p className="key-value">Quantity</p>
                         <p className="key-value">Total</p>
-                    </div>
+                    </div> */}
                     {
                         order.map((item) => (
                             <div className="order-item">
                                 <img className="order-img" src={item.picture[0]}></img>
                                 <p className="order-name order-txt">{item.name}</p>
-                                <p className="order-quantity order-txt">{item.quantity}</p>
-                                <p className="item-total order-txt">{itemTotal(item)}</p>
+                                <p className="order-quantity order-txt">Quantity: {item.quantity}</p>
+                                <p className="item-total order-txt">${itemTotal(item)}</p>
                             </div>
                         ))
                     }
@@ -100,7 +100,7 @@ class Orders extends Component {
     render() {
         return (
             <div>
-                <h1 className="feat-text">Orders for: {this.state.user}</h1>
+                <h1 className="orders-feat-text">Orders for: {this.state.user}</h1>
                 <div id="orders-body">
                     {this.ordersMap()}
                 </div>

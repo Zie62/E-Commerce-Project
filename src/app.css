@@ -90,6 +90,14 @@ h1{
     background-color: var(--mainTheme);
     color:white;
 }
+.orders-feat-text{
+    width: 100%;
+    height: 9.5vh;
+    font-size: x-large;
+    text-align: center;
+    background-color: var(--mainTheme);
+    color:white;
+}
 .feat-package{
     display: flex;
     justify-content:center;
@@ -486,6 +494,46 @@ h1{
     padding: 10px 0px;
     color:white
 }
+#orders-body{
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.single-order{
+    width:95%;
+    background-color: #c4c4c4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin:10px 0;
+}
+.order-info{
+    font-size:large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.order-key{
+    display:none;
+}
+.order-item{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.order-img{
+    max-height: 40%;
+    width:  90%;
+    height: auto;
+}
+.order-txt{
+    margin: 0 0;
+    font-weight:700;
+}
 .width100{
     width:100%
 }
@@ -541,6 +589,14 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
     .feat-text{
         height: 7%;
         font-size: xxx-large;
+    }
+    .orders-feat-text{
+        width: 100%;
+        height: 9.5vh;
+        font-size: 7vh;
+        text-align: center;
+        background-color: var(--mainTheme);
+        color:white;
     }
     .feat-img{
         margin-top: 2%;
@@ -716,6 +772,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
     .form-input{
         width: 20vw;
     }
+    /*bookmark for orders*/
     #orders-body{
         display:flex;
         align-items: center;
@@ -733,6 +790,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         margin-top: 10px;
     }
     .order-info{
+        width: 95%;
         display:flex;
         flex-direction: row;
         align-items: center;
@@ -743,6 +801,8 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
     }
     .key-value{
         font-size: xx-large;
+        font-weight: 700;
+        margin-block: 0;
     }
     .order-item, .order-key{
         width:90%;
@@ -757,6 +817,7 @@ or phone view. This prioritizes optimizing for small laptops (1336x768px) vs lar
         height: auto;
     }
     .order-txt{
+        font-weight: 400;
         font-size: xxx-large;
     }
 }
