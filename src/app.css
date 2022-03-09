@@ -267,12 +267,12 @@ h1{
     color:black;
 }
 #cart-relative-box{
-    position:relative
+    position:relative;
+    margin-top:125px;
 }
 .cart-contents{
     z-index: 500;
     display:none;
-    top: 12vh;
     position: absolute;
     width: 28vh;
     height: 60vh;
