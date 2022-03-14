@@ -1,2 +1,3 @@
-Order totals and total item count at bottom. 
+Redesign and update order UI to be better looking.
+implement redux to prevent duplicate API calls and support a central state.
 Make cart page default to saying it is empty when the cart is emptied. (currently shows loading screen despite nothing loading.)

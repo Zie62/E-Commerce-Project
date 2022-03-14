@@ -22,10 +22,10 @@ class LogBar extends Component {
         //dont need to do anything, just prevent logStatus from being overwritten with undefined/error
     }
     }
-    logOut(e) {
+    async logOut(e) {
         e.preventDefault();
-        //doesnt need to be awaited as I dont need any response data
-        Axios.post('/logout', { email: this.state.logStatus })
+        //awaiting not for data but to prevent race conditions
+        await Axios.post('/logout', { email: this.state.logStatus })
         this.setState({
             logStatus: false
         })

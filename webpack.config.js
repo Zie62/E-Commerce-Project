@@ -34,7 +34,7 @@ module.exports = {
     decided to not do that.*/
     plugins: [
         new htmlWebpackPlugin({
-            title: 'react template',
+            title: 'home page',
             template: './src/index.html',
             inject: true,
             chunks: ['index'],
