@@ -68,40 +68,7 @@ const ordersSchema = new Schema({
     timestamp: { type: Date, required: true },
 })
 const Order = mongoose.model("Orders", ordersSchema)
-/*this checks if the next day has passed and updates the sales 
-property of random listings if it has. I decided to do this to create an artificial 
-"specials" page that would change on a timer to give an illusion of daily sales.*/
-const timeCheck = async () => {
-    try {
-        //takes all listings off sale
-        await Listing.updateMany({}, { $set: { sale: false } }, { new: true })
-        //supplies an array of the listings to be referenced at the end
-        let listings = await Listing.find({})
-        //this serves as storage for the items to be put on sale 
-        let saleArray = []
-        //for loop to generate 6 unique values to represent the items being put on sale
-        for (let i = 0; i < 6; i) {
-            //generates random values, pushes if it is unique, otherwise loops again
-            let selector = ~~(Math.random() * listings.length);
-            if (saleArray.includes(selector)) { }
-            else {
-                saleArray.push(selector)
-                i++
-            };
-        }
-        //updates each new item which is on sale
-        for (let i = 0; i < saleArray.length; i++) {
-            await Listing.findOneAndUpdate({ _id: listings[saleArray[i]]._id }, { sale: true }, { new: true })
-        }
-    }
-    catch (error) {
-        console.log(error)
-    }
-};
-//this schedules the timeCheck / sale updating function once a day at midnight
-cron.schedule('0 0 0 * * *', () => {
-    timeCheck();
-})
+
 //returns a listing based on the provided id value.
 const listingByID = async (id, res) => {
     try {
@@ -116,18 +83,6 @@ const listingByID = async (id, res) => {
         res.status(500).send();
     }
 }
-//this commented out function was used to create and save new store listings
-// const createAndSaveListing = (pictures, listname, oriPrice, discPrice) => {
-//     /*because this is taken from a text input box on a html form, this must be split
-//     into an array to be properly saved to the database.
-//     This is not currently used as i dont have a way to gate it to admin accounts,
-//     but i will in the future.*/
-//     let picArray = pictures.split(",")
-//     var newListing = new Listing({ picture: picArray, name: listname, ogPrice: oriPrice, disPrice: discPrice })
-//     newListing.save(function (err, data) {
-//         if (err) return console.error(err);
-//     });
-// };
 //Gives all item listings, async to prevent repeated requests to database
 const giveAllListings = async (res) => {
     try {
@@ -137,11 +92,11 @@ const giveAllListings = async (res) => {
         }
         else {
             //responds with results to frontend if relevant, otherwise returns the values.
-            if(res){
-            res.json(results)
+            if (res) {
+                res.json(results)
             }
-            else{
-            return results
+            else {
+                return results
             }
         }
     }
@@ -170,7 +125,7 @@ const giveSaleListings = async (res) => {
 };
 /*checks if the user has a cart based on a post request with cookies and 
 passes down the rest of the post information.*/
-const checkForCart = async (session, update) => {
+const checkForActiveCart = async (session, update) => {
     try {
         //checks if the user has a cart
         let data = await Cart.find({ uid: session })
@@ -280,7 +235,7 @@ const addToCart = async (uid, poster) => {
     }
 }
 //gets a users cart based on their Session ID cookie (abbreviated as "uid" or user ID)
-const getTheirCart = async (uid, res) => {
+const getUserCart = async (uid, res) => {
     //makes sure the user has a sessionID cookie to prevent access to carts with "null" cookies
     if (uid) {
         try {
@@ -483,33 +438,33 @@ const checkOut = async (session) => {
         return false
     }
 }
-const getOrders = async (session) =>{
-    try{
+const getOrders = async (session) => {
+    try {
         //finds if the person accessing the page is logged in, if not returns false.
-        let user = await User.findOne({sessionId: session})
-        if (!user){
+        let user = await User.findOne({ sessionId: session })
+        if (!user) {
             return false
         }
         //this will return all orders associated with the users email
-        let orders = await Order.find({account: user.email})
+        let orders = await Order.find({ account: user.email })
         return orders
     }
-    catch (error){
+    catch (error) {
         console.log(error)
         return false
     }
 }
-const populateOrder = async(cart) =>{
+const populateOrder = async (cart) => {
     //listings = [{}, {}, {}, ...]
     let listings = await giveAllListings();
     //cart = [[id, quantity], [0, 1], []]
     let completedCart = []
-    cart.forEach((item) =>{
-        for(let i=0; i<listings.length; i++){
-            if (item[0] == listings[i]._id){
+    cart.forEach((item) => {
+        for (let i = 0; i < listings.length; i++) {
+            if (item[0] == listings[i]._id) {
                 //populates the listing object with the quantity from the cart item
                 //._doc is where the targeted data is stored, listings[i] contains lots of metadata as well.
-                let popListing = {quantity: item[1], ...listings[i]._doc}
+                let popListing = { quantity: item[1], ...listings[i]._doc }
                 completedCart.push(popListing)
             }
         }
@@ -517,6 +472,40 @@ const populateOrder = async(cart) =>{
     //completedCart = [{}, {}, {}, ...]
     return completedCart
 }
+/*this checks if the next day has passed and updates the sales 
+property of random listings if it has. I decided to do this to create an artificial 
+"specials" page that would change on a timer to give an illusion of daily sales.*/
+const timeCheck = async () => {
+    try {
+        //takes all listings off sale
+        await Listing.updateMany({}, { $set: { sale: false } }, { new: true })
+        //supplies an array of the listings to be referenced at the end
+        let listings = await Listing.find({})
+        //this serves as storage for the items to be put on sale 
+        let saleArray = []
+        //for loop to generate 6 unique values to represent the items being put on sale
+        for (let i = 0; i < 6; i) {
+            //generates random values, pushes if it is unique, otherwise loops again
+            let selector = ~~(Math.random() * listings.length);
+            if (saleArray.includes(selector)) { }
+            else {
+                saleArray.push(selector)
+                i++
+            };
+        }
+        //updates each new item which is on sale
+        for (let i = 0; i < saleArray.length; i++) {
+            await Listing.findOneAndUpdate({ _id: listings[saleArray[i]]._id }, { sale: true }, { new: true })
+        }
+    }
+    catch (error) {
+        console.log(error)
+    }
+};
+//this schedules the timeCheck / sale updating function once a day at midnight (UTC)
+cron.schedule('0 0 0 * * *', () => {
+    timeCheck();
+})
 
 const app = express();
 app.use(cookieParser())
@@ -526,7 +515,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'build')));
 /*this middleware function sets the response headers for cache control, so when a user
 presses back on a webpage it does not load a potentially stale state (and therefore a
-stale cart). This allows for ComponentWill/DidMount functions to execute*/
+stale cart). This allows for ComponentDidMount functions to execute*/
 app.use((req, res, next) => {
     res.set('Cache-control', `no-store`);
     next();
@@ -562,17 +551,6 @@ app.get("/full-db", async (req, res) => {
 app.get("/products-page", async (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'products.html'))
 });
-//these methods are commented out as they are not currently being used
-//post for creating new listings utilizing form input
-/*app.post('/database-upload', (req, res) => {
-    let data = req.body
-    createAndSaveListing(data.picture, data.listname, data.oriPrice, data.discPrice)
-    res.json("Successfully Posted!")
-});*/
-//serves a basic input form that post to the above route, creating a new listing
-/*app.get("/dont-go-here-nothing-here", (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'dbentry.html'))
-});*/
 /*this get is used by the /item page where axios fetches the listings information
 by its database ObjectID, which is always used in any redirect to the /item page below. */
 app.get("/listing", async (req, res) => {
@@ -589,7 +567,7 @@ app.get("/sale-db", (req, res) => {
 //updates the cart to contain a new item / updated quantity of an item
 app.post("/cart-add-now", async (req, res) => {
     let update = req.body
-    let status = await checkForCart(req.cookies.usesh, update)
+    let status = await checkForActiveCart(req.cookies.usesh, update)
     //status returns boolean value of true (meaning successful) or false.
     if (status) {
         res.json({ status: true })
@@ -606,7 +584,7 @@ app.post("/cart-delete-now", (req, res) => {
 })
 //api call for getting a users cart from the database
 app.get("/this-user-cart", async (req, res) => {
-    await getTheirCart(req.cookies.usesh, res)
+    await getUserCart(req.cookies.usesh, res)
 });
 //serves the cart page 
 app.get("/cart", (req, res) => {
@@ -645,7 +623,7 @@ app.post("/checkout", (req, res) => {
     //returns true if the cart has been "checked out" or false if there was an error
     res.json({ status: status })
 })
-app.get("/account", (req, res) =>{
+app.get("/account", (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'account.html'))
 })
 app.post("/orders", async (req, res) => {
