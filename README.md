@@ -8,8 +8,7 @@ This site contains functionality to show items which are on sale (randomly gener
 
 Each item on the site is a "listing" in the database, and users carts are maintained in the database by utilizing randomly assigned 'uid' cookies to maintain parity between pages. The 'uid' cookie expires on session end, but alternatively I understand I could have added an expires property instead to allow users to come back to their cart later in a real implementation.
 
-This project was started with a basic understanding of the libraries I used, but over the development I utilized documentation as well as Stack Overflow and other educational sources to continuously solve related implementation problems unlike those I had previously tackled when taking courses towards certifications. Im currently working on fixing some of the poor solutions i went with such as using global variables for various data stores or database calls without await. This is being fixed over time alongside adding new features.
-
+This project was started with a basic understanding of the libraries I used, but over the development I utilized documentation as well as Stack Overflow and other educational sources to continuously solve related implementation problems unlike those I had previously tackled when taking courses towards certifications. 
 The design is simple, but I still decided to go through the design process and execute both mobile and desktop designs using figma as my design tool. Media queries are used to differentiate between mobile and desktop views, but the majority of the CSS is the same in both instances.
 
 Note: This project previously had a few hundred commits, but I refreshed the main branch as github was claiming this project had a size of over 700 MB which exceeded their storage capacity for the free package. I started working on this around October of 2021.
