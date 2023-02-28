@@ -1,7 +1,5 @@
 # Mock E-commerce Site
 
-https://no-rscripts.herokuapp.com/
-
 This is a mock E-commerce site I coded from scratch utilizing the MERN stack (MongoDB, Express, React, Node.js) alongside supporting libraries and utilities such as Axios and Webpack. The site was hosted through Heroku(RIP free tier), and files are stored on Github as well as a local Git repository.
 
 This site contains functionality to show items which are on sale (randomly generated sales daily), show all items "being sold" (no items are actually for sale as it is a sample), and maintain and display a cart with an indicator at the top of the screen to confirm when items are added to the cart. Each item on the site has a page for its self, procedurally generated utilizing the information stored in the database about them. Conditional HTML classes are used to display sales and other conditional content throughout the site.
