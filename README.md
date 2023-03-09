@@ -8,4 +8,3 @@ Each item on the site is a "listing" in the database, and users carts are mainta
 
 This project was started with a basic understanding of the libraries I used, but over the development I utilized documentation as well as Stack Overflow and other educational sources to continuously solve related implementation problems unlike those I had previously tackled when taking courses towards certifications. 
 The design is simple, but I still decided to go through the design process and execute both mobile and desktop designs using figma as my design tool. Media queries are used to differentiate between mobile and desktop views, but the majority of the CSS is the same in both instances.
-
