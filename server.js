@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 const uri = process.env.URI;
-const TIMEOUT = 10000
+const TIMEOUT = 10000;
 
 //connects backend to the MongoDB atlas database via mongoose.
 const connector = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
